@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan("io.renren.dao")
-//@ComponentScan(basePackages = {"com.power","io.renren"})
+@MapperScan(basePackages = {"io.renren.dao","com.power.dao"})
+@ComponentScan(basePackages = {"com.power","io.renren"})
 public class RenrenApplication {
 
 	public static void main(String[] args) {
