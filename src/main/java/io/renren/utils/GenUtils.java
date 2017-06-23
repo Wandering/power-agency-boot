@@ -108,6 +108,8 @@ public class GenUtils {
 		map.put("package", config.getString("package"));
 		map.put("author", config.getString("author"));
 		map.put("email", config.getString("email"));
+		map.put("staticPath", config.getString("staticPath"));
+		map.put("commonPackage", config.getString("commonPackage"));
 		map.put("datetime", DateUtils.format(new Date(), DateUtils.DATE_TIME_PATTERN));
         VelocityContext context = new VelocityContext(map);
         
@@ -195,12 +197,12 @@ public class GenUtils {
 
 		if(template.contains("list.html.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator
-					+ "generator" + File.separator + className.toLowerCase() + ".html";
+					+ "biz" + File.separator + className.toLowerCase() + ".html";
 		}
 		
 		if(template.contains("list.js.vm")){
 			return "main" + File.separator + "resources" + File.separator + "static" + File.separator + "public" + File.separator
-					+ "js" + File.separator + "generator" + File.separator + className.toLowerCase() + ".js";
+					+ "js" + File.separator + "biz" + File.separator + className.toLowerCase() + ".js";
 		}
 
 		if(template.contains("menu.sql.vm")){

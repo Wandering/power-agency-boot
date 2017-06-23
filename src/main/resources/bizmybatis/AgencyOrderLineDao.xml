@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.AgencyOrderLineDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.AgencyOrderLineEntity" id="agencyOrderLineMap">
+        <result property="id" column="id"/>
+        <result property="fee" column="fee"/>
+        <result property="userId" column="user_id"/>
+        <result property="agency" column="agency"/>
+        <result property="fromStation" column="from_station"/>
+        <result property="toStation" column="to_station"/>
+        <result property="powerBank" column="power_bank"/>
+        <result property="feeType" column="fee_type"/>
+        <result property="orderId" column="order_id"/>
+        <result property="startDt" column="start_dt"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="endDt" column="end_dt"/>
+        <result property="originOrder" column="origin_order"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.AgencyOrderLineEntity">
+		select * from agency_order_line where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.AgencyOrderLineEntity">
+		select * from agency_order_line
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from agency_order_line 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.AgencyOrderLineEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into agency_order_line
+		(
+			`fee`, 
+			`user_id`, 
+			`agency`, 
+			`from_station`, 
+			`to_station`, 
+			`power_bank`, 
+			`fee_type`, 
+			`order_id`, 
+			`start_dt`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`, 
+			`end_dt`, 
+			`origin_order`
+		)
+		values
+		(
+			#{fee}, 
+			#{userId}, 
+			#{agency}, 
+			#{fromStation}, 
+			#{toStation}, 
+			#{powerBank}, 
+			#{feeType}, 
+			#{orderId}, 
+			#{startDt}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{endDt}, 
+			#{originOrder}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.AgencyOrderLineEntity">
+		update agency_order_line 
+		<set>
+			<if test="fee != null">`fee` = #{fee}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="agency != null">`agency` = #{agency}, </if>
+			<if test="fromStation != null">`from_station` = #{fromStation}, </if>
+			<if test="toStation != null">`to_station` = #{toStation}, </if>
+			<if test="powerBank != null">`power_bank` = #{powerBank}, </if>
+			<if test="feeType != null">`fee_type` = #{feeType}, </if>
+			<if test="orderId != null">`order_id` = #{orderId}, </if>
+			<if test="startDt != null">`start_dt` = #{startDt}, </if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="endDt != null">`end_dt` = #{endDt}, </if>
+			<if test="originOrder != null">`origin_order` = #{originOrder}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from agency_order_line where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from agency_order_line where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

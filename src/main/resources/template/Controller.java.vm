@@ -13,9 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import ${package}.entity.${className}Entity;
 import ${package}.service.${className}Service;
-import ${package}.utils.PageUtils;
-import ${package}.utils.Query;
-import ${package}.utils.R;
+import ${commonPackage}.utils.PageUtils;
+import ${commonPackage}.utils.Query;
+import ${commonPackage}.utils.R;
 
 
 /**

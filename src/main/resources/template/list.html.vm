@@ -53,6 +53,6 @@
 	</div>
 </div>
 
-<script src="../public/js/generator/${pathName}.js"></script>
+<script src="../public/js/${staticPath}/${pathName}.js"></script>
 </body>
 </html>
