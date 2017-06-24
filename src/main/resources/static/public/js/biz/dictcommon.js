@@ -1,16 +1,13 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../${pathName}/list',
+        url: '../dictcommon/list',
         datatype: "json",
         colModel: [			
-#foreach($column in $columns)
-#if($column.columnName == $pk.columnName)
-			{ label: '${column.attrname}', name: '${column.attrname}', index: '${column.columnName}', width: 50, key: true },
-#else
-			{ label: '${column.comments}', name: '${column.attrname}', index: '${column.columnName}', width: 80 }#if($velocityCount != $columns.size()), #end
-			
-#end			
-#end
+			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '代码', name: 'code', index: 'code', width: 80 }, 			
+			{ label: '名称', name: 'name', index: 'name', width: 80 }, 			
+			{ label: '字典类型', name: 'type', index: 'type', width: 80 }, 			
+			{ label: '字典描述', name: 'note', index: 'note', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -45,7 +42,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
-		${classname}: {}
+		dictCommon: {}
 	},
 	methods: {
 		query: function () {
@@ -55,25 +52,25 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.status = "add";
-			vm.${classname} = {};
+			vm.dictCommon = {};
 		},
 		update: function (event) {
-			var $pk.attrname = getSelectedRow();
-			if($pk.attrname == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             vm.status = "edit";
-            vm.getInfo(${pk.attrname})
+            vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "../${pathName}/save" : "../${pathName}/update";
+			var url = vm.dictCommon.id == null ? "../dictcommon/save" : "../dictcommon/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
 			    contentType: "application/json",
-			    data: JSON.stringify(vm.${classname}),
+			    data: JSON.stringify(vm.dictCommon),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -86,17 +83,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var ${pk.attrname}s = getSelectedRows();
-			if(${pk.attrname}s == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../${pathName}/delete",
+				    url: "../dictcommon/delete",
 				    contentType: "application/json",
-				    data: JSON.stringify(${pk.attrname}s),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -109,9 +106,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(${pk.attrname}){
-			$.get("../${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+		getInfo: function(id){
+			$.get("../dictcommon/info/"+id, function(r){
+                vm.dictCommon = r.dictCommon;
             });
 		},
 		reload: function (event) {

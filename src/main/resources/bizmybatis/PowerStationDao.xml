@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.PowerStationDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.PowerStationEntity" id="powerStationMap">
+        <result property="id" column="id"/>
+        <result property="agent" column="agent"/>
+        <result property="code" column="code"/>
+        <result property="address" column="address"/>
+        <result property="region" column="region"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="wxUser" column="wx_user"/>
+        <result property="wxUserPhone" column="wx_user_phone"/>
+        <result property="dimensionCode" column="dimension_code"/>
+        <result property="status" column="status"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="productDt" column="product_dt"/>
+        <result property="productCreator" column="product_creator"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="connectType" column="connect_type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="shopStartDt" column="shop_start_dt"/>
+        <result property="shopEndDt" column="shop_end_dt"/>
+        <result property="activeBankNo" column="active_bank_no"/>
+        <result property="shopPhone" column="shop_phone"/>
+        <result property="shopStationPoint" column="shop_station_point"/>
+        <result property="feescale" column="feescale"/>
+        <result property="lasteditor" column="lastEditor"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.PowerStationEntity">
+		select * from power_station where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.PowerStationEntity">
+		select * from power_station
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_station 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.PowerStationEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into power_station
+		(
+			`agent`, 
+			`code`, 
+			`address`, 
+			`region`, 
+			`latitude`, 
+			`longitude`, 
+			`wx_user`, 
+			`wx_user_phone`, 
+			`dimension_code`, 
+			`status`, 
+			`create_dt`, 
+			`update_dt`, 
+			`product_dt`, 
+			`product_creator`, 
+			`shop_name`, 
+			`connect_type`, 
+			`create_by`, 
+			`update_by`, 
+			`shop_start_dt`, 
+			`shop_end_dt`, 
+			`active_bank_no`, 
+			`shop_phone`, 
+			`shop_station_point`, 
+			`feescale`, 
+			`lastEditor`
+		)
+		values
+		(
+			#{agent}, 
+			#{code}, 
+			#{address}, 
+			#{region}, 
+			#{latitude}, 
+			#{longitude}, 
+			#{wxUser}, 
+			#{wxUserPhone}, 
+			#{dimensionCode}, 
+			#{status}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{productDt}, 
+			#{productCreator}, 
+			#{shopName}, 
+			#{connectType}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{shopStartDt}, 
+			#{shopEndDt}, 
+			#{activeBankNo}, 
+			#{shopPhone}, 
+			#{shopStationPoint}, 
+			#{feescale}, 
+			#{lasteditor}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.PowerStationEntity">
+		update power_station 
+		<set>
+			<if test="agent != null">`agent` = #{agent}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="address != null">`address` = #{address}, </if>
+			<if test="region != null">`region` = #{region}, </if>
+			<if test="latitude != null">`latitude` = #{latitude}, </if>
+			<if test="longitude != null">`longitude` = #{longitude}, </if>
+			<if test="wxUser != null">`wx_user` = #{wxUser}, </if>
+			<if test="wxUserPhone != null">`wx_user_phone` = #{wxUserPhone}, </if>
+			<if test="dimensionCode != null">`dimension_code` = #{dimensionCode}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
+			<if test="productDt != null">`product_dt` = #{productDt}, </if>
+			<if test="productCreator != null">`product_creator` = #{productCreator}, </if>
+			<if test="shopName != null">`shop_name` = #{shopName}, </if>
+			<if test="connectType != null">`connect_type` = #{connectType}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="shopStartDt != null">`shop_start_dt` = #{shopStartDt}, </if>
+			<if test="shopEndDt != null">`shop_end_dt` = #{shopEndDt}, </if>
+			<if test="activeBankNo != null">`active_bank_no` = #{activeBankNo}, </if>
+			<if test="shopPhone != null">`shop_phone` = #{shopPhone}, </if>
+			<if test="shopStationPoint != null">`shop_station_point` = #{shopStationPoint}, </if>
+			<if test="feescale != null">`feescale` = #{feescale}, </if>
+			<if test="lasteditor != null">`lastEditor` = #{lasteditor}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from power_station where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from power_station where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

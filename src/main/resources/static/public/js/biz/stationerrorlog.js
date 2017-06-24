@@ -1,16 +1,15 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../${pathName}/list',
+        url: '../stationerrorlog/list',
         datatype: "json",
         colModel: [			
-#foreach($column in $columns)
-#if($column.columnName == $pk.columnName)
-			{ label: '${column.attrname}', name: '${column.attrname}', index: '${column.columnName}', width: 50, key: true },
-#else
-			{ label: '${column.comments}', name: '${column.attrname}', index: '${column.columnName}', width: 80 }#if($velocityCount != $columns.size()), #end
-			
-#end			
-#end
+			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '充电桩', name: 'deviceId', index: 'device_id', width: 80 }, 			
+			{ label: '卡槽号', name: 'slotNo', index: 'slot_no', width: 80 }, 			
+			{ label: '错误类型(需要处理，不需要处理[暂定])', name: 'type', index: 'type', width: 80 }, 			
+			{ label: '错误码', name: 'errorCode', index: 'error_code', width: 80 }, 			
+			{ label: '上报时间', name: 'upTime', index: 'up_time', width: 80 }, 			
+			{ label: '当前处理状态(被处理1，未处理0)', name: 'status', index: 'status', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -45,7 +44,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
-		${classname}: {}
+		stationErrorLog: {}
 	},
 	methods: {
 		query: function () {
@@ -55,25 +54,25 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.status = "add";
-			vm.${classname} = {};
+			vm.stationErrorLog = {};
 		},
 		update: function (event) {
-			var $pk.attrname = getSelectedRow();
-			if($pk.attrname == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             vm.status = "edit";
-            vm.getInfo(${pk.attrname})
+            vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "../${pathName}/save" : "../${pathName}/update";
+			var url = vm.stationErrorLog.id == null ? "../stationerrorlog/save" : "../stationerrorlog/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
 			    contentType: "application/json",
-			    data: JSON.stringify(vm.${classname}),
+			    data: JSON.stringify(vm.stationErrorLog),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -86,17 +85,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var ${pk.attrname}s = getSelectedRows();
-			if(${pk.attrname}s == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../${pathName}/delete",
+				    url: "../stationerrorlog/delete",
 				    contentType: "application/json",
-				    data: JSON.stringify(${pk.attrname}s),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -109,9 +108,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(${pk.attrname}){
-			$.get("../${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+		getInfo: function(id){
+			$.get("../stationerrorlog/info/"+id, function(r){
+                vm.stationErrorLog = r.stationErrorLog;
             });
 		},
 		reload: function (event) {

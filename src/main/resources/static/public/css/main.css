@@ -35,8 +35,26 @@ html { overflow-x:hidden; }
 .ml-10 { margin-left:0 !important; }
 @media (min-width: 768px) {
 	.ml-10 { margin-left:10px !important; }
-	.col-sm-10 {width: 70%;padding-left: 0px;}
-	.col-sm-2 {width: 24%;}
+	.form-horizontal .col-sm-10 {width: 70%;padding-left: 0px;}
+	.form-horizontal .col-sm-2 {width: 24%;}
+}
+@media (min-width: 768px){
+	.form-biz .control-label {
+	    padding-top: 7px;
+	    margin-bottom: 0;
+	    text-align: right;
+	}
+	.form-biz .form-group {
+		display:block;
+		margin-left:0px;margin-right:0px;}
+	.form-biz{
+		width:100%;padding-top:20px;
+	}
+	.form-group:after,.form-group:before {
+	    display: table;
+	    content: " ";
+	}
+	.form-group:after{clear:both;}
 }
 tbody > tr > th {font-weight: normal; }
 .panel .table { margin:0 0; }

@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>充电桩基础表</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+<link rel="stylesheet" href="../public/css/font-awesome.min.css">
+<link rel="stylesheet" href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../public/css/main.css">
+<script src="../public/libs/jquery.min.js"></script>
+<script src="../public/plugins/layer/layer.js"></script>
+<script src="../public/libs/bootstrap.min.js"></script>
+<script src="../public/libs/vue.min.js"></script>
+<script src="../public/plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../public/plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../public/js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<a v-if="hasPermission('powerstationbase:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('powerstationbase:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('powerstationbase:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩code，充电桩IMEI编号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.code" placeholder="充电桩code，充电桩IMEI编号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.channel" placeholder="主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩型号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.type" placeholder="充电桩型号"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">服务商id(由哪个服务商提供服务，默认是1知路)</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.facilitatorId" placeholder="服务商id(由哪个服务商提供服务，默认是1知路)"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩槽位</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.slotNo" placeholder="充电桩槽位"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩错误状态：0、正常</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.errorCode" placeholder="充电桩错误状态：0、正常"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">是否同步到知路服务器(1：是 0：否)</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.isSync" placeholder="是否同步到知路服务器(1：是 0：否)"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">是否正在被使用(1，正在使用  2未使用)</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.status" placeholder="是否正在被使用(1，正在使用  2未使用)"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">异常槽位数量</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.errorSlot" placeholder="异常槽位数量"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">空闲槽位</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.free" placeholder="空闲槽位"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">可借(记录当前充电中状态，减少每次统计)</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.canBorrow" placeholder="可借(记录当前充电中状态，减少每次统计)"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩状态码：0、正常、1、禁用 2、删除</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.stateCode" placeholder="充电桩状态码：0、正常、1、禁用 2、删除"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">总共借出次数</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.borrowCount" placeholder="总共借出次数"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">编辑人</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.editName" placeholder="编辑人"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">编辑人ID</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.editId" placeholder="编辑人ID"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">批次</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.batch" placeholder="批次"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">备注</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.note" placeholder="备注"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">生产日期</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.production" placeholder="生产日期"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label">运营商ID</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.agencyid" placeholder="运营商ID"/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.createDt" placeholder=""/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.updateDt" placeholder=""/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.createBy" placeholder=""/>
+			    </div>
+			</div>
+			<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerStationBase.updateBy" placeholder=""/>
+			    </div>
+			</div>
+			<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="../public/js/biz/powerstationbase.js"></script>
+</body>
+</html>

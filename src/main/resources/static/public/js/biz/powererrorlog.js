@@ -1,16 +1,21 @@
 $(function () {
     $("#jqGrid").jqGrid({
-        url: '../${pathName}/list',
+        url: '../powererrorlog/list',
         datatype: "json",
         colModel: [			
-#foreach($column in $columns)
-#if($column.columnName == $pk.columnName)
-			{ label: '${column.attrname}', name: '${column.attrname}', index: '${column.columnName}', width: 50, key: true },
-#else
-			{ label: '${column.comments}', name: '${column.attrname}', index: '${column.columnName}', width: 80 }#if($velocityCount != $columns.size()), #end
-			
-#end			
-#end
+			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '充电宝id', name: 'batteryId', index: 'battery_id', width: 80 }, 			
+			{ label: '幢ID', name: 'deviceId', index: 'device_id', width: 80 }, 			
+			{ label: '槽位', name: 'slotNo', index: 'slot_no', width: 80 }, 			
+			{ label: '错误类型(1：认为处理，2：系统处理)', name: 'type', index: 'type', width: 80 }, 			
+			{ label: '错误码', name: 'errorCode', index: 'error_code', width: 80 }, 			
+			{ label: '重放次数', name: 'chargeCount', index: 'charge_count', width: 80 }, 			
+			{ label: '电量当前', name: 'eq', index: 'eq', width: 80 }, 			
+			{ label: '电压', name: 'vol', index: 'vol', width: 80 }, 			
+			{ label: '温度', name: 'tempNow', index: 'temp_now', width: 80 }, 			
+			{ label: '充电宝状态(上报字段)', name: 'state', index: 'state', width: 80 }, 			
+			{ label: '上报时间', name: 'upTime', index: 'up_time', width: 80 }, 			
+			{ label: '当前处理状态(已处理，未处理)', name: 'status', index: 'status', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -45,7 +50,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
-		${classname}: {}
+		powerErrorLog: {}
 	},
 	methods: {
 		query: function () {
@@ -55,25 +60,25 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.status = "add";
-			vm.${classname} = {};
+			vm.powerErrorLog = {};
 		},
 		update: function (event) {
-			var $pk.attrname = getSelectedRow();
-			if($pk.attrname == null){
+			var id = getSelectedRow();
+			if(id == null){
 				return ;
 			}
 			vm.showList = false;
             vm.title = "修改";
             vm.status = "edit";
-            vm.getInfo(${pk.attrname})
+            vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.${classname}.${pk.attrname} == null ? "../${pathName}/save" : "../${pathName}/update";
+			var url = vm.powerErrorLog.id == null ? "../powererrorlog/save" : "../powererrorlog/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
 			    contentType: "application/json",
-			    data: JSON.stringify(vm.${classname}),
+			    data: JSON.stringify(vm.powerErrorLog),
 			    success: function(r){
 			    	if(r.code === 0){
 						alert('操作成功', function(index){
@@ -86,17 +91,17 @@ var vm = new Vue({
 			});
 		},
 		del: function (event) {
-			var ${pk.attrname}s = getSelectedRows();
-			if(${pk.attrname}s == null){
+			var ids = getSelectedRows();
+			if(ids == null){
 				return ;
 			}
 			
 			confirm('确定要删除选中的记录？', function(){
 				$.ajax({
 					type: "POST",
-				    url: "../${pathName}/delete",
+				    url: "../powererrorlog/delete",
 				    contentType: "application/json",
-				    data: JSON.stringify(${pk.attrname}s),
+				    data: JSON.stringify(ids),
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功', function(index){
@@ -109,9 +114,9 @@ var vm = new Vue({
 				});
 			});
 		},
-		getInfo: function(${pk.attrname}){
-			$.get("../${pathName}/info/"+${pk.attrname}, function(r){
-                vm.${classname} = r.${classname};
+		getInfo: function(id){
+			$.get("../powererrorlog/info/"+id, function(r){
+                vm.powerErrorLog = r.powerErrorLog;
             });
 		},
 		reload: function (event) {
