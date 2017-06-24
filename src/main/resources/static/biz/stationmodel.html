@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>充电桩型号</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+<link rel="stylesheet" href="../public/css/font-awesome.min.css">
+<link rel="stylesheet" href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../public/css/main.css">
+<script src="../public/libs/jquery.min.js"></script>
+<script src="../public/plugins/layer/layer.js"></script>
+<script src="../public/libs/bootstrap.min.js"></script>
+<script src="../public/libs/vue.min.js"></script>
+<script src="../public/plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../public/plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../public/js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+	<div v-show="showList">
+		<div class="grid-btn">
+			<a v-if="hasPermission('stationmodel:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('stationmodel:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
+			<a v-if="hasPermission('stationmodel:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+		</div>
+	    <table id="jqGrid"></table>
+	    <div id="jqGridPager"></div>
+    </div>
+    
+    <div v-show="!showList" class="panel panel-default">
+		<div class="panel-heading">{{title}}</div>
+		<form class="form-horizontal">
+											<div class="form-group">
+			   	<div class="col-sm-2 control-label">充电桩型号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.model" placeholder="充电桩型号"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">卡槽数量</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.slotNo" placeholder="卡槽数量"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">通讯方式</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.channel" placeholder="通讯方式"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">输入电压</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.inputVoltage" placeholder="输入电压"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">最大输入电流</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.maxInputCurrent" placeholder="最大输入电流"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">最大输入功耗</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.maxInputPower" placeholder="最大输入功耗"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">静态输入功耗</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.staticInputPower" placeholder="静态输入功耗"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">认证</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.authentication" placeholder="认证"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">尺寸</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.size" placeholder="尺寸"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">NFC</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.isnfc" placeholder="NFC"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">出仓方式</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.deliveryModel" placeholder="出仓方式"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label">生产厂家</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.manufacturer" placeholder="生产厂家"/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.createDt" placeholder=""/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.updateDt" placeholder=""/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.createBy" placeholder=""/>
+			    </div>
+			</div>
+									<div class="form-group">
+			   	<div class="col-sm-2 control-label"></div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="stationModel.updateBy" placeholder=""/>
+			    </div>
+			</div>
+							<div class="form-group">
+				<div class="col-sm-2 control-label"></div> 
+				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
+				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
+			</div>
+		</form>
+	</div>
+</div>
+
+<script src="../public/js/biz/stationmodel.js"></script>
+</body>
+</html>
