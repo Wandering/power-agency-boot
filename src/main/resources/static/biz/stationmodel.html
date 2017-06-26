@@ -49,7 +49,9 @@
 									<div class="form-group">
 			   	<div class="col-sm-2 control-label">通讯方式</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="stationModel.channel" placeholder="通讯方式"/>
+			      <select class="form-control" v-model="stationModel.channel" placeholder="通讯方式"> 
+					  <option v-for="channel in channels" v-bind:value="channel.code">{{ channel.name }}</option>  
+				  </select> 
 			    </div>
 			</div>
 									<div class="form-group">
@@ -91,7 +93,9 @@
 									<div class="form-group">
 			   	<div class="col-sm-2 control-label">NFC</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="stationModel.isnfc" placeholder="NFC"/>
+			      <select class="form-control" v-model="stationModel.isnfc" placeholder="NFC "> 
+					  <option v-for="nfc in nfcs" v-bind:value="nfc.code">{{ nfc.name }}</option>  
+				  </select> 
 			    </div>
 			</div>
 									<div class="form-group">
@@ -106,7 +110,7 @@
 			      <input type="text" class="form-control" v-model="stationModel.manufacturer" placeholder="生产厂家"/>
 			    </div>
 			</div>
-									<div class="form-group">
+			<!-- 						<div class="form-group">
 			   	<div class="col-sm-2 control-label"></div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="stationModel.createDt" placeholder=""/>
@@ -129,7 +133,7 @@
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="stationModel.updateBy" placeholder=""/>
 			    </div>
-			</div>
+			</div> -->
 							<div class="form-group">
 				<div class="col-sm-2 control-label"></div> 
 				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>

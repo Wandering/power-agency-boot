@@ -28,6 +28,11 @@ public class DictCommonServiceImpl implements DictCommonService {
 	}
 	
 	@Override
+	public List<DictCommonEntity> queryListByType(String type){
+		return dictCommonDao.queryListByType(type);
+	}
+	
+	@Override
 	public int queryTotal(Map<String, Object> map){
 		return dictCommonDao.queryTotal(map);
 	}

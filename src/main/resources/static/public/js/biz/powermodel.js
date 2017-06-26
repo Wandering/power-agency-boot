@@ -3,7 +3,7 @@ $(function () {
         url: '../powermodel/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: 'id', name: 'id', index: 'id', width: 30, key: true },
 			{ label: '充电宝型号', name: 'model', index: 'model', width: 80 }, 			
 			{ label: '电池容量', name: 'capacity', index: 'capacity', width: 80 }, 			
 			{ label: '电芯类型', name: 'coreType', index: 'core_type', width: 80 }, 			
@@ -13,13 +13,13 @@ $(function () {
 			{ label: '输出电压', name: 'outputVoltage', index: 'output_voltage', width: 80 }, 			
 			{ label: '认证', name: 'authentication', index: 'authentication', width: 80 }, 			
 			{ label: '尺寸', name: 'size', index: 'size', width: 80 }, 			
-			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 80 }, 			
-			{ label: '充电线', name: 'chargeLine', index: 'charge_line', width: 80 }, 			
+			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 80 ,formatter: function(value, options, row){return getDict(vm.nfcs)[value];}}, 			
+			{ label: '充电线', name: 'chargeLine', index: 'charge_line', width: 180 }, 			
 			{ label: '生产厂家', name: 'manufacturer', index: 'manufacturer', width: 80 }, 			
-			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
-			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
-			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
+			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
+			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -41,6 +41,21 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.nfcs.length==0){
+	        	$.ajax({
+					type: "POST",
+				    url: "../dictcommon/ISNFC",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.nfcs = r.dictCommon;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -54,6 +69,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		nfcs:[],
 		powerModel: {}
 	},
 	methods: {

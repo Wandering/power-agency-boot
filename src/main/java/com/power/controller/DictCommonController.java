@@ -48,6 +48,19 @@ public class DictCommonController {
 		return R.ok().put("page", pageUtil);
 	}
 	
+	/**
+	 * 查询字典
+	 */
+	@RequestMapping("/{type}")
+	public R listbytype(@PathVariable("type") String type){
+		//查询列表数据
+
+		List<DictCommonEntity> dictCommonList = dictCommonService.queryListByType(type);
+		
+		
+		return R.ok().put("dictCommon", dictCommonList);
+	}
+	
 	
 	/**
 	 * 信息

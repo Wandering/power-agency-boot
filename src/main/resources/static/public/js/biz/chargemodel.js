@@ -3,21 +3,22 @@ $(function () {
         url: '../chargemodel/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: 'id', name: 'id', index: 'id', width: 30, key: true },
 			{ label: '模式名称', name: 'name', index: 'name', width: 80 }, 			
-			{ label: '计费机制 0 24小时 1 自然日制', name: 'chargeDay', index: 'charge_day', width: 80 }, 			
-			{ label: '每次需要充值多少', name: 'firstDeposit', index: 'first_deposit', width: 80 }, 			
-			{ label: '账号本金最少值', name: 'minDeposit', index: 'min_deposit', width: 80 }, 			
-			{ label: '年费', name: 'yearFee', index: 'year_fee', width: 80 }, 			
-			{ label: '免费时长（小时）', name: 'freeTime', index: 'free_time', width: 80 }, 			
-			{ label: '逾期单价（元/时）', name: 'overdueFee', index: 'overdue_fee', width: 80 }, 			
-			{ label: '封顶（元/天）', name: 'maxOverdueFee', index: 'max_overdue_fee', width: 80 }, 			
-			{ label: '还电缓冲时间 单位s', name: 'bufferTime', index: 'buffer_time', width: 80 }, 			
+			{ label: '计费机制', name: 'chargeDay', index: 'charge_day', width: 80 ,formatter: function(value, options, row){
+				return getDict(vm.chargeConfigs)[value];}}, 			
+			{ label: '首次充值', name: 'firstDeposit', index: 'first_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
+			{ label: '最低余额', name: 'minDeposit', index: 'min_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
+			{ label: '年费', name: 'yearFee', index: 'year_fee', width: 80 ,formatter: function(value){return value+"元";}}, 			
+			{ label: '免费时长', name: 'freeTime', index: 'free_time', width: 80 ,formatter: function(value){return value+"小时";}}, 			
+			{ label: '逾期单价', name: 'overdueFee', index: 'overdue_fee', width: 80 ,formatter: function(value){return value+"元/时";}}, 			
+			{ label: '封顶', name: 'maxOverdueFee', index: 'max_overdue_fee', width: 80 ,formatter: function(value){return value+"元/天";}}, 			
+			{ label: '还电缓冲时间', name: 'bufferTime', index: 'buffer_time', width: 80 ,formatter: function(value){return value+"秒";}}, 			
 			{ label: '扣费比例', name: 'borrowScale', index: 'borrow_scale', width: 80 }, 			
-			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
-			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
-			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
+			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
+			{ label: '编辑时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			{ label: '编辑人', name: 'updateBy', index: 'update_by', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -39,6 +40,21 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.chargeConfigs.length==0){
+	        	$.ajax({
+					type: "POST",
+				    url: "../dictcommon/CHARGE_COF",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.chargeConfigs = r.dictCommon;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -52,6 +68,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		chargeConfigs:[],
 		chargeModel: {}
 	},
 	methods: {

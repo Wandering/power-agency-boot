@@ -31,6 +31,10 @@
 		</if>
 	</select>
 	
+	<select id="queryListByType" resultType="com.power.entity.DictCommonEntity">
+		select * from dict_common where type = #{value}
+	</select>
+	
  	<select id="queryTotal" resultType="int">
 		select count(*) from dict_common 
 	</select>

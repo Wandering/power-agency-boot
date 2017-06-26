@@ -80,3 +80,11 @@ function getSelectedRows() {
     
     return grid.getGridParam("selarrrow");
 }
+
+function getDict(obj){
+	var Arr = [];
+	for(var i=0;i<obj.length;i++){
+		Arr[obj[i].code] = obj[i].name;
+	}
+	return Arr;
+}

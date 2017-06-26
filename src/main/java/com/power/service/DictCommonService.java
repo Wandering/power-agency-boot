@@ -27,4 +27,6 @@ public interface DictCommonService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
+
+	List<DictCommonEntity> queryListByType(String type);
 }

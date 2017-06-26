@@ -3,23 +3,23 @@ $(function () {
         url: '../stationmodel/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: 'id', name: 'id', index: 'id', width: 30, key: true },
 			{ label: '充电桩型号', name: 'model', index: 'model', width: 80 }, 			
 			{ label: '卡槽数量', name: 'slotNo', index: 'slot_no', width: 80 }, 			
-			{ label: '通讯方式', name: 'channel', index: 'channel', width: 80 }, 			
+			{ label: '通讯方式', name: 'channel', index: 'channel', width: 80 ,formatter: function(value, options, row){return getDict(vm.channels)[value];}}, 			
 			{ label: '输入电压', name: 'inputVoltage', index: 'input_voltage', width: 80 }, 			
-			{ label: '最大输入电流', name: 'maxInputCurrent', index: 'max_input_current', width: 80 }, 			
-			{ label: '最大输入功耗', name: 'maxInputPower', index: 'max_input_power', width: 80 }, 			
-			{ label: '静态输入功耗', name: 'staticInputPower', index: 'static_input_power', width: 80 }, 			
-			{ label: '认证', name: 'authentication', index: 'authentication', width: 80 }, 			
-			{ label: '尺寸', name: 'size', index: 'size', width: 80 }, 			
-			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 80 }, 			
+			{ label: '最大输入电流', name: 'maxInputCurrent', index: 'max_input_current', width: 90 }, 			
+			{ label: '最大输入功耗', name: 'maxInputPower', index: 'max_input_power', width: 90 }, 			
+			{ label: '静态输入功耗', name: 'staticInputPower', index: 'static_input_power', width: 90 }, 			
+			{ label: '认证', name: 'authentication', index: 'authentication', width: 70 }, 			
+			{ label: '尺寸', name: 'size', index: 'size', width: 70 }, 			
+			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 70 ,formatter: function(value, options, row){return getDict(vm.nfcs)[value];}}, 			
 			{ label: '出仓方式', name: 'deliveryModel', index: 'delivery_model', width: 80 }, 			
 			{ label: '生产厂家', name: 'manufacturer', index: 'manufacturer', width: 80 }, 			
-			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
-			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
-			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
+			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
+			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }		
         ],
 		viewrecords: true,
         height: 385,
@@ -41,6 +41,34 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.nfcs.length==0){
+	        	$.ajax({
+					type: "POST",
+				    url: "../dictcommon/ISNFC",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.nfcs = r.dictCommon;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        	if(vm.channels.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dictcommon/STATION_CHANNEL",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.channels = r.dictCommon;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -54,6 +82,8 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		nfcs:[],
+		channels:[],
 		stationModel: {}
 	},
 	methods: {
