@@ -29,4 +29,8 @@ public interface DictCommonService {
 	void deleteBatch(Integer[] ids);
 
 	List<DictCommonEntity> queryListByType(String type);
+	
+	List<?> queryStationModel();
+	
+	List<?> queryPowerModel();
 }

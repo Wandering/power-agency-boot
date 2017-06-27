@@ -58,7 +58,7 @@ public class DictCommonController {
 		List<DictCommonEntity> dictCommonList = dictCommonService.queryListByType(type);
 		
 		
-		return R.ok().put("dictCommon", dictCommonList);
+		return R.ok().put("data", dictCommonList);
 	}
 	
 	
@@ -104,6 +104,24 @@ public class DictCommonController {
 		dictCommonService.deleteBatch(ids);
 		
 		return R.ok();
+	}
+	
+	/**
+	 * 字典-充电桩型号
+	 */
+	@RequestMapping("/queryStationModel")
+	public R queryStationModel(){
+		List<?> models = dictCommonService.queryStationModel();
+		return R.ok().put("data", models);
+	}
+	
+	/**
+	 * 字典-充电宝型号
+	 */
+	@RequestMapping("/queryPowerModel")
+	public R queryPowerModel(){
+		List<?> models = dictCommonService.queryPowerModel();
+		return R.ok().put("data", models);
 	}
 	
 }

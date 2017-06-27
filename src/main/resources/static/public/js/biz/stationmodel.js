@@ -13,7 +13,9 @@ $(function () {
 			{ label: '静态输入功耗', name: 'staticInputPower', index: 'static_input_power', width: 90 }, 			
 			{ label: '认证', name: 'authentication', index: 'authentication', width: 70 }, 			
 			{ label: '尺寸', name: 'size', index: 'size', width: 70 }, 			
-			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 70 ,formatter: function(value, options, row){return getDict(vm.nfcs)[value];}}, 			
+			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 70 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.nfcs)[value]:"";
+			}},
 			{ label: '出仓方式', name: 'deliveryModel', index: 'delivery_model', width: 80 }, 			
 			{ label: '生产厂家', name: 'manufacturer', index: 'manufacturer', width: 80 }, 			
 			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
@@ -48,7 +50,7 @@ $(function () {
 				    url: "../dictcommon/ISNFC",
 				    success: function(r){
 				    	if(r.code === 0){
-				    		vm.nfcs = r.dictCommon;
+				    		vm.nfcs = r.data;
 						}else{
 							alert(r.msg);
 						}
@@ -61,7 +63,7 @@ $(function () {
 				    url: "../dictcommon/STATION_CHANNEL",
 				    success: function(r){
 				    	if(r.code === 0){
-				    		vm.channels = r.dictCommon;
+				    		vm.channels = r.data;
 						}else{
 							alert(r.msg);
 						}

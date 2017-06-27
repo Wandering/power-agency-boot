@@ -13,7 +13,9 @@ $(function () {
 			{ label: '输出电压', name: 'outputVoltage', index: 'output_voltage', width: 80 }, 			
 			{ label: '认证', name: 'authentication', index: 'authentication', width: 80 }, 			
 			{ label: '尺寸', name: 'size', index: 'size', width: 80 }, 			
-			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 80 ,formatter: function(value, options, row){return getDict(vm.nfcs)[value];}}, 			
+			{ label: 'NFC', name: 'isnfc', index: 'isNFC', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.nfcs)[value]:"";
+			}}, 			
 			{ label: '充电线', name: 'chargeLine', index: 'charge_line', width: 180 }, 			
 			{ label: '生产厂家', name: 'manufacturer', index: 'manufacturer', width: 80 }, 			
 			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
@@ -48,7 +50,7 @@ $(function () {
 				    url: "../dictcommon/ISNFC",
 				    success: function(r){
 				    	if(r.code === 0){
-				    		vm.nfcs = r.dictCommon;
+				    		vm.nfcs = r.data;
 						}else{
 							alert(r.msg);
 						}

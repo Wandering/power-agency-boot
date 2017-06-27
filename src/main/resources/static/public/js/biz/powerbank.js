@@ -4,18 +4,22 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '用户ID，充电宝目前被哪个用户借用', name: 'customer', index: 'customer', width: 80 }, 			
-			{ label: '充电桩ID，充电宝目前位于哪个充电桩', name: 'station', index: 'station', width: 80 }, 			
-			{ label: '充电桩卡槽号，充电宝目前位于哪个卡槽中', name: 'position', index: 'position', width: 80 }, 			
 			{ label: '充电宝IMEI号', name: 'code', index: 'code', width: 80 }, 			
-			{ label: '充电宝型号', name: 'type', index: 'type', width: 80 }, 			
-			{ label: '服务商', name: 'agency', index: 'agency', width: 80 }, 			
-			{ label: '充电宝状态，在卡槽中IN_POSITION，借出RENT', name: 'status', index: 'status', width: 80 }, 			
-			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
-			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
-			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }, 			
-			{ label: '充电宝被借出次数', name: 'borrowCount', index: 'borrow_count', width: 80 }			
+			{ label: '充电宝型号', name: 'type', index: 'type', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getModel(vm.models)[value]:"";
+			}},
+			{ label: '充电桩IMEI号', name: 'station', index: 'station', width: 80 }, 			
+			{ label: '卡槽号', name: 'position', index: 'position', width: 80 },
+			{ label: '当前使用用户', name: 'customer', index: 'customer', width: 80 },
+			{ label: '充电宝被借出次数', name: 'borrowCount', index: 'borrow_count', width: 80 },		
+			{ label: '充电宝状态', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.bankStatus)[value]:"";
+			}},
+			{ label: '服务商', name: 'agency', index: 'agency', width: 80 }, 
+			{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
+			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
+			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }	
         ],
 		viewrecords: true,
         height: 385,
@@ -37,6 +41,34 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.bankStatus.length==0){
+	        	$.ajax({
+					type: "POST",
+				    url: "../dictcommon/BANK_STATUS",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.bankStatus = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        	if(vm.models.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dictcommon/queryStationModel",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.models = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -50,6 +82,8 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		bankStatus:[],
+		models:[],
 		powerBank: {}
 	},
 	methods: {

@@ -13,4 +13,8 @@ import io.renren.dao.BaseDao;
  */
 public interface DictCommonDao extends BaseDao<DictCommonEntity> {
 	List<DictCommonEntity> queryListByType(String type);
+	
+	List<?> queryStationModel();
+	
+	List<?> queryPowerModel();
 }

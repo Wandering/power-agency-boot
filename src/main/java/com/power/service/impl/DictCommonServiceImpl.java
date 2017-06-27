@@ -57,4 +57,14 @@ public class DictCommonServiceImpl implements DictCommonService {
 		dictCommonDao.deleteBatch(ids);
 	}
 	
+	@Override
+	public List<?> queryStationModel(){
+		return dictCommonDao.queryStationModel();
+	}
+	
+	@Override
+	public List<?> queryPowerModel(){
+		return dictCommonDao.queryPowerModel();
+	}
+	
 }

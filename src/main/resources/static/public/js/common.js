@@ -88,3 +88,11 @@ function getDict(obj){
 	}
 	return Arr;
 }
+
+function getModel(obj){
+	var Arr = [];
+	for(var i=0;i<obj.length;i++){
+		Arr[obj[i].id] = obj[i].model;
+	}
+	return Arr;
+}

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>充电宝基础表</title>
+<title>充电宝中心</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -33,25 +33,7 @@
     
     <div v-show="!showList" class="panel panel-default">
 		<div class="panel-heading">{{title}}</div>
-		<form class="form-biz">
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">用户ID，充电宝目前被哪个用户借用</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.customer" placeholder="用户ID，充电宝目前被哪个用户借用"/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电桩ID，充电宝目前位于哪个充电桩</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.station" placeholder="充电桩ID，充电宝目前位于哪个充电桩"/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电桩卡槽号，充电宝目前位于哪个卡槽中</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.position" placeholder="充电桩卡槽号，充电宝目前位于哪个卡槽中"/>
-			    </div>
-			</div>
+		<form class="form-horizontal">
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">充电宝IMEI号</div>
 			   	<div class="col-sm-10">
@@ -61,7 +43,39 @@
 			<div class="form-group">
 			   	<div class="col-sm-2 control-label">充电宝型号</div>
 			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.type" placeholder="充电宝型号"/>
+			      <select class="form-control" v-model="powerBank.type" placeholder="充电宝型号"> 
+					  <option v-for="model in models" v-bind:value="model.id">{{ model.model }}</option>  
+				  </select>
+			    </div>
+			</div>
+			<div class="form-group" v-show="status=='edit'">
+			   	<div class="col-sm-2 control-label">充电桩IMEI号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerBank.station" placeholder="充电桩IMEI号" readonly/>
+			    </div>
+			</div>
+			<div class="form-group" v-show="status=='edit'">
+			   	<div class="col-sm-2 control-label">卡槽号</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerBank.position" placeholder="充电宝目前位于哪个卡槽中" readonly/>
+			    </div>
+			</div>
+			<div class="form-group" v-show="status=='edit'">
+			   	<div class="col-sm-2 control-label">当前使用用户</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerBank.customer" placeholder="当前使用用户" readonly/>
+			    </div>
+			</div>
+			<div class="form-group" v-show="status=='edit'">
+			   	<div class="col-sm-2 control-label">借出次数</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerBank.borrowCount" placeholder="借出次数" readonly/>
+			    </div>
+			</div>
+			<div class="form-group" v-show="status=='edit'">
+			   	<div class="col-sm-2 control-label">充电宝状态</div>
+			   	<div class="col-sm-10">
+			      <input type="text" class="form-control" v-model="powerBank.status" placeholder="充电宝状态" readonly/>
 			    </div>
 			</div>
 			<div class="form-group">
@@ -70,40 +84,28 @@
 			      <input type="text" class="form-control" v-model="powerBank.agency" placeholder="服务商"/>
 			    </div>
 			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电宝状态，在卡槽中IN_POSITION，借出RENT</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.status" placeholder="充电宝状态，在卡槽中IN_POSITION，借出RENT"/>
-			    </div>
-			</div>
-			<div class="form-group">
+			<div class="form-group" v-show="showList">
 			   	<div class="col-sm-2 control-label"></div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="powerBank.createDt" placeholder=""/>
 			    </div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" v-show="showList">
 			   	<div class="col-sm-2 control-label"></div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="powerBank.updateDt" placeholder=""/>
 			    </div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" v-show="showList">
 			   	<div class="col-sm-2 control-label"></div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="powerBank.createBy" placeholder=""/>
 			    </div>
 			</div>
-			<div class="form-group">
+			<div class="form-group" v-show="showList">
 			   	<div class="col-sm-2 control-label"></div>
 			   	<div class="col-sm-10">
 			      <input type="text" class="form-control" v-model="powerBank.updateBy" placeholder=""/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电宝被借出次数</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.borrowCount" placeholder="充电宝被借出次数"/>
 			    </div>
 			</div>
 			<div class="form-group">

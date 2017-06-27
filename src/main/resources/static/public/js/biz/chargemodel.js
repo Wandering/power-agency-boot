@@ -6,7 +6,8 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 30, key: true },
 			{ label: '模式名称', name: 'name', index: 'name', width: 80 }, 			
 			{ label: '计费机制', name: 'chargeDay', index: 'charge_day', width: 80 ,formatter: function(value, options, row){
-				return getDict(vm.chargeConfigs)[value];}}, 			
+				return value!=null?getDict(vm.chargeConfigs)[value]:"";
+			}}, 			
 			{ label: '首次充值', name: 'firstDeposit', index: 'first_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
 			{ label: '最低余额', name: 'minDeposit', index: 'min_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
 			{ label: '年费', name: 'yearFee', index: 'year_fee', width: 80 ,formatter: function(value){return value+"元";}}, 			
@@ -47,7 +48,7 @@ $(function () {
 				    url: "../dictcommon/CHARGE_COF",
 				    success: function(r){
 				    	if(r.code === 0){
-				    		vm.chargeConfigs = r.dictCommon;
+				    		vm.chargeConfigs = r.data;
 						}else{
 							alert(r.msg);
 						}

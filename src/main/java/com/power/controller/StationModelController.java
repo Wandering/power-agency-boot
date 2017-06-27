@@ -46,8 +46,7 @@ public class StationModelController {
 		PageUtils pageUtil = new PageUtils(stationModelList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
-	}
-	
+	}	
 	
 	/**
 	 * 信息

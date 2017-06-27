@@ -4,29 +4,33 @@ $(function () {
         datatype: "json",
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '充电桩code，充电桩IMEI编号', name: 'code', index: 'code', width: 80 }, 			
-			{ label: '主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL', name: 'channel', index: 'channel', width: 80 }, 			
-			{ label: '充电桩型号', name: 'type', index: 'type', width: 80 }, 			
-			{ label: '服务商id(由哪个服务商提供服务，默认是1知路)', name: 'facilitatorId', index: 'facilitator_id', width: 80 }, 			
-			{ label: '充电桩槽位', name: 'slotNo', index: 'slot_no', width: 80 }, 			
-			{ label: '充电桩错误状态：0、正常', name: 'errorCode', index: 'error_code', width: 80 }, 			
-			{ label: '是否同步到知路服务器(1：是 0：否)', name: 'isSync', index: 'is_sync', width: 80 }, 			
-			{ label: '是否正在被使用(1，正在使用  2未使用)', name: 'status', index: 'status', width: 80 }, 			
-			{ label: '异常槽位数量', name: 'errorSlot', index: 'error_slot', width: 80 }, 			
-			{ label: '空闲槽位', name: 'free', index: 'free', width: 80 }, 			
-			{ label: '可借(记录当前充电中状态，减少每次统计)', name: 'canBorrow', index: 'can_borrow', width: 80 }, 			
-			{ label: '充电桩状态码：0、正常、1、禁用 2、删除', name: 'stateCode', index: 'state_code', width: 80 }, 			
-			{ label: '总共借出次数', name: 'borrowCount', index: 'borrow_count', width: 80 }, 			
-			{ label: '编辑人', name: 'editName', index: 'edit_name', width: 80 }, 			
-			{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 80 }, 			
-			{ label: '批次', name: 'batch', index: 'batch', width: 80 }, 			
-			{ label: '备注', name: 'note', index: 'note', width: 80 }, 			
-			{ label: '生产日期', name: 'production', index: 'production', width: 80 }, 			
-			{ label: '运营商ID', name: 'agencyid', index: 'agencyId', width: 80 }, 			
-			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
-			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
-			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }			
+			{ label: '充电桩IMEI号', name: 'code', index: 'code', width: 120 }, 
+			{ label: '充电桩型号', name: 'type', index: 'type', width: 90 ,formatter: function(value, options, row){
+				return value!=null&&value!=""?getModel(vm.models)[value]:"";
+			}},
+			{ label: '通讯方式 ', name: 'channel', index: 'channel', width: 90 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.channels)[value]:"";
+			}}, 			
+			{ label: '充电桩槽位', name: 'slotNo', index: 'slot_no', width: 100 },
+			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 100 }, 	
+			{ label: '充电桩错误状态', name: 'errorCode', index: 'error_code', width: 100 }, 			
+			{ label: '是否同步', name: 'isSync', index: 'is_sync', width: 100 }, 			
+			{ label: '是否正在被使用', name: 'status', index: 'status', width: 100 }, 			
+			{ label: '异常槽位数量', name: 'errorSlot', index: 'error_slot', width: 100 }, 			
+			{ label: '空闲槽位', name: 'free', index: 'free', width: 100 }, 			
+			{ label: '可借', name: 'canBorrow', index: 'can_borrow', width: 100 }, 			
+			{ label: '充电桩状态', name: 'stateCode', index: 'state_code', width: 100 }, 			
+			{ label: '总借出次数', name: 'borrowCount', index: 'borrow_count', width: 100 }, 			
+			//{ label: '编辑人', name: 'editName', index: 'edit_name', width: 100 }, 			
+			//{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 100 }, 			
+			{ label: '批次', name: 'batch', index: 'batch', width: 100 }, 			
+			{ label: '备注', name: 'note', index: 'note', width: 100 }, 			
+			{ label: '生产日期', name: 'production', index: 'production', width: 100 }, 			
+			//{ label: '运营商ID', name: 'agencyid', index: 'agencyId', width: 100 }, 			
+			/*{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
+			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
+			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }*/
         ],
 		viewrecords: true,
         height: 385,
@@ -48,6 +52,34 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.channels.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dictcommon/STATION_CHANNEL",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.channels = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        	if(vm.models.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dictcommon/queryStationModel",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.models = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -61,6 +93,8 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		models:[],
+		channels:[],
 		powerStationBase: {}
 	},
 	methods: {
@@ -136,6 +170,18 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
+		},
+		selectModel: function(){
+			for(i in vm.models){ 
+				if(vm.powerStationBase.type==vm.models[i].id){
+					vm.powerStationBase.channel = vm.models[i].channel
+					vm.powerStationBase.slotNo = vm.models[i].slotNo
+					if(vm.status=='add'){
+						$("select[name='channel']").val(vm.models[i].channel);
+						$("input[name='slotNo']").val(vm.models[i].slotNo);
+					}
+				}
+			}
 		}
 	}
 });
