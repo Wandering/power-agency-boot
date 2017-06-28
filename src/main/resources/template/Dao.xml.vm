@@ -16,6 +16,14 @@
 
 	<select id="queryList" resultType="${package}.entity.${className}Entity">
 		select * from ${tableName}
+        <where>
+			#foreach( $column in $columns)
+                <!-- $column.comments -->
+                <if test="${column.attrname}!=null">
+                    AND ${column.columnName} = #{${column.attrname}}
+                </if>
+			#end
+        </where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
