@@ -4,95 +4,232 @@
 <mapper namespace="com.power.dao.PowerModelDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.PowerModelEntity" id="powerModelMap">
-		<result property="id" column="id" />
-		<result property="model" column="model" />
-		<result property="capacity" column="capacity" />
-		<result property="coreType" column="core_type" />
-		<result property="inputCurrent" column="input_current" />
-		<result property="outputCurrent" column="output_current" />
-		<result property="inputVoltage" column="input_voltage" />
-		<result property="outputVoltage" column="output_voltage" />
-		<result property="authentication" column="authentication" />
-		<result property="size" column="size" />
-		<result property="isnfc" column="isNFC" />
-		<result property="chargeLine" column="charge_line" />
-		<result property="manufacturer" column="manufacturer" />
-		<result property="createDt" column="create_dt" />
-		<result property="updateDt" column="update_dt" />
-		<result property="createBy" column="create_by" />
-		<result property="updateBy" column="update_by" />
-	</resultMap>
+    <resultMap type="com.power.entity.PowerModelEntity" id="powerModelMap">
+        <result property="id" column="id"/>
+        <result property="model" column="model"/>
+        <result property="capacity" column="capacity"/>
+        <result property="coreType" column="core_type"/>
+        <result property="inputCurrent" column="input_current"/>
+        <result property="outputCurrent" column="output_current"/>
+        <result property="inputVoltage" column="input_voltage"/>
+        <result property="outputVoltage" column="output_voltage"/>
+        <result property="authentication" column="authentication"/>
+        <result property="size" column="size"/>
+        <result property="isnfc" column="isNFC"/>
+        <result property="chargeLine" column="charge_line"/>
+        <result property="manufacturer" column="manufacturer"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerModelEntity">
-		select * from power_model
-		where id = #{value}
+		select * from power_model where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerModelEntity">
 		select * from power_model
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电宝型号 -->
+                <if test="model!=null and model.trim()!=null">
+                    AND model = #{model}
+                </if>
+			                <!-- 电池容量 -->
+                <if test="capacity!=null and capacity.trim()!=null">
+                    AND capacity = #{capacity}
+                </if>
+			                <!-- 电芯类型 -->
+                <if test="coreType!=null and coreType.trim()!=null">
+                    AND core_type = #{coreType}
+                </if>
+			                <!-- 输入电流 -->
+                <if test="inputCurrent!=null and inputCurrent.trim()!=null">
+                    AND input_current = #{inputCurrent}
+                </if>
+			                <!-- 输出电流 -->
+                <if test="outputCurrent!=null and outputCurrent.trim()!=null">
+                    AND output_current = #{outputCurrent}
+                </if>
+			                <!-- 输入电压 -->
+                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                    AND input_voltage = #{inputVoltage}
+                </if>
+			                <!-- 输出电压 -->
+                <if test="outputVoltage!=null and outputVoltage.trim()!=null">
+                    AND output_voltage = #{outputVoltage}
+                </if>
+			                <!-- 认证 -->
+                <if test="authentication!=null and authentication.trim()!=null">
+                    AND authentication = #{authentication}
+                </if>
+			                <!-- 尺寸 -->
+                <if test="size!=null and size.trim()!=null">
+                    AND size = #{size}
+                </if>
+			                <!-- NFC -->
+                <if test="isnfc!=null and isnfc.trim()!=null">
+                    AND isNFC = #{isnfc}
+                </if>
+			                <!-- 充电线 -->
+                <if test="chargeLine!=null and chargeLine.trim()!=null">
+                    AND charge_line = #{chargeLine}
+                </if>
+			                <!-- 生产厂家 -->
+                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                    AND manufacturer = #{manufacturer}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		power_model
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_model
+		<where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电宝型号 -->
+                <if test="model!=null and model.trim()!=null">
+                    AND model = #{model}
+                </if>
+			                <!-- 电池容量 -->
+                <if test="capacity!=null and capacity.trim()!=null">
+                    AND capacity = #{capacity}
+                </if>
+			                <!-- 电芯类型 -->
+                <if test="coreType!=null and coreType.trim()!=null">
+                    AND core_type = #{coreType}
+                </if>
+			                <!-- 输入电流 -->
+                <if test="inputCurrent!=null and inputCurrent.trim()!=null">
+                    AND input_current = #{inputCurrent}
+                </if>
+			                <!-- 输出电流 -->
+                <if test="outputCurrent!=null and outputCurrent.trim()!=null">
+                    AND output_current = #{outputCurrent}
+                </if>
+			                <!-- 输入电压 -->
+                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                    AND input_voltage = #{inputVoltage}
+                </if>
+			                <!-- 输出电压 -->
+                <if test="outputVoltage!=null and outputVoltage.trim()!=null">
+                    AND output_voltage = #{outputVoltage}
+                </if>
+			                <!-- 认证 -->
+                <if test="authentication!=null and authentication.trim()!=null">
+                    AND authentication = #{authentication}
+                </if>
+			                <!-- 尺寸 -->
+                <if test="size!=null and size.trim()!=null">
+                    AND size = #{size}
+                </if>
+			                <!-- NFC -->
+                <if test="isnfc!=null and isnfc.trim()!=null">
+                    AND isNFC = #{isnfc}
+                </if>
+			                <!-- 充电线 -->
+                <if test="chargeLine!=null and chargeLine.trim()!=null">
+                    AND charge_line = #{chargeLine}
+                </if>
+			                <!-- 生产厂家 -->
+                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                    AND manufacturer = #{manufacturer}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.PowerModelEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.PowerModelEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_model
 		(
-		`model`,
-		`capacity`,
-		`core_type`,
-		`input_current`,
-		`output_current`,
-		`input_voltage`,
-		`output_voltage`,
-		`authentication`,
-		`size`,
-		`isNFC`,
-		`charge_line`,
-		`manufacturer`,
-		`create_dt`,
-		`update_dt`,
-		`create_by`,
-		`update_by`
+			`model`, 
+			`capacity`, 
+			`core_type`, 
+			`input_current`, 
+			`output_current`, 
+			`input_voltage`, 
+			`output_voltage`, 
+			`authentication`, 
+			`size`, 
+			`isNFC`, 
+			`charge_line`, 
+			`manufacturer`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`
 		)
 		values
 		(
-		#{model},
-		#{capacity},
-		#{coreType},
-		#{inputCurrent},
-		#{outputCurrent},
-		#{inputVoltage},
-		#{outputVoltage},
-		#{authentication},
-		#{size},
-		#{isnfc},
-		#{chargeLine},
-		#{manufacturer},
-		#{createDt},
-		#{updateDt},
-		#{createBy},
-		#{updateBy}
+			#{model}, 
+			#{capacity}, 
+			#{coreType}, 
+			#{inputCurrent}, 
+			#{outputCurrent}, 
+			#{inputVoltage}, 
+			#{outputVoltage}, 
+			#{authentication}, 
+			#{size}, 
+			#{isnfc}, 
+			#{chargeLine}, 
+			#{manufacturer}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.PowerModelEntity">
-		update power_model
+		update power_model 
 		<set>
 			<if test="model != null">`model` = #{model}, </if>
 			<if test="capacity != null">`capacity` = #{capacity}, </if>
@@ -113,15 +250,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from power_model where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from power_model where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from power_model where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

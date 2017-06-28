@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 09:59:18
+ * @date 2017-06-28 19:34:39
  */
 public class PowerBankEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

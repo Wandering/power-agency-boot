@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-23 19:43:25
+ * @date 2017-06-28 20:03:38
  */
 public class PowerStationEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

@@ -23,7 +23,7 @@ import io.renren.utils.R;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 16:01:17
+ * @date 2017-06-28 19:17:40
  */
 @RestController
 @RequestMapping("stationmodel")
@@ -46,7 +46,8 @@ public class StationModelController {
 		PageUtils pageUtil = new PageUtils(stationModelList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
-	}	
+	}
+	
 	
 	/**
 	 * 信息

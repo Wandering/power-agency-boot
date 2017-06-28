@@ -1,7 +1,5 @@
 package com.power.dao;
 
-import java.util.List;
-
 import com.power.entity.DictCommonEntity;
 import io.renren.dao.BaseDao;
 /**
@@ -9,12 +7,8 @@ import io.renren.dao.BaseDao;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 11:49:16
+ * @date 2017-06-28 19:31:08
  */
 public interface DictCommonDao extends BaseDao<DictCommonEntity> {
-	List<DictCommonEntity> queryListByType(String type);
 	
-	List<?> queryStationModel();
-	
-	List<?> queryPowerModel();
 }

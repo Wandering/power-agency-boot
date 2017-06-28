@@ -23,7 +23,7 @@ import io.renren.utils.R;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 11:49:16
+ * @date 2017-06-28 19:31:08
  */
 @RestController
 @RequestMapping("dictcommon")
@@ -46,19 +46,6 @@ public class DictCommonController {
 		PageUtils pageUtil = new PageUtils(dictCommonList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
-	}
-	
-	/**
-	 * 查询字典
-	 */
-	@RequestMapping("/{type}")
-	public R listbytype(@PathVariable("type") String type){
-		//查询列表数据
-
-		List<DictCommonEntity> dictCommonList = dictCommonService.queryListByType(type);
-		
-		
-		return R.ok().put("data", dictCommonList);
 	}
 	
 	
@@ -104,24 +91,6 @@ public class DictCommonController {
 		dictCommonService.deleteBatch(ids);
 		
 		return R.ok();
-	}
-	
-	/**
-	 * 字典-充电桩型号
-	 */
-	@RequestMapping("/queryStationModel")
-	public R queryStationModel(){
-		List<?> models = dictCommonService.queryStationModel();
-		return R.ok().put("data", models);
-	}
-	
-	/**
-	 * 字典-充电宝型号
-	 */
-	@RequestMapping("/queryPowerModel")
-	public R queryPowerModel(){
-		List<?> models = dictCommonService.queryPowerModel();
-		return R.ok().put("data", models);
 	}
 	
 }

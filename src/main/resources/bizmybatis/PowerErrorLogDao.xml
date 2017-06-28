@@ -4,83 +4,180 @@
 <mapper namespace="com.power.dao.PowerErrorLogDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.PowerErrorLogEntity" id="powerErrorLogMap">
-		<result property="id" column="id" />
-		<result property="batteryId" column="battery_id" />
-		<result property="deviceId" column="device_id" />
-		<result property="slotNo" column="slot_no" />
-		<result property="type" column="type" />
-		<result property="errorCode" column="error_code" />
-		<result property="chargeCount" column="charge_count" />
-		<result property="eq" column="eq" />
-		<result property="vol" column="vol" />
-		<result property="tempNow" column="temp_now" />
-		<result property="state" column="state" />
-		<result property="upTime" column="up_time" />
-		<result property="status" column="status" />
-	</resultMap>
+    <resultMap type="com.power.entity.PowerErrorLogEntity" id="powerErrorLogMap">
+        <result property="id" column="id"/>
+        <result property="batteryId" column="battery_id"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="slotNo" column="slot_no"/>
+        <result property="type" column="type"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="chargeCount" column="charge_count"/>
+        <result property="eq" column="eq"/>
+        <result property="vol" column="vol"/>
+        <result property="tempNow" column="temp_now"/>
+        <result property="state" column="state"/>
+        <result property="upTime" column="up_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerErrorLogEntity">
-		select * from
-		power_error_log where id = #{value}
+		select * from power_error_log where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerErrorLogEntity">
 		select * from power_error_log
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!-- 自增主键 -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电宝id -->
+                <if test="batteryId!=null and batteryId.trim()!=null">
+                    AND battery_id = #{batteryId}
+                </if>
+			                <!-- 幢ID -->
+                <if test="deviceId!=null and deviceId.trim()!=null">
+                    AND device_id = #{deviceId}
+                </if>
+			                <!-- 槽位 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 错误类型(1：认为处理，2：系统处理) -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 错误码 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 重放次数 -->
+                <if test="chargeCount!=null and chargeCount.trim()!=null">
+                    AND charge_count = #{chargeCount}
+                </if>
+			                <!-- 电压 -->
+                <if test="vol!=null and vol.trim()!=null">
+                    AND vol = #{vol}
+                </if>
+			                <!-- 温度 -->
+                <if test="tempNow!=null and tempNow.trim()!=null">
+                    AND temp_now = #{tempNow}
+                </if>
+			                <!-- 充电宝状态(上报字段) -->
+                <if test="state!=null and state.trim()!=null">
+                    AND state = #{state}
+                </if>
+			                <!-- 上报时间 -->
+                <if test="upTime!=null and upTime.trim()!=null">
+                    AND up_time = #{upTime}
+                </if>
+			                <!-- 当前处理状态(已处理，未处理) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		power_error_log
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_error_log
+		<where>
+			                <!-- 自增主键 -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电宝id -->
+                <if test="batteryId!=null and batteryId.trim()!=null">
+                    AND battery_id = #{batteryId}
+                </if>
+			                <!-- 幢ID -->
+                <if test="deviceId!=null and deviceId.trim()!=null">
+                    AND device_id = #{deviceId}
+                </if>
+			                <!-- 槽位 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 错误类型(1：认为处理，2：系统处理) -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 错误码 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 重放次数 -->
+                <if test="chargeCount!=null and chargeCount.trim()!=null">
+                    AND charge_count = #{chargeCount}
+                </if>
+			                <!-- 电压 -->
+                <if test="vol!=null and vol.trim()!=null">
+                    AND vol = #{vol}
+                </if>
+			                <!-- 温度 -->
+                <if test="tempNow!=null and tempNow.trim()!=null">
+                    AND temp_now = #{tempNow}
+                </if>
+			                <!-- 充电宝状态(上报字段) -->
+                <if test="state!=null and state.trim()!=null">
+                    AND state = #{state}
+                </if>
+			                <!-- 上报时间 -->
+                <if test="upTime!=null and upTime.trim()!=null">
+                    AND up_time = #{upTime}
+                </if>
+			                <!-- 当前处理状态(已处理，未处理) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.PowerErrorLogEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.PowerErrorLogEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_error_log
 		(
-		`battery_id`,
-		`device_id`,
-		`slot_no`,
-		`type`,
-		`error_code`,
-		`charge_count`,
-		`eq`,
-		`vol`,
-		`temp_now`,
-		`state`,
-		`up_time`,
-		`status`
+			`battery_id`, 
+			`device_id`, 
+			`slot_no`, 
+			`type`, 
+			`error_code`, 
+			`charge_count`, 
+			`eq`, 
+			`vol`, 
+			`temp_now`, 
+			`state`, 
+			`up_time`, 
+			`status`
 		)
 		values
 		(
-		#{batteryId},
-		#{deviceId},
-		#{slotNo},
-		#{type},
-		#{errorCode},
-		#{chargeCount},
-		#{eq},
-		#{vol},
-		#{tempNow},
-		#{state},
-		#{upTime},
-		#{status}
+			#{batteryId}, 
+			#{deviceId}, 
+			#{slotNo}, 
+			#{type}, 
+			#{errorCode}, 
+			#{chargeCount}, 
+			#{eq}, 
+			#{vol}, 
+			#{tempNow}, 
+			#{state}, 
+			#{upTime}, 
+			#{status}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.PowerErrorLogEntity">
-		update power_error_log
+		update power_error_log 
 		<set>
 			<if test="batteryId != null">`battery_id` = #{batteryId}, </if>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
@@ -88,7 +185,7 @@
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="errorCode != null">`error_code` = #{errorCode}, </if>
 			<if test="chargeCount != null">`charge_count` = #{chargeCount}, </if>
-			<if test="eq != null">`eq` = #{eq}, </if>
+			<if test="'eq' != null">`eq` = #{eq}, </if>
 			<if test="vol != null">`vol` = #{vol}, </if>
 			<if test="tempNow != null">`temp_now` = #{tempNow}, </if>
 			<if test="state != null">`state` = #{state}, </if>
@@ -97,15 +194,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from power_error_log where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from power_error_log where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from power_error_log where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

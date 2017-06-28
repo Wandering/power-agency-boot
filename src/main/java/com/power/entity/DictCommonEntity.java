@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 11:49:16
+ * @date 2017-06-28 19:31:08
  */
 public class DictCommonEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

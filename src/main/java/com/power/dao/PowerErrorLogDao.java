@@ -7,7 +7,7 @@ import io.renren.dao.BaseDao;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-23 20:34:04
+ * @date 2017-06-28 19:21:05
  */
 public interface PowerErrorLogDao extends BaseDao<PowerErrorLogEntity> {
 	

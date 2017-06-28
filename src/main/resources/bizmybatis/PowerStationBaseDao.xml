@@ -4,116 +4,309 @@
 <mapper namespace="com.power.dao.PowerStationBaseDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.PowerStationBaseEntity" id="powerStationBaseMap">
-		<result property="id" column="id" />
-		<result property="code" column="code" />
-		<result property="channel" column="channel" />
-		<result property="type" column="type" />
-		<result property="facilitatorId" column="facilitator_id" />
-		<result property="slotNo" column="slot_no" />
-		<result property="errorCode" column="error_code" />
-		<result property="isSync" column="is_sync" />
-		<result property="status" column="status" />
-		<result property="errorSlot" column="error_slot" />
-		<result property="free" column="free" />
-		<result property="canBorrow" column="can_borrow" />
-		<result property="stateCode" column="state_code" />
-		<result property="borrowCount" column="borrow_count" />
-		<result property="editName" column="edit_name" />
-		<result property="editId" column="edit_id" />
-		<result property="batch" column="batch" />
-		<result property="note" column="note" />
-		<result property="production" column="production" />
-		<result property="agencyid" column="agencyId" />
-		<result property="createDt" column="create_dt" />
-		<result property="updateDt" column="update_dt" />
-		<result property="createBy" column="create_by" />
-		<result property="updateBy" column="update_by" />
-	</resultMap>
+    <resultMap type="com.power.entity.PowerStationBaseEntity" id="powerStationBaseMap">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="channel" column="channel"/>
+        <result property="type" column="type"/>
+        <result property="facilitatorId" column="facilitator_id"/>
+        <result property="slotNo" column="slot_no"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="isSync" column="is_sync"/>
+        <result property="status" column="status"/>
+        <result property="errorSlot" column="error_slot"/>
+        <result property="free" column="free"/>
+        <result property="canBorrow" column="can_borrow"/>
+        <result property="stateCode" column="state_code"/>
+        <result property="borrowCount" column="borrow_count"/>
+        <result property="editName" column="edit_name"/>
+        <result property="editId" column="edit_id"/>
+        <result property="batch" column="batch"/>
+        <result property="note" column="note"/>
+        <result property="production" column="production"/>
+        <result property="agencyid" column="agencyId"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerStationBaseEntity">
-		select * from
-		power_station_base where id = #{value}
+		select * from power_station_base where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerStationBaseEntity">
 		select * from power_station_base
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!-- 主键(不参与关联) -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电桩code，充电桩IMEI编号 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
+                <if test="channel!=null and channel.trim()!=null">
+                    AND channel = #{channel}
+                </if>
+			                <!-- 充电桩型号 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 服务商id(由哪个服务商提供服务，默认是1知路) -->
+                <if test="facilitatorId!=null and facilitatorId.trim()!=null">
+                    AND facilitator_id = #{facilitatorId}
+                </if>
+			                <!-- 充电桩槽位 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 充电桩错误状态：0、正常 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 是否同步到知路服务器(1：是 0：否) -->
+                <if test="isSync!=null and isSync.trim()!=null">
+                    AND is_sync = #{isSync}
+                </if>
+			                <!-- 是否正在被使用(1，正在使用  2未使用) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!-- 异常槽位数量 -->
+                <if test="errorSlot!=null and errorSlot.trim()!=null">
+                    AND error_slot = #{errorSlot}
+                </if>
+			                <!-- 空闲槽位 -->
+                <if test="free!=null and free.trim()!=null">
+                    AND free = #{free}
+                </if>
+			                <!-- 可借(记录当前充电中状态，减少每次统计) -->
+                <if test="canBorrow!=null and canBorrow.trim()!=null">
+                    AND can_borrow = #{canBorrow}
+                </if>
+			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
+                <if test="stateCode!=null and stateCode.trim()!=null">
+                    AND state_code = #{stateCode}
+                </if>
+			                <!-- 总共借出次数 -->
+                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                    AND borrow_count = #{borrowCount}
+                </if>
+			                <!-- 编辑人 -->
+                <if test="editName!=null and editName.trim()!=null">
+                    AND edit_name = #{editName}
+                </if>
+			                <!-- 编辑人ID -->
+                <if test="editId!=null and editId.trim()!=null">
+                    AND edit_id = #{editId}
+                </if>
+			                <!-- 批次 -->
+                <if test="batch!=null and batch.trim()!=null">
+                    AND batch = #{batch}
+                </if>
+			                <!-- 备注 -->
+                <if test="note!=null and note.trim()!=null">
+                    AND note = #{note}
+                </if>
+			                <!-- 生产日期 -->
+                <if test="production!=null and production.trim()!=null">
+                    AND production = #{production}
+                </if>
+			                <!-- 运营商ID -->
+                <if test="agencyid!=null and agencyid.trim()!=null">
+                    AND agencyId = #{agencyid}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		power_station_base
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_station_base
+		<where>
+			                <!-- 主键(不参与关联) -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电桩code，充电桩IMEI编号 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
+                <if test="channel!=null and channel.trim()!=null">
+                    AND channel = #{channel}
+                </if>
+			                <!-- 充电桩型号 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 服务商id(由哪个服务商提供服务，默认是1知路) -->
+                <if test="facilitatorId!=null and facilitatorId.trim()!=null">
+                    AND facilitator_id = #{facilitatorId}
+                </if>
+			                <!-- 充电桩槽位 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 充电桩错误状态：0、正常 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 是否同步到知路服务器(1：是 0：否) -->
+                <if test="isSync!=null and isSync.trim()!=null">
+                    AND is_sync = #{isSync}
+                </if>
+			                <!-- 是否正在被使用(1，正在使用  2未使用) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!-- 异常槽位数量 -->
+                <if test="errorSlot!=null and errorSlot.trim()!=null">
+                    AND error_slot = #{errorSlot}
+                </if>
+			                <!-- 空闲槽位 -->
+                <if test="free!=null and free.trim()!=null">
+                    AND free = #{free}
+                </if>
+			                <!-- 可借(记录当前充电中状态，减少每次统计) -->
+                <if test="canBorrow!=null and canBorrow.trim()!=null">
+                    AND can_borrow = #{canBorrow}
+                </if>
+			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
+                <if test="stateCode!=null and stateCode.trim()!=null">
+                    AND state_code = #{stateCode}
+                </if>
+			                <!-- 总共借出次数 -->
+                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                    AND borrow_count = #{borrowCount}
+                </if>
+			                <!-- 编辑人 -->
+                <if test="editName!=null and editName.trim()!=null">
+                    AND edit_name = #{editName}
+                </if>
+			                <!-- 编辑人ID -->
+                <if test="editId!=null and editId.trim()!=null">
+                    AND edit_id = #{editId}
+                </if>
+			                <!-- 批次 -->
+                <if test="batch!=null and batch.trim()!=null">
+                    AND batch = #{batch}
+                </if>
+			                <!-- 备注 -->
+                <if test="note!=null and note.trim()!=null">
+                    AND note = #{note}
+                </if>
+			                <!-- 生产日期 -->
+                <if test="production!=null and production.trim()!=null">
+                    AND production = #{production}
+                </if>
+			                <!-- 运营商ID -->
+                <if test="agencyid!=null and agencyid.trim()!=null">
+                    AND agencyId = #{agencyid}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.PowerStationBaseEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.PowerStationBaseEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_station_base
 		(
-		`code`,
-		`channel`,
-		`type`,
-		`facilitator_id`,
-		`slot_no`,
-		`error_code`,
-		`is_sync`,
-		`status`,
-		`error_slot`,
-		`free`,
-		`can_borrow`,
-		`state_code`,
-		`borrow_count`,
-		`edit_name`,
-		`edit_id`,
-		`batch`,
-		`note`,
-		`production`,
-		`agencyId`,
-		`create_dt`,
-		`update_dt`,
-		`create_by`,
-		`update_by`
+			`code`, 
+			`channel`, 
+			`type`, 
+			`facilitator_id`, 
+			`slot_no`, 
+			`error_code`, 
+			`is_sync`, 
+			`status`, 
+			`error_slot`, 
+			`free`, 
+			`can_borrow`, 
+			`state_code`, 
+			`borrow_count`, 
+			`edit_name`, 
+			`edit_id`, 
+			`batch`, 
+			`note`, 
+			`production`, 
+			`agencyId`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`
 		)
 		values
 		(
-		#{code},
-		#{channel},
-		#{type},
-		#{facilitatorId},
-		#{slotNo},
-		#{errorCode},
-		#{isSync},
-		#{status},
-		#{errorSlot},
-		#{free},
-		#{canBorrow},
-		#{stateCode},
-		#{borrowCount},
-		#{editName},
-		#{editId},
-		#{batch},
-		#{note},
-		#{production},
-		#{agencyid},
-		#{createDt},
-		#{updateDt},
-		#{createBy},
-		#{updateBy}
+			#{code}, 
+			#{channel}, 
+			#{type}, 
+			#{facilitatorId}, 
+			#{slotNo}, 
+			#{errorCode}, 
+			#{isSync}, 
+			#{status}, 
+			#{errorSlot}, 
+			#{free}, 
+			#{canBorrow}, 
+			#{stateCode}, 
+			#{borrowCount}, 
+			#{editName}, 
+			#{editId}, 
+			#{batch}, 
+			#{note}, 
+			#{production}, 
+			#{agencyid}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.PowerStationBaseEntity">
-		update power_station_base
+		update power_station_base 
 		<set>
 			<if test="code != null">`code` = #{code}, </if>
 			<if test="channel != null">`channel` = #{channel}, </if>
@@ -141,15 +334,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from power_station_base where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from power_station_base where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from power_station_base where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

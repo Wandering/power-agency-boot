@@ -7,7 +7,7 @@ import io.renren.dao.BaseDao;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 16:01:17
+ * @date 2017-06-28 19:17:40
  */
 public interface StationModelDao extends BaseDao<StationModelEntity> {
 	

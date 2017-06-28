@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 16:01:17
+ * @date 2017-06-28 19:17:40
  */
 public class ChargeModelEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -28,12 +28,12 @@ public class ChargeModelEntity implements Serializable {
 	private BigDecimal minDeposit;
 	//年费
 	private BigDecimal yearFee;
-	//免费时长（小时）
-	private BigDecimal freeTime;
+	//免费时长（分钟）
+	private Integer freeTime;
 	//逾期单价（元/时）
-	private BigDecimal overdueFee;
+	private Long overdueFee;
 	//封顶（元/天）
-	private BigDecimal maxOverdueFee;
+	private Long maxOverdueFee;
 	//还电缓冲时间 单位s
 	private Long bufferTime;
 	//扣费比例
@@ -46,6 +46,8 @@ public class ChargeModelEntity implements Serializable {
 	private Long createBy;
 	//
 	private Long updateBy;
+	//订单免费时长
+	private Long orderFreeTime;
 
 	/**
 	 * 设置：######收费模式######
@@ -120,39 +122,39 @@ public class ChargeModelEntity implements Serializable {
 		return yearFee;
 	}
 	/**
-	 * 设置：免费时长（小时）
+	 * 设置：免费时长（分钟）
 	 */
-	public void setFreeTime(BigDecimal freeTime) {
+	public void setFreeTime(Integer freeTime) {
 		this.freeTime = freeTime;
 	}
 	/**
-	 * 获取：免费时长（小时）
+	 * 获取：免费时长（分钟）
 	 */
-	public BigDecimal getFreeTime() {
+	public Integer getFreeTime() {
 		return freeTime;
 	}
 	/**
 	 * 设置：逾期单价（元/时）
 	 */
-	public void setOverdueFee(BigDecimal overdueFee) {
+	public void setOverdueFee(Long overdueFee) {
 		this.overdueFee = overdueFee;
 	}
 	/**
 	 * 获取：逾期单价（元/时）
 	 */
-	public BigDecimal getOverdueFee() {
+	public Long getOverdueFee() {
 		return overdueFee;
 	}
 	/**
 	 * 设置：封顶（元/天）
 	 */
-	public void setMaxOverdueFee(BigDecimal maxOverdueFee) {
+	public void setMaxOverdueFee(Long maxOverdueFee) {
 		this.maxOverdueFee = maxOverdueFee;
 	}
 	/**
 	 * 获取：封顶（元/天）
 	 */
-	public BigDecimal getMaxOverdueFee() {
+	public Long getMaxOverdueFee() {
 		return maxOverdueFee;
 	}
 	/**
@@ -226,5 +228,17 @@ public class ChargeModelEntity implements Serializable {
 	 */
 	public Long getUpdateBy() {
 		return updateBy;
+	}
+	/**
+	 * 设置：订单免费时长
+	 */
+	public void setOrderFreeTime(Long orderFreeTime) {
+		this.orderFreeTime = orderFreeTime;
+	}
+	/**
+	 * 获取：订单免费时长
+	 */
+	public Long getOrderFreeTime() {
+		return orderFreeTime;
 	}
 }

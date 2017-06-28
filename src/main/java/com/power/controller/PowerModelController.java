@@ -23,7 +23,7 @@ import io.renren.utils.R;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 16:01:17
+ * @date 2017-06-28 19:17:41
  */
 @RestController
 @RequestMapping("powermodel")

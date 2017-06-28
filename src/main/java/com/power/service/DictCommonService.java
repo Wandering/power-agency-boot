@@ -10,7 +10,7 @@ import java.util.Map;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-24 11:49:16
+ * @date 2017-06-28 19:31:08
  */
 public interface DictCommonService {
 	
@@ -27,10 +27,4 @@ public interface DictCommonService {
 	void delete(Integer id);
 	
 	void deleteBatch(Integer[] ids);
-
-	List<DictCommonEntity> queryListByType(String type);
-	
-	List<?> queryStationModel();
-	
-	List<?> queryPowerModel();
 }

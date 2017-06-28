@@ -4,65 +4,122 @@
 <mapper namespace="com.power.dao.StationErrorLogDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.StationErrorLogEntity" id="stationErrorLogMap">
-		<result property="id" column="id" />
-		<result property="deviceId" column="device_id" />
-		<result property="slotNo" column="slot_no" />
-		<result property="type" column="type" />
-		<result property="errorCode" column="error_code" />
-		<result property="upTime" column="up_time" />
-		<result property="status" column="status" />
-	</resultMap>
+    <resultMap type="com.power.entity.StationErrorLogEntity" id="stationErrorLogMap">
+        <result property="id" column="id"/>
+        <result property="deviceId" column="device_id"/>
+        <result property="slotNo" column="slot_no"/>
+        <result property="type" column="type"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="upTime" column="up_time"/>
+        <result property="status" column="status"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.StationErrorLogEntity">
-		select * from
-		station_error_log where id = #{value}
+		select * from station_error_log where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.StationErrorLogEntity">
 		select * from station_error_log
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电桩 -->
+                <if test="deviceId!=null and deviceId.trim()!=null">
+                    AND device_id = #{deviceId}
+                </if>
+			                <!-- 卡槽号 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 错误类型(需要处理，不需要处理[暂定]) -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 错误码 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 上报时间 -->
+                <if test="upTime!=null and upTime.trim()!=null">
+                    AND up_time = #{upTime}
+                </if>
+			                <!-- 当前处理状态(被处理1，未处理0) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		station_error_log
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from station_error_log
+		<where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 充电桩 -->
+                <if test="deviceId!=null and deviceId.trim()!=null">
+                    AND device_id = #{deviceId}
+                </if>
+			                <!-- 卡槽号 -->
+                <if test="slotNo!=null and slotNo.trim()!=null">
+                    AND slot_no = #{slotNo}
+                </if>
+			                <!-- 错误类型(需要处理，不需要处理[暂定]) -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 错误码 -->
+                <if test="errorCode!=null and errorCode.trim()!=null">
+                    AND error_code = #{errorCode}
+                </if>
+			                <!-- 上报时间 -->
+                <if test="upTime!=null and upTime.trim()!=null">
+                    AND up_time = #{upTime}
+                </if>
+			                <!-- 当前处理状态(被处理1，未处理0) -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.StationErrorLogEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.StationErrorLogEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into station_error_log
 		(
-		`device_id`,
-		`slot_no`,
-		`type`,
-		`error_code`,
-		`up_time`,
-		`status`
+			`device_id`, 
+			`slot_no`, 
+			`type`, 
+			`error_code`, 
+			`up_time`, 
+			`status`
 		)
 		values
 		(
-		#{deviceId},
-		#{slotNo},
-		#{type},
-		#{errorCode},
-		#{upTime},
-		#{status}
+			#{deviceId}, 
+			#{slotNo}, 
+			#{type}, 
+			#{errorCode}, 
+			#{upTime}, 
+			#{status}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.StationErrorLogEntity">
-		update station_error_log
+		update station_error_log 
 		<set>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
 			<if test="slotNo != null">`slot_no` = #{slotNo}, </if>
@@ -73,15 +130,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from station_error_log where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from station_error_log where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from station_error_log where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

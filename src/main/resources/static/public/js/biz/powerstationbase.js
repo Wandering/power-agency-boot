@@ -56,7 +56,7 @@ $(function () {
         	if(vm.channels.length==0){
         		$.ajax({
 					type: "POST",
-				    url: "../dictcommon/STATION_CHANNEL",
+				    url: "../dict/STATION_CHANNEL",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.channels = r.data;
@@ -69,7 +69,7 @@ $(function () {
         	if(vm.models.length==0){
         		$.ajax({
 					type: "POST",
-				    url: "../dictcommon/queryStationModel",
+				    url: "../dict/queryStationModel",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.models = r.data;

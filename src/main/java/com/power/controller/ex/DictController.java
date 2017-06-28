@@ -1,4 +1,4 @@
-package com.power.controller;
+package com.power.controller.ex;
 
 import java.util.List;
 

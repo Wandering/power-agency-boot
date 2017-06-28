@@ -4,64 +4,100 @@
 <mapper namespace="com.power.dao.DictCommonDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.DictCommonEntity" id="dictCommonMap">
-		<result property="id" column="id" />
-		<result property="code" column="code" />
-		<result property="name" column="name" />
-		<result property="type" column="type" />
-		<result property="note" column="note" />
-	</resultMap>
+    <resultMap type="com.power.entity.DictCommonEntity" id="dictCommonMap">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="name" column="name"/>
+        <result property="type" column="type"/>
+        <result property="note" column="note"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.DictCommonEntity">
-		select * from dict_common
-		where id = #{value}
+		select * from dict_common where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.DictCommonEntity">
 		select * from dict_common
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 代码 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 名称 -->
+                <if test="name!=null and name.trim()!=null">
+                    AND name = #{name}
+                </if>
+			                <!-- 字典类型 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 字典描述 -->
+                <if test="note!=null and note.trim()!=null">
+                    AND note = #{note}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryListByType" resultType="com.power.entity.DictCommonEntity">
-		select * from
-		dict_common where type = #{value}
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from dict_common
+		<where>
+			                <!--  -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 代码 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 名称 -->
+                <if test="name!=null and name.trim()!=null">
+                    AND name = #{name}
+                </if>
+			                <!-- 字典类型 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 字典描述 -->
+                <if test="note!=null and note.trim()!=null">
+                    AND note = #{note}
+                </if>
+			        </where> 
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		dict_common
-	</select>
-
-	<insert id="save" parameterType="com.power.entity.DictCommonEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.DictCommonEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into dict_common
 		(
-		`code`,
-		`name`,
-		`type`,
-		`note`
+			`code`, 
+			`name`, 
+			`type`, 
+			`note`
 		)
 		values
 		(
-		#{code},
-		#{name},
-		#{type},
-		#{note}
+			#{code}, 
+			#{name}, 
+			#{type}, 
+			#{note}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.DictCommonEntity">
-		update dict_common
+		update dict_common 
 		<set>
 			<if test="code != null">`code` = #{code}, </if>
 			<if test="name != null">`name` = #{name}, </if>
@@ -70,24 +106,16 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from dict_common where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from dict_common where id in
+		delete from dict_common where id in 
 		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>
-
-	<select id="queryStationModel" resultType="java.util.HashMap">
-		select id,model,slot_no slotNo,channel from station_model order by id
-	</select>
-
-	<select id="queryPowerModel" resultType="java.util.HashMap">
-		select id,model from power_model order by id
-	</select>
 
 </mapper>

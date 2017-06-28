@@ -4,144 +4,331 @@
 <mapper namespace="com.power.dao.PowerStationDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.PowerStationEntity" id="powerStationMap">
-		<result property="id" column="id" />
-		<result property="agent" column="agent" />
-		<result property="code" column="code" />
-		<result property="address" column="address" />
-		<result property="region" column="region" />
-		<result property="latitude" column="latitude" />
-		<result property="longitude" column="longitude" />
-		<result property="wxUser" column="wx_user" />
-		<result property="wxUserPhone" column="wx_user_phone" />
-		<result property="dimensionCode" column="dimension_code" />
-		<result property="status" column="status" />
-		<result property="createDt" column="create_dt" />
-		<result property="updateDt" column="update_dt" />
-		<result property="productDt" column="product_dt" />
-		<result property="productCreator" column="product_creator" />
-		<result property="shopName" column="shop_name" />
-		<result property="connectType" column="connect_type" />
-		<result property="createBy" column="create_by" />
-		<result property="updateBy" column="update_by" />
-		<result property="shopStartDt" column="shop_start_dt" />
-		<result property="shopEndDt" column="shop_end_dt" />
-		<result property="activeBankNo" column="active_bank_no" />
-		<result property="shopPhone" column="shop_phone" />
-		<result property="shopStationPoint" column="shop_station_point" />
-		<result property="feescale" column="feescale" />
-		<result property="lasteditor" column="lastEditor" />
-	</resultMap>
+    <resultMap type="com.power.entity.PowerStationEntity" id="powerStationMap">
+        <result property="id" column="id"/>
+        <result property="agent" column="agent"/>
+        <result property="code" column="code"/>
+        <result property="address" column="address"/>
+        <result property="region" column="region"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="wxUser" column="wx_user"/>
+        <result property="wxUserPhone" column="wx_user_phone"/>
+        <result property="dimensionCode" column="dimension_code"/>
+        <result property="status" column="status"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="productDt" column="product_dt"/>
+        <result property="productCreator" column="product_creator"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="connectType" column="connect_type"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="shopStartDt" column="shop_start_dt"/>
+        <result property="shopEndDt" column="shop_end_dt"/>
+        <result property="activeBankNo" column="active_bank_no"/>
+        <result property="shopPhone" column="shop_phone"/>
+        <result property="shopStationPoint" column="shop_station_point"/>
+        <result property="feescale" column="feescale"/>
+        <result property="lasteditor" column="lastEditor"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerStationEntity">
-		select * from power_station
-		where id = #{value}
+		select * from power_station where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerStationEntity">
 		select * from power_station
-		<where>
-			<if test="code != null and code.trim() != ''">
-				and `code` like concat('%',#{code},'%')
-			</if>
-			<if test="shopName != null and shopName.trim() != ''">
-				and `shop_name` like concat('%',#{shopName},'%')
-			</if>
-			<if test="feescale != null and feescale.trim() != ''">
-				and feescale = #{feescale}
-			</if>
-		</where>
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!-- ######充电桩表###### -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 服务商 -->
+                <if test="agent!=null and agent.trim()!=null">
+                    AND agent = #{agent}
+                </if>
+			                <!-- 充电桩ID -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 充电桩网点地址 -->
+                <if test="address!=null and address.trim()!=null">
+                    AND address = #{address}
+                </if>
+			                <!-- 表region.地点ID(如深圳南山1000103) -->
+                <if test="region!=null and region.trim()!=null">
+                    AND region = #{region}
+                </if>
+			                <!-- 网点地址对应纬度 -->
+                <if test="latitude!=null and latitude.trim()!=null">
+                    AND latitude = #{latitude}
+                </if>
+			                <!-- 网点地址对应经度 -->
+                <if test="longitude!=null and longitude.trim()!=null">
+                    AND longitude = #{longitude}
+                </if>
+			                <!-- 维修人员/负责人 -->
+                <if test="wxUser!=null and wxUser.trim()!=null">
+                    AND wx_user = #{wxUser}
+                </if>
+			                <!-- 维修人员联系电话 -->
+                <if test="wxUserPhone!=null and wxUserPhone.trim()!=null">
+                    AND wx_user_phone = #{wxUserPhone}
+                </if>
+			                <!--  -->
+                <if test="dimensionCode!=null and dimensionCode.trim()!=null">
+                    AND dimension_code = #{dimensionCode}
+                </if>
+			                <!-- 充电桩状态，启用（正常运营） or 禁用 or 审核  -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!-- 生产日期 -->
+                <if test="productDt!=null and productDt.trim()!=null">
+                    AND product_dt = #{productDt}
+                </if>
+			                <!-- 生产厂家 -->
+                <if test="productCreator!=null and productCreator.trim()!=null">
+                    AND product_creator = #{productCreator}
+                </if>
+			                <!-- 充电桩网点名称 -->
+                <if test="shopName!=null and shopName.trim()!=null">
+                    AND shop_name = #{shopName}
+                </if>
+			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
+                <if test="connectType!=null and connectType.trim()!=null">
+                    AND connect_type = #{connectType}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 开始营业时间 -->
+                <if test="shopStartDt!=null and shopStartDt.trim()!=null">
+                    AND shop_start_dt = #{shopStartDt}
+                </if>
+			                <!-- 结束营业时间 -->
+                <if test="shopEndDt!=null and shopEndDt.trim()!=null">
+                    AND shop_end_dt = #{shopEndDt}
+                </if>
+			                <!--  -->
+                <if test="activeBankNo!=null and activeBankNo.trim()!=null">
+                    AND active_bank_no = #{activeBankNo}
+                </if>
+			                <!-- 网点联系电话 -->
+                <if test="shopPhone!=null and shopPhone.trim()!=null">
+                    AND shop_phone = #{shopPhone}
+                </if>
+			                <!-- 充电桩在网点的摆放位置，如收银台 -->
+                <if test="shopStationPoint!=null and shopStationPoint.trim()!=null">
+                    AND shop_station_point = #{shopStationPoint}
+                </if>
+			                <!-- 收费模式 -->
+                <if test="feescale!=null and feescale.trim()!=null">
+                    AND feescale = #{feescale}
+                </if>
+			                <!-- 最后编辑人员 -->
+                <if test="lasteditor!=null and lasteditor.trim()!=null">
+                    AND lastEditor = #{lasteditor}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		power_station
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_station
 		<where>
-			<if test="code != null and code.trim() != ''">
-				and `code` like concat('%',#{code},'%')
-			</if>
-			<if test="shopName != null and shopName.trim() != ''">
-				and `shop_name` like concat('%',#{shopName},'%')
-			</if>
-			<if test="feescale != null and feescale.trim() != ''">
-				and feescale = #{feescale}
-			</if>
-		</where>
+			                <!-- ######充电桩表###### -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 服务商 -->
+                <if test="agent!=null and agent.trim()!=null">
+                    AND agent = #{agent}
+                </if>
+			                <!-- 充电桩ID -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 充电桩网点地址 -->
+                <if test="address!=null and address.trim()!=null">
+                    AND address = #{address}
+                </if>
+			                <!-- 表region.地点ID(如深圳南山1000103) -->
+                <if test="region!=null and region.trim()!=null">
+                    AND region = #{region}
+                </if>
+			                <!-- 网点地址对应纬度 -->
+                <if test="latitude!=null and latitude.trim()!=null">
+                    AND latitude = #{latitude}
+                </if>
+			                <!-- 网点地址对应经度 -->
+                <if test="longitude!=null and longitude.trim()!=null">
+                    AND longitude = #{longitude}
+                </if>
+			                <!-- 维修人员/负责人 -->
+                <if test="wxUser!=null and wxUser.trim()!=null">
+                    AND wx_user = #{wxUser}
+                </if>
+			                <!-- 维修人员联系电话 -->
+                <if test="wxUserPhone!=null and wxUserPhone.trim()!=null">
+                    AND wx_user_phone = #{wxUserPhone}
+                </if>
+			                <!--  -->
+                <if test="dimensionCode!=null and dimensionCode.trim()!=null">
+                    AND dimension_code = #{dimensionCode}
+                </if>
+			                <!-- 充电桩状态，启用（正常运营） or 禁用 or 审核  -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!-- 生产日期 -->
+                <if test="productDt!=null and productDt.trim()!=null">
+                    AND product_dt = #{productDt}
+                </if>
+			                <!-- 生产厂家 -->
+                <if test="productCreator!=null and productCreator.trim()!=null">
+                    AND product_creator = #{productCreator}
+                </if>
+			                <!-- 充电桩网点名称 -->
+                <if test="shopName!=null and shopName.trim()!=null">
+                    AND shop_name = #{shopName}
+                </if>
+			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
+                <if test="connectType!=null and connectType.trim()!=null">
+                    AND connect_type = #{connectType}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 开始营业时间 -->
+                <if test="shopStartDt!=null and shopStartDt.trim()!=null">
+                    AND shop_start_dt = #{shopStartDt}
+                </if>
+			                <!-- 结束营业时间 -->
+                <if test="shopEndDt!=null and shopEndDt.trim()!=null">
+                    AND shop_end_dt = #{shopEndDt}
+                </if>
+			                <!--  -->
+                <if test="activeBankNo!=null and activeBankNo.trim()!=null">
+                    AND active_bank_no = #{activeBankNo}
+                </if>
+			                <!-- 网点联系电话 -->
+                <if test="shopPhone!=null and shopPhone.trim()!=null">
+                    AND shop_phone = #{shopPhone}
+                </if>
+			                <!-- 充电桩在网点的摆放位置，如收银台 -->
+                <if test="shopStationPoint!=null and shopStationPoint.trim()!=null">
+                    AND shop_station_point = #{shopStationPoint}
+                </if>
+			                <!-- 收费模式 -->
+                <if test="feescale!=null and feescale.trim()!=null">
+                    AND feescale = #{feescale}
+                </if>
+			                <!-- 最后编辑人员 -->
+                <if test="lasteditor!=null and lasteditor.trim()!=null">
+                    AND lastEditor = #{lasteditor}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.PowerStationEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.PowerStationEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_station
 		(
-		`agent`,
-		`code`,
-		`address`,
-		`region`,
-		`latitude`,
-		`longitude`,
-		`wx_user`,
-		`wx_user_phone`,
-		`dimension_code`,
-		`status`,
-		`create_dt`,
-		`update_dt`,
-		`product_dt`,
-		`product_creator`,
-		`shop_name`,
-		`connect_type`,
-		`create_by`,
-		`update_by`,
-		`shop_start_dt`,
-		`shop_end_dt`,
-		`active_bank_no`,
-		`shop_phone`,
-		`shop_station_point`,
-		`feescale`,
-		`lastEditor`
+			`agent`, 
+			`code`, 
+			`address`, 
+			`region`, 
+			`latitude`, 
+			`longitude`, 
+			`wx_user`, 
+			`wx_user_phone`, 
+			`dimension_code`, 
+			`status`, 
+			`create_dt`, 
+			`update_dt`, 
+			`product_dt`, 
+			`product_creator`, 
+			`shop_name`, 
+			`connect_type`, 
+			`create_by`, 
+			`update_by`, 
+			`shop_start_dt`, 
+			`shop_end_dt`, 
+			`active_bank_no`, 
+			`shop_phone`, 
+			`shop_station_point`, 
+			`feescale`, 
+			`lastEditor`
 		)
 		values
 		(
-		#{agent},
-		#{code},
-		#{address},
-		#{region},
-		#{latitude},
-		#{longitude},
-		#{wxUser},
-		#{wxUserPhone},
-		#{dimensionCode},
-		#{status},
-		#{createDt},
-		#{updateDt},
-		#{productDt},
-		#{productCreator},
-		#{shopName},
-		#{connectType},
-		#{createBy},
-		#{updateBy},
-		#{shopStartDt},
-		#{shopEndDt},
-		#{activeBankNo},
-		#{shopPhone},
-		#{shopStationPoint},
-		#{feescale},
-		#{lasteditor}
+			#{agent}, 
+			#{code}, 
+			#{address}, 
+			#{region}, 
+			#{latitude}, 
+			#{longitude}, 
+			#{wxUser}, 
+			#{wxUserPhone}, 
+			#{dimensionCode}, 
+			#{status}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{productDt}, 
+			#{productCreator}, 
+			#{shopName}, 
+			#{connectType}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{shopStartDt}, 
+			#{shopEndDt}, 
+			#{activeBankNo}, 
+			#{shopPhone}, 
+			#{shopStationPoint}, 
+			#{feescale}, 
+			#{lasteditor}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.PowerStationEntity">
-		update power_station
+		update power_station 
 		<set>
 			<if test="agent != null">`agent` = #{agent}, </if>
 			<if test="code != null">`code` = #{code}, </if>
@@ -171,15 +358,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from power_station where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from power_station where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from power_station where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

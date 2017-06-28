@@ -47,7 +47,7 @@ $(function () {
         	if(vm.nfcs.length==0){
 	        	$.ajax({
 					type: "POST",
-				    url: "../dictcommon/ISNFC",
+				    url: "../dict/ISNFC",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.nfcs = r.data;

@@ -4,83 +4,188 @@
 <mapper namespace="com.power.dao.PowerBankDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.PowerBankEntity" id="powerBankMap">
-		<result property="id" column="id" />
-		<result property="customer" column="customer" />
-		<result property="station" column="station" />
-		<result property="position" column="position" />
-		<result property="code" column="code" />
-		<result property="type" column="type" />
-		<result property="agency" column="agency" />
-		<result property="status" column="status" />
-		<result property="createDt" column="create_dt" />
-		<result property="updateDt" column="update_dt" />
-		<result property="createBy" column="create_by" />
-		<result property="updateBy" column="update_by" />
-		<result property="borrowCount" column="borrow_count" />
-	</resultMap>
+    <resultMap type="com.power.entity.PowerBankEntity" id="powerBankMap">
+        <result property="id" column="id"/>
+        <result property="customer" column="customer"/>
+        <result property="station" column="station"/>
+        <result property="position" column="position"/>
+        <result property="code" column="code"/>
+        <result property="type" column="type"/>
+        <result property="agency" column="agency"/>
+        <result property="status" column="status"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="borrowCount" column="borrow_count"/>
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerBankEntity">
-		select * from power_bank
-		where id = #{value}
+		select * from power_bank where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerBankEntity">
 		select * from power_bank
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+        <where>
+			                <!-- ######充电宝表###### -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 用户ID，充电宝目前被哪个用户借用 -->
+                <if test="customer!=null and customer.trim()!=null">
+                    AND customer = #{customer}
+                </if>
+			                <!-- 充电桩ID，充电宝目前位于哪个充电桩 -->
+                <if test="station!=null and station.trim()!=null">
+                    AND station = #{station}
+                </if>
+			                <!-- 充电桩卡槽号，充电宝目前位于哪个卡槽中 -->
+                <if test="position!=null and position.trim()!=null">
+                    AND position = #{position}
+                </if>
+			                <!-- 充电宝IMEI号 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 充电宝型号 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 服务商 -->
+                <if test="agency!=null and agency.trim()!=null">
+                    AND agency = #{agency}
+                </if>
+			                <!-- 充电宝状态，在卡槽中IN_POSITION，借出RENT -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 充电宝被借出次数 -->
+                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                    AND borrow_count = #{borrowCount}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from
-		power_bank
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_bank
+		<where>
+			                <!-- ######充电宝表###### -->
+                <if test="id!=null and id.trim()!=null">
+                    AND id = #{id}
+                </if>
+			                <!-- 用户ID，充电宝目前被哪个用户借用 -->
+                <if test="customer!=null and customer.trim()!=null">
+                    AND customer = #{customer}
+                </if>
+			                <!-- 充电桩ID，充电宝目前位于哪个充电桩 -->
+                <if test="station!=null and station.trim()!=null">
+                    AND station = #{station}
+                </if>
+			                <!-- 充电桩卡槽号，充电宝目前位于哪个卡槽中 -->
+                <if test="position!=null and position.trim()!=null">
+                    AND position = #{position}
+                </if>
+			                <!-- 充电宝IMEI号 -->
+                <if test="code!=null and code.trim()!=null">
+                    AND code = #{code}
+                </if>
+			                <!-- 充电宝型号 -->
+                <if test="type!=null and type.trim()!=null">
+                    AND type = #{type}
+                </if>
+			                <!-- 服务商 -->
+                <if test="agency!=null and agency.trim()!=null">
+                    AND agency = #{agency}
+                </if>
+			                <!-- 充电宝状态，在卡槽中IN_POSITION，借出RENT -->
+                <if test="status!=null and status.trim()!=null">
+                    AND status = #{status}
+                </if>
+			                <!--  -->
+                <if test="createDt!=null and createDt.trim()!=null">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt!=null and updateDt.trim()!=null">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!--  -->
+                <if test="createBy!=null and createBy.trim()!=null">
+                    AND create_by = #{createBy}
+                </if>
+			                <!--  -->
+                <if test="updateBy!=null and updateBy.trim()!=null">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 充电宝被借出次数 -->
+                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                    AND borrow_count = #{borrowCount}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.PowerBankEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.PowerBankEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_bank
 		(
-		`customer`,
-		`station`,
-		`position`,
-		`code`,
-		`type`,
-		`agency`,
-		`status`,
-		`create_dt`,
-		`update_dt`,
-		`create_by`,
-		`update_by`,
-		`borrow_count`
+			`customer`, 
+			`station`, 
+			`position`, 
+			`code`, 
+			`type`, 
+			`agency`, 
+			`status`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`, 
+			`borrow_count`
 		)
 		values
 		(
-		#{customer},
-		#{station},
-		#{position},
-		#{code},
-		#{type},
-		#{agency},
-		#{status},
-		#{createDt},
-		#{updateDt},
-		#{createBy},
-		#{updateBy},
-		#{borrowCount}
+			#{customer}, 
+			#{station}, 
+			#{position}, 
+			#{code}, 
+			#{type}, 
+			#{agency}, 
+			#{status}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{borrowCount}
 		)
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.PowerBankEntity">
-		update power_bank
+		update power_bank 
 		<set>
 			<if test="customer != null">`customer` = #{customer}, </if>
 			<if test="station != null">`station` = #{station}, </if>
@@ -97,15 +202,14 @@
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from power_bank where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from power_bank where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from power_bank where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

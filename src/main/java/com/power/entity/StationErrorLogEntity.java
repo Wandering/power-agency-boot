@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-23 20:34:04
+ * @date 2017-06-28 19:21:05
  */
 public class StationErrorLogEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
