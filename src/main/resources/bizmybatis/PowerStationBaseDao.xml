@@ -4,113 +4,116 @@
 <mapper namespace="com.power.dao.PowerStationBaseDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.PowerStationBaseEntity" id="powerStationBaseMap">
-        <result property="id" column="id"/>
-        <result property="code" column="code"/>
-        <result property="channel" column="channel"/>
-        <result property="type" column="type"/>
-        <result property="facilitatorId" column="facilitator_id"/>
-        <result property="slotNo" column="slot_no"/>
-        <result property="errorCode" column="error_code"/>
-        <result property="isSync" column="is_sync"/>
-        <result property="status" column="status"/>
-        <result property="errorSlot" column="error_slot"/>
-        <result property="free" column="free"/>
-        <result property="canBorrow" column="can_borrow"/>
-        <result property="stateCode" column="state_code"/>
-        <result property="borrowCount" column="borrow_count"/>
-        <result property="editName" column="edit_name"/>
-        <result property="editId" column="edit_id"/>
-        <result property="batch" column="batch"/>
-        <result property="note" column="note"/>
-        <result property="production" column="production"/>
-        <result property="agencyid" column="agencyId"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-    </resultMap>
+	<resultMap type="com.power.entity.PowerStationBaseEntity" id="powerStationBaseMap">
+		<result property="id" column="id" />
+		<result property="code" column="code" />
+		<result property="channel" column="channel" />
+		<result property="type" column="type" />
+		<result property="facilitatorId" column="facilitator_id" />
+		<result property="slotNo" column="slot_no" />
+		<result property="errorCode" column="error_code" />
+		<result property="isSync" column="is_sync" />
+		<result property="status" column="status" />
+		<result property="errorSlot" column="error_slot" />
+		<result property="free" column="free" />
+		<result property="canBorrow" column="can_borrow" />
+		<result property="stateCode" column="state_code" />
+		<result property="borrowCount" column="borrow_count" />
+		<result property="editName" column="edit_name" />
+		<result property="editId" column="edit_id" />
+		<result property="batch" column="batch" />
+		<result property="note" column="note" />
+		<result property="production" column="production" />
+		<result property="agencyid" column="agencyId" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerStationBaseEntity">
-		select * from power_station_base where id = #{value}
+		select * from
+		power_station_base where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerStationBaseEntity">
 		select * from power_station_base
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from power_station_base 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		power_station_base
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.PowerStationBaseEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.PowerStationBaseEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into power_station_base
 		(
-			`code`, 
-			`channel`, 
-			`type`, 
-			`facilitator_id`, 
-			`slot_no`, 
-			`error_code`, 
-			`is_sync`, 
-			`status`, 
-			`error_slot`, 
-			`free`, 
-			`can_borrow`, 
-			`state_code`, 
-			`borrow_count`, 
-			`edit_name`, 
-			`edit_id`, 
-			`batch`, 
-			`note`, 
-			`production`, 
-			`agencyId`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`
+		`code`,
+		`channel`,
+		`type`,
+		`facilitator_id`,
+		`slot_no`,
+		`error_code`,
+		`is_sync`,
+		`status`,
+		`error_slot`,
+		`free`,
+		`can_borrow`,
+		`state_code`,
+		`borrow_count`,
+		`edit_name`,
+		`edit_id`,
+		`batch`,
+		`note`,
+		`production`,
+		`agencyId`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`
 		)
 		values
 		(
-			#{code}, 
-			#{channel}, 
-			#{type}, 
-			#{facilitatorId}, 
-			#{slotNo}, 
-			#{errorCode}, 
-			#{isSync}, 
-			#{status}, 
-			#{errorSlot}, 
-			#{free}, 
-			#{canBorrow}, 
-			#{stateCode}, 
-			#{borrowCount}, 
-			#{editName}, 
-			#{editId}, 
-			#{batch}, 
-			#{note}, 
-			#{production}, 
-			#{agencyid}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}
+		#{code},
+		#{channel},
+		#{type},
+		#{facilitatorId},
+		#{slotNo},
+		#{errorCode},
+		#{isSync},
+		#{status},
+		#{errorSlot},
+		#{free},
+		#{canBorrow},
+		#{stateCode},
+		#{borrowCount},
+		#{editName},
+		#{editId},
+		#{batch},
+		#{note},
+		#{production},
+		#{agencyid},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.PowerStationBaseEntity">
-		update power_station_base 
+		update power_station_base
 		<set>
 			<if test="code != null">`code` = #{code}, </if>
 			<if test="channel != null">`channel` = #{channel}, </if>
@@ -138,14 +141,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from power_station_base where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from power_station_base where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from power_station_base where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

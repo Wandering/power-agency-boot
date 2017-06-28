@@ -4,86 +4,89 @@
 <mapper namespace="com.power.dao.ChargeModelDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.ChargeModelEntity" id="chargeModelMap">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="chargeDay" column="charge_day"/>
-        <result property="firstDeposit" column="first_deposit"/>
-        <result property="minDeposit" column="min_deposit"/>
-        <result property="yearFee" column="year_fee"/>
-        <result property="freeTime" column="free_time"/>
-        <result property="overdueFee" column="overdue_fee"/>
-        <result property="maxOverdueFee" column="max_overdue_fee"/>
-        <result property="bufferTime" column="buffer_time"/>
-        <result property="borrowScale" column="borrow_scale"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-    </resultMap>
+	<resultMap type="com.power.entity.ChargeModelEntity" id="chargeModelMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="chargeDay" column="charge_day" />
+		<result property="firstDeposit" column="first_deposit" />
+		<result property="minDeposit" column="min_deposit" />
+		<result property="yearFee" column="year_fee" />
+		<result property="freeTime" column="free_time" />
+		<result property="overdueFee" column="overdue_fee" />
+		<result property="maxOverdueFee" column="max_overdue_fee" />
+		<result property="bufferTime" column="buffer_time" />
+		<result property="borrowScale" column="borrow_scale" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.ChargeModelEntity">
-		select * from charge_model where id = #{value}
+		select * from charge_model
+		where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.ChargeModelEntity">
 		select * from charge_model
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from charge_model 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		charge_model
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.ChargeModelEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.ChargeModelEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into charge_model
 		(
-			`name`, 
-			`charge_day`, 
-			`first_deposit`, 
-			`min_deposit`, 
-			`year_fee`, 
-			`free_time`, 
-			`overdue_fee`, 
-			`max_overdue_fee`, 
-			`buffer_time`, 
-			`borrow_scale`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`
+		`name`,
+		`charge_day`,
+		`first_deposit`,
+		`min_deposit`,
+		`year_fee`,
+		`free_time`,
+		`overdue_fee`,
+		`max_overdue_fee`,
+		`buffer_time`,
+		`borrow_scale`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`
 		)
 		values
 		(
-			#{name}, 
-			#{chargeDay}, 
-			#{firstDeposit}, 
-			#{minDeposit}, 
-			#{yearFee}, 
-			#{freeTime}, 
-			#{overdueFee}, 
-			#{maxOverdueFee}, 
-			#{bufferTime}, 
-			#{borrowScale}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}
+		#{name},
+		#{chargeDay},
+		#{firstDeposit},
+		#{minDeposit},
+		#{yearFee},
+		#{freeTime},
+		#{overdueFee},
+		#{maxOverdueFee},
+		#{bufferTime},
+		#{borrowScale},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.ChargeModelEntity">
-		update charge_model 
+		update charge_model
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="chargeDay != null">`charge_day` = #{chargeDay}, </if>
@@ -102,14 +105,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from charge_model where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from charge_model where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from charge_model where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

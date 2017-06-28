@@ -4,77 +4,79 @@
 <mapper namespace="com.power.dao.AgenciesDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.AgenciesEntity" id="agenciesMap">
-        <result property="id" column="id"/>
-        <result property="name" column="name"/>
-        <result property="abbrCode" column="abbr_code"/>
-        <result property="region" column="region"/>
-        <result property="address" column="address"/>
-        <result property="status" column="status"/>
-        <result property="type" column="type"/>
-        <result property="parent" column="parent"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-    </resultMap>
+	<resultMap type="com.power.entity.AgenciesEntity" id="agenciesMap">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="abbrCode" column="abbr_code" />
+		<result property="region" column="region" />
+		<result property="address" column="address" />
+		<result property="status" column="status" />
+		<result property="type" column="type" />
+		<result property="parent" column="parent" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.AgenciesEntity">
-		select * from agencies where id = #{value}
+		select * from agencies where
+		id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.AgenciesEntity">
 		select * from agencies
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from agencies 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from agencies
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.AgenciesEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.AgenciesEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into agencies
 		(
-			`name`, 
-			`abbr_code`, 
-			`region`, 
-			`address`, 
-			`status`, 
-			`type`, 
-			`parent`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`
+		`name`,
+		`abbr_code`,
+		`region`,
+		`address`,
+		`status`,
+		`type`,
+		`parent`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`
 		)
 		values
 		(
-			#{name}, 
-			#{abbrCode}, 
-			#{region}, 
-			#{address}, 
-			#{status}, 
-			#{type}, 
-			#{parent}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}
+		#{name},
+		#{abbrCode},
+		#{region},
+		#{address},
+		#{status},
+		#{type},
+		#{parent},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.AgenciesEntity">
-		update agencies 
+		update agencies
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="abbrCode != null">`abbr_code` = #{abbrCode}, </if>
@@ -90,14 +92,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from agencies where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from agencies where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from agencies where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

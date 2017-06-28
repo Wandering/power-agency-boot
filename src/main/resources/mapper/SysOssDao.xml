@@ -4,7 +4,8 @@
 <mapper namespace="io.renren.dao.SysOssDao">
 
 	<select id="queryObject" resultType="io.renren.entity.SysOssEntity">
-		select * from sys_oss where id = #{value}
+		select * from sys_oss where
+		id = #{value}
 	</select>
 
 	<select id="queryList" resultType="io.renren.entity.SysOssEntity">
@@ -13,40 +14,42 @@
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from sys_oss 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from sys_oss
 	</select>
-	 
-	<insert id="save" parameterType="io.renren.entity.SysOssEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="io.renren.entity.SysOssEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into sys_oss
 		(
-			`url`, 
-			`create_date`
+		`url`,
+		`create_date`
 		)
 		values
 		(
-			#{url}, 
-			#{createDate}
+		#{url},
+		#{createDate}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.renren.entity.SysOssEntity">
-		update sys_oss 
+		update sys_oss
 		<set>
 			<if test="url != null">`url` = #{url}, </if>
 			<if test="createDate != null">`create_date` = #{createDate}</if>
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from sys_oss where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from sys_oss where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from sys_oss where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

@@ -4,92 +4,95 @@
 <mapper namespace="com.power.dao.StationModelDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.StationModelEntity" id="stationModelMap">
-        <result property="id" column="id"/>
-        <result property="model" column="model"/>
-        <result property="slotNo" column="slot_no"/>
-        <result property="channel" column="channel"/>
-        <result property="inputVoltage" column="input_voltage"/>
-        <result property="maxInputCurrent" column="max_input_current"/>
-        <result property="maxInputPower" column="max_input_power"/>
-        <result property="staticInputPower" column="static_input_power"/>
-        <result property="authentication" column="authentication"/>
-        <result property="size" column="size"/>
-        <result property="isnfc" column="isNFC"/>
-        <result property="deliveryModel" column="delivery_model"/>
-        <result property="manufacturer" column="manufacturer"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-    </resultMap>
+	<resultMap type="com.power.entity.StationModelEntity" id="stationModelMap">
+		<result property="id" column="id" />
+		<result property="model" column="model" />
+		<result property="slotNo" column="slot_no" />
+		<result property="channel" column="channel" />
+		<result property="inputVoltage" column="input_voltage" />
+		<result property="maxInputCurrent" column="max_input_current" />
+		<result property="maxInputPower" column="max_input_power" />
+		<result property="staticInputPower" column="static_input_power" />
+		<result property="authentication" column="authentication" />
+		<result property="size" column="size" />
+		<result property="isnfc" column="isNFC" />
+		<result property="deliveryModel" column="delivery_model" />
+		<result property="manufacturer" column="manufacturer" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.StationModelEntity">
-		select * from station_model where id = #{value}
+		select * from station_model
+		where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.StationModelEntity">
 		select * from station_model
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from station_model 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		station_model
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.StationModelEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.StationModelEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into station_model
 		(
-			`model`, 
-			`slot_no`, 
-			`channel`, 
-			`input_voltage`, 
-			`max_input_current`, 
-			`max_input_power`, 
-			`static_input_power`, 
-			`authentication`, 
-			`size`, 
-			`isNFC`, 
-			`delivery_model`, 
-			`manufacturer`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`
+		`model`,
+		`slot_no`,
+		`channel`,
+		`input_voltage`,
+		`max_input_current`,
+		`max_input_power`,
+		`static_input_power`,
+		`authentication`,
+		`size`,
+		`isNFC`,
+		`delivery_model`,
+		`manufacturer`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`
 		)
 		values
 		(
-			#{model}, 
-			#{slotNo}, 
-			#{channel}, 
-			#{inputVoltage}, 
-			#{maxInputCurrent}, 
-			#{maxInputPower}, 
-			#{staticInputPower}, 
-			#{authentication}, 
-			#{size}, 
-			#{isnfc}, 
-			#{deliveryModel}, 
-			#{manufacturer}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}
+		#{model},
+		#{slotNo},
+		#{channel},
+		#{inputVoltage},
+		#{maxInputCurrent},
+		#{maxInputPower},
+		#{staticInputPower},
+		#{authentication},
+		#{size},
+		#{isnfc},
+		#{deliveryModel},
+		#{manufacturer},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.StationModelEntity">
-		update station_model 
+		update station_model
 		<set>
 			<if test="model != null">`model` = #{model}, </if>
 			<if test="slotNo != null">`slot_no` = #{slotNo}, </if>
@@ -110,14 +113,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from station_model where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from station_model where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from station_model where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

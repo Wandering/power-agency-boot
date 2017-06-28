@@ -4,68 +4,72 @@
 <mapper namespace="com.power.dao.AgencyOrderLifecyleDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.AgencyOrderLifecyleEntity" id="agencyOrderLifecyleMap">
-        <result property="id" column="id"/>
-        <result property="startDt" column="start_dt"/>
-        <result property="endDt" column="end_dt"/>
-        <result property="type" column="type"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="mounth" column="mounth"/>
-    </resultMap>
+	<resultMap type="com.power.entity.AgencyOrderLifecyleEntity"
+		id="agencyOrderLifecyleMap">
+		<result property="id" column="id" />
+		<result property="startDt" column="start_dt" />
+		<result property="endDt" column="end_dt" />
+		<result property="type" column="type" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+		<result property="mounth" column="mounth" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.AgencyOrderLifecyleEntity">
-		select * from agency_order_lifecyle where id = #{value}
+		select * from
+		agency_order_lifecyle where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.AgencyOrderLifecyleEntity">
 		select * from agency_order_lifecyle
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from agency_order_lifecyle 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		agency_order_lifecyle
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.AgencyOrderLifecyleEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.AgencyOrderLifecyleEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into agency_order_lifecyle
 		(
-			`start_dt`, 
-			`end_dt`, 
-			`type`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`, 
-			`mounth`
+		`start_dt`,
+		`end_dt`,
+		`type`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`,
+		`mounth`
 		)
 		values
 		(
-			#{startDt}, 
-			#{endDt}, 
-			#{type}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}, 
-			#{mounth}
+		#{startDt},
+		#{endDt},
+		#{type},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy},
+		#{mounth}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.AgencyOrderLifecyleEntity">
-		update agency_order_lifecyle 
+		update agency_order_lifecyle
 		<set>
 			<if test="startDt != null">`start_dt` = #{startDt}, </if>
 			<if test="endDt != null">`end_dt` = #{endDt}, </if>
@@ -78,14 +82,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from agency_order_lifecyle where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from agency_order_lifecyle where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from agency_order_lifecyle where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>
