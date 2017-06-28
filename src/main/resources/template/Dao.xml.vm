@@ -38,7 +38,15 @@
 	</select>
 	
  	<select id="queryTotal" resultType="int">
-		select count(*) from ${tableName} 
+		select count(*) from ${tableName}
+		<where>
+			#foreach( $column in $columns)
+                <!-- $column.comments -->
+                <if test="${column.attrname}!=null and ${column.attrname}.trim()!=null">
+                    AND ${column.columnName} = #{${column.attrname}}
+                </if>
+			#end
+        </where> 
 	</select>
 	 
 	<insert id="save" parameterType="${package}.entity.${className}Entity"#if($pk.extra == 'auto_increment') useGeneratedKeys="true" keyProperty="$pk.attrname"#end>
