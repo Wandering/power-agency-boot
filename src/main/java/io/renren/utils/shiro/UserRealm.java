@@ -71,6 +71,7 @@ public class UserRealm extends AuthorizingRealm {
         }
         
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
+//        UserContext.setUser(user);
         return info;
 	}
 

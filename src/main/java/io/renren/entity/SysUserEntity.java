@@ -68,6 +68,8 @@ public class SysUserEntity implements Serializable {
 	 */
 	private Date createTime;
 
+	private Integer agencyId;
+
 	/**
 	 * 设置：
 	 * @param userId 
@@ -195,5 +197,12 @@ public class SysUserEntity implements Serializable {
 	public void setCreateUserId(Long createUserId) {
 		this.createUserId = createUserId;
 	}
-	
+
+	public Integer getAgencyId() {
+		return agencyId;
+	}
+
+	public void setAgencyId(Integer agencyId) {
+		this.agencyId = agencyId;
+	}
 }

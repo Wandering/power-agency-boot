@@ -72,7 +72,7 @@ public class GenUtils {
 			String attrName = columnToJava(columnEntity.getColumnName());
 			columnEntity.setAttrName(attrName);
 			columnEntity.setAttrname(StringUtils.uncapitalize(attrName));
-			
+
 			//列的数据类型，转换成Java类型
 			String attrType = config.getString(columnEntity.getDataType(), Object.class.getSimpleName());
 			columnEntity.setAttrType(attrType);
