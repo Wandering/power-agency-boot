@@ -4,80 +4,83 @@
 <mapper namespace="com.power.dao.PowerErrorLogDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.PowerErrorLogEntity" id="powerErrorLogMap">
-        <result property="id" column="id"/>
-        <result property="batteryId" column="battery_id"/>
-        <result property="deviceId" column="device_id"/>
-        <result property="slotNo" column="slot_no"/>
-        <result property="type" column="type"/>
-        <result property="errorCode" column="error_code"/>
-        <result property="chargeCount" column="charge_count"/>
-        <result property="eq" column="eq"/>
-        <result property="vol" column="vol"/>
-        <result property="tempNow" column="temp_now"/>
-        <result property="state" column="state"/>
-        <result property="upTime" column="up_time"/>
-        <result property="status" column="status"/>
-    </resultMap>
+	<resultMap type="com.power.entity.PowerErrorLogEntity" id="powerErrorLogMap">
+		<result property="id" column="id" />
+		<result property="batteryId" column="battery_id" />
+		<result property="deviceId" column="device_id" />
+		<result property="slotNo" column="slot_no" />
+		<result property="type" column="type" />
+		<result property="errorCode" column="error_code" />
+		<result property="chargeCount" column="charge_count" />
+		<result property="eq" column="eq" />
+		<result property="vol" column="vol" />
+		<result property="tempNow" column="temp_now" />
+		<result property="state" column="state" />
+		<result property="upTime" column="up_time" />
+		<result property="status" column="status" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.PowerErrorLogEntity">
-		select * from power_error_log where id = #{value}
+		select * from
+		power_error_log where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerErrorLogEntity">
 		select * from power_error_log
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from power_error_log 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		power_error_log
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.PowerErrorLogEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.PowerErrorLogEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into power_error_log
 		(
-			`battery_id`, 
-			`device_id`, 
-			`slot_no`, 
-			`type`, 
-			`error_code`, 
-			`charge_count`, 
-			`eq`, 
-			`vol`, 
-			`temp_now`, 
-			`state`, 
-			`up_time`, 
-			`status`
+		`battery_id`,
+		`device_id`,
+		`slot_no`,
+		`type`,
+		`error_code`,
+		`charge_count`,
+		`eq`,
+		`vol`,
+		`temp_now`,
+		`state`,
+		`up_time`,
+		`status`
 		)
 		values
 		(
-			#{batteryId}, 
-			#{deviceId}, 
-			#{slotNo}, 
-			#{type}, 
-			#{errorCode}, 
-			#{chargeCount}, 
-			#{eq}, 
-			#{vol}, 
-			#{tempNow}, 
-			#{state}, 
-			#{upTime}, 
-			#{status}
+		#{batteryId},
+		#{deviceId},
+		#{slotNo},
+		#{type},
+		#{errorCode},
+		#{chargeCount},
+		#{eq},
+		#{vol},
+		#{tempNow},
+		#{state},
+		#{upTime},
+		#{status}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.PowerErrorLogEntity">
-		update power_error_log 
+		update power_error_log
 		<set>
 			<if test="batteryId != null">`battery_id` = #{batteryId}, </if>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
@@ -94,14 +97,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from power_error_log where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from power_error_log where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from power_error_log where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

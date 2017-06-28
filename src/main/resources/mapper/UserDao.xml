@@ -3,29 +3,32 @@
 
 <mapper namespace="io.renren.dao.UserDao">
 
-	<insert id="save" parameterType="io.renren.entity.UserEntity" useGeneratedKeys="true" keyProperty="userId">
+	<insert id="save" parameterType="io.renren.entity.UserEntity"
+		useGeneratedKeys="true" keyProperty="userId">
 		insert into tb_user
 		(
-			`username`,
-			`mobile`,
-			`password`,
-			`create_time`
+		`username`,
+		`mobile`,
+		`password`,
+		`create_time`
 		)
 		values
-			(
-				#{username},
-				#{mobile},
-				#{password},
-				#{createTime}
-			)
+		(
+		#{username},
+		#{mobile},
+		#{password},
+		#{createTime}
+		)
 	</insert>
 
 	<select id="queryObject" resultType="io.renren.entity.UserEntity">
-		select * from tb_user where user_id = #{value}
+		select * from tb_user where
+		user_id = #{value}
 	</select>
 
 	<select id="queryByMobile" resultType="io.renren.entity.UserEntity">
-		select * from tb_user where mobile = #{value}
+		select * from tb_user
+		where mobile = #{value}
 	</select>
 
 </mapper>

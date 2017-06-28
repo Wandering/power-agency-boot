@@ -4,86 +4,89 @@
 <mapper namespace="com.power.dao.AgencyOrdersDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-    <resultMap type="com.power.entity.AgencyOrdersEntity" id="agencyOrdersMap">
-        <result property="id" column="id"/>
-        <result property="totalFee" column="total_fee"/>
-        <result property="orderOwner" column="order_owner"/>
-        <result property="parentOrder" column="parent_order"/>
-        <result property="agency" column="agency"/>
-        <result property="type" column="type"/>
-        <result property="status" column="status"/>
-        <result property="createDt" column="create_dt"/>
-        <result property="updateDt" column="update_dt"/>
-        <result property="createBy" column="create_by"/>
-        <result property="updateBy" column="update_by"/>
-        <result property="useCount" column="use_count"/>
-        <result property="agencyType" column="agency_type"/>
-        <result property="fromStation" column="from_station"/>
-        <result property="orderNo" column="order_no"/>
-    </resultMap>
+	<resultMap type="com.power.entity.AgencyOrdersEntity" id="agencyOrdersMap">
+		<result property="id" column="id" />
+		<result property="totalFee" column="total_fee" />
+		<result property="orderOwner" column="order_owner" />
+		<result property="parentOrder" column="parent_order" />
+		<result property="agency" column="agency" />
+		<result property="type" column="type" />
+		<result property="status" column="status" />
+		<result property="createDt" column="create_dt" />
+		<result property="updateDt" column="update_dt" />
+		<result property="createBy" column="create_by" />
+		<result property="updateBy" column="update_by" />
+		<result property="useCount" column="use_count" />
+		<result property="agencyType" column="agency_type" />
+		<result property="fromStation" column="from_station" />
+		<result property="orderNo" column="order_no" />
+	</resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.AgencyOrdersEntity">
-		select * from agency_orders where id = #{value}
+		select * from agency_orders
+		where id = #{value}
 	</select>
 
 	<select id="queryList" resultType="com.power.entity.AgencyOrdersEntity">
 		select * from agency_orders
-        <choose>
-            <when test="sidx != null and sidx.trim() != ''">
-                order by ${sidx} ${order}
-            </when>
+		<choose>
+			<when test="sidx != null and sidx.trim() != ''">
+				order by ${sidx} ${order}
+			</when>
 			<otherwise>
-                order by id desc
+				order by id desc
 			</otherwise>
-        </choose>
+		</choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-	
- 	<select id="queryTotal" resultType="int">
-		select count(*) from agency_orders 
+
+	<select id="queryTotal" resultType="int">
+		select count(*) from
+		agency_orders
 	</select>
-	 
-	<insert id="save" parameterType="com.power.entity.AgencyOrdersEntity" useGeneratedKeys="true" keyProperty="id">
+
+	<insert id="save" parameterType="com.power.entity.AgencyOrdersEntity"
+		useGeneratedKeys="true" keyProperty="id">
 		insert into agency_orders
 		(
-			`total_fee`, 
-			`order_owner`, 
-			`parent_order`, 
-			`agency`, 
-			`type`, 
-			`status`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`, 
-			`use_count`, 
-			`agency_type`, 
-			`from_station`, 
-			`order_no`
+		`total_fee`,
+		`order_owner`,
+		`parent_order`,
+		`agency`,
+		`type`,
+		`status`,
+		`create_dt`,
+		`update_dt`,
+		`create_by`,
+		`update_by`,
+		`use_count`,
+		`agency_type`,
+		`from_station`,
+		`order_no`
 		)
 		values
 		(
-			#{totalFee}, 
-			#{orderOwner}, 
-			#{parentOrder}, 
-			#{agency}, 
-			#{type}, 
-			#{status}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}, 
-			#{useCount}, 
-			#{agencyType}, 
-			#{fromStation}, 
-			#{orderNo}
+		#{totalFee},
+		#{orderOwner},
+		#{parentOrder},
+		#{agency},
+		#{type},
+		#{status},
+		#{createDt},
+		#{updateDt},
+		#{createBy},
+		#{updateBy},
+		#{useCount},
+		#{agencyType},
+		#{fromStation},
+		#{orderNo}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="com.power.entity.AgencyOrdersEntity">
-		update agency_orders 
+		update agency_orders
 		<set>
 			<if test="totalFee != null">`total_fee` = #{totalFee}, </if>
 			<if test="orderOwner != null">`order_owner` = #{orderOwner}, </if>
@@ -102,14 +105,15 @@
 		</set>
 		where id = #{id}
 	</update>
-	
+
 	<delete id="delete">
 		delete from agency_orders where id = #{value}
 	</delete>
-	
+
 	<delete id="deleteBatch">
-		delete from agency_orders where id in 
-		<foreach item="id" collection="array" open="(" separator="," close=")">
+		delete from agency_orders where id in
+		<foreach item="id" collection="array" open="(" separator=","
+			close=")">
 			#{id}
 		</foreach>
 	</delete>

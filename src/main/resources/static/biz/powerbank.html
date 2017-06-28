@@ -4,11 +4,15 @@
 <title>充电宝中心</title>
 <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
 <link rel="stylesheet" href="../public/css/bootstrap.min.css">
 <link rel="stylesheet" href="../public/css/font-awesome.min.css">
-<link rel="stylesheet" href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
-<link rel="stylesheet" href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet"
+	href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet"
+	href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
 <link rel="stylesheet" href="../public/css/main.css">
 <script src="../public/libs/jquery.min.js"></script>
 <script src="../public/plugins/layer/layer.js"></script>
@@ -20,103 +24,120 @@
 <script src="../public/js/common.js"></script>
 </head>
 <body>
-<div id="rrapp" v-cloak>
-	<div v-show="showList">
-		<div class="grid-btn">
-			<a v-if="hasPermission('powerbank:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
-			<a v-if="hasPermission('powerbank:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>
-			<a v-if="hasPermission('powerbank:delete')" class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+	<div id="rrapp" v-cloak>
+		<div v-show="showList">
+			<div class="grid-btn">
+				<a v-if="hasPermission('powerbank:save')" class="btn btn-primary"
+					@click="add"><i class="fa fa-plus"></i>&nbsp;新增</a> <a
+					v-if="hasPermission('powerbank:update')" class="btn btn-primary"
+					@click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a> <a
+					v-if="hasPermission('powerbank:delete')" class="btn btn-primary"
+					@click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+			</div>
+			<table id="jqGrid"></table>
+			<div id="jqGridPager"></div>
 		</div>
-	    <table id="jqGrid"></table>
-	    <div id="jqGridPager"></div>
-    </div>
-    
-    <div v-show="!showList" class="panel panel-default">
-		<div class="panel-heading">{{title}}</div>
-		<form class="form-horizontal">
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电宝IMEI号</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.code" placeholder="充电宝IMEI号"/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">充电宝型号</div>
-			   	<div class="col-sm-10">
-			      <select class="form-control" v-model="powerBank.type" placeholder="充电宝型号"> 
-					  <option v-for="model in models" v-bind:value="model.id">{{ model.model }}</option>  
-				  </select>
-			    </div>
-			</div>
-			<div class="form-group" v-show="status=='edit'">
-			   	<div class="col-sm-2 control-label">充电桩IMEI号</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.station" placeholder="充电桩IMEI号" readonly/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="status=='edit'">
-			   	<div class="col-sm-2 control-label">卡槽号</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.position" placeholder="充电宝目前位于哪个卡槽中" readonly/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="status=='edit'">
-			   	<div class="col-sm-2 control-label">当前使用用户</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.customer" placeholder="当前使用用户" readonly/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="status=='edit'">
-			   	<div class="col-sm-2 control-label">借出次数</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.borrowCount" placeholder="借出次数" readonly/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="status=='edit'">
-			   	<div class="col-sm-2 control-label">充电宝状态</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.status" placeholder="充电宝状态" readonly/>
-			    </div>
-			</div>
-			<div class="form-group">
-			   	<div class="col-sm-2 control-label">服务商</div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.agency" placeholder="服务商"/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="showList">
-			   	<div class="col-sm-2 control-label"></div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.createDt" placeholder=""/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="showList">
-			   	<div class="col-sm-2 control-label"></div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.updateDt" placeholder=""/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="showList">
-			   	<div class="col-sm-2 control-label"></div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.createBy" placeholder=""/>
-			    </div>
-			</div>
-			<div class="form-group" v-show="showList">
-			   	<div class="col-sm-2 control-label"></div>
-			   	<div class="col-sm-10">
-			      <input type="text" class="form-control" v-model="powerBank.updateBy" placeholder=""/>
-			    </div>
-			</div>
-			<div class="form-group">
-				<div class="col-sm-2 control-label"></div> 
-				<input type="button" class="btn btn-primary" @click="saveOrUpdate" value="确定"/>
-				&nbsp;&nbsp;<input type="button" class="btn btn-warning" @click="reload" value="返回"/>
-			</div>
-		</form>
-	</div>
-</div>
 
-<script src="../public/js/biz/powerbank.js"></script>
+		<div v-show="!showList" class="panel panel-default">
+			<div class="panel-heading">{{title}}</div>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<div class="col-sm-2 control-label">充电宝IMEI号</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="powerBank.code"
+							placeholder="充电宝IMEI号" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">充电宝型号</div>
+					<div class="col-sm-10">
+						<select class="form-control" v-model="powerBank.type"
+							placeholder="充电宝型号">
+							<option v-for="model in models" v-bind:value="model.id">{{
+								model.model }}</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group" v-show="status=='edit'">
+					<div class="col-sm-2 control-label">充电桩IMEI号</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.station" placeholder="充电桩IMEI号" readonly />
+					</div>
+				</div>
+				<div class="form-group" v-show="status=='edit'">
+					<div class="col-sm-2 control-label">卡槽号</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.position" placeholder="充电宝目前位于哪个卡槽中" readonly />
+					</div>
+				</div>
+				<div class="form-group" v-show="status=='edit'">
+					<div class="col-sm-2 control-label">当前使用用户</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.customer" placeholder="当前使用用户" readonly />
+					</div>
+				</div>
+				<div class="form-group" v-show="status=='edit'">
+					<div class="col-sm-2 control-label">借出次数</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.borrowCount" placeholder="借出次数" readonly />
+					</div>
+				</div>
+				<div class="form-group" v-show="status=='edit'">
+					<div class="col-sm-2 control-label">充电宝状态</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="powerBank.status"
+							placeholder="充电宝状态" readonly />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label">服务商</div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control" v-model="powerBank.agency"
+							placeholder="服务商" />
+					</div>
+				</div>
+				<div class="form-group" v-show="showList">
+					<div class="col-sm-2 control-label"></div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.createDt" placeholder="" />
+					</div>
+				</div>
+				<div class="form-group" v-show="showList">
+					<div class="col-sm-2 control-label"></div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.updateDt" placeholder="" />
+					</div>
+				</div>
+				<div class="form-group" v-show="showList">
+					<div class="col-sm-2 control-label"></div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.createBy" placeholder="" />
+					</div>
+				</div>
+				<div class="form-group" v-show="showList">
+					<div class="col-sm-2 control-label"></div>
+					<div class="col-sm-10">
+						<input type="text" class="form-control"
+							v-model="powerBank.updateBy" placeholder="" />
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-2 control-label"></div>
+					<input type="button" class="btn btn-primary" @click="saveOrUpdate"
+						value="确定" /> &nbsp;&nbsp;<input type="button"
+						class="btn btn-warning" @click="reload" value="返回" />
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<script src="../public/js/biz/powerbank.js"></script>
 </body>
 </html>

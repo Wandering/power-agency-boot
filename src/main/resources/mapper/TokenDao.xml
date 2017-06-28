@@ -4,32 +4,34 @@
 <mapper namespace="io.renren.dao.TokenDao">
 
 	<select id="queryByUserId" resultType="io.renren.entity.TokenEntity">
-		select * from tb_token where user_id = #{value}
+		select * from tb_token
+		where user_id = #{value}
 	</select>
 
 	<select id="queryByToken" resultType="io.renren.entity.TokenEntity">
-		select * from tb_token where token = #{value}
+		select * from tb_token
+		where token = #{value}
 	</select>
-	 
+
 	<insert id="save" parameterType="io.renren.entity.TokenEntity">
 		insert into tb_token
 		(
-			`user_id`, 
-			`token`, 
-			`expire_time`, 
-			`update_time`
+		`user_id`,
+		`token`,
+		`expire_time`,
+		`update_time`
 		)
 		values
 		(
-			#{userId}, 
-			#{token}, 
-			#{expireTime}, 
-			#{updateTime}
+		#{userId},
+		#{token},
+		#{expireTime},
+		#{updateTime}
 		)
 	</insert>
-	 
+
 	<update id="update" parameterType="io.renren.entity.TokenEntity">
-		update tb_token 
+		update tb_token
 		<set>
 			<if test="token != null">`token` = #{token}, </if>
 			<if test="expireTime != null">`expire_time` = #{expireTime}, </if>
