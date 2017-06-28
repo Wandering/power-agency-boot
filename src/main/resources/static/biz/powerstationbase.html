@@ -52,10 +52,8 @@
 				<div class="form-group">
 					<div class="col-sm-2 control-label">充电桩型号</div>
 					<div class="col-sm-10">
-						<select class="form-control" v-model="powerStationBase.type"
-							placeholder="充电桩型号" @change="selectModel()">
-							<option v-for="model in models" v-bind:value="model.id">{{
-								model.model }}</option>
+						<select class="form-control" v-model="powerStationBase.type" placeholder="充电桩型号" @change="selectModel()">
+							<option v-for="model in models" v-bind:value="model.id">{{model.model }}</option>
 						</select>
 					</div>
 				</div>
@@ -64,8 +62,7 @@
 					<div class="col-sm-10">
 						<select class="form-control" v-model="powerStationBase.channel"
 							placeholder="通讯方式" name="channel" disabled="disabled">
-							<option v-for="channel in channels" v-bind:value="channel.code">{{
-								channel.name }}</option>
+							<option v-for="channel in channels" v-bind:value="channel.code">{{channel.name }}</option>
 						</select>
 					</div>
 				</div>

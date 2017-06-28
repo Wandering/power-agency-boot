@@ -45,7 +45,7 @@ $(function () {
         	if(vm.bankStatus.length==0){
 	        	$.ajax({
 					type: "POST",
-				    url: "../dictcommon/BANK_STATUS",
+				    url: "../dict/BANK_STATUS",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.bankStatus = r.data;
@@ -58,7 +58,7 @@ $(function () {
         	if(vm.models.length==0){
         		$.ajax({
 					type: "POST",
-				    url: "../dictcommon/queryStationModel",
+				    url: "../dict/queryPowerModel",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.models = r.data;

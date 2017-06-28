@@ -45,7 +45,7 @@ $(function () {
         	if(vm.chargeConfigs.length==0){
 	        	$.ajax({
 					type: "POST",
-				    url: "../dictcommon/CHARGE_COF",
+				    url: "../dict/CHARGE_COF",
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.chargeConfigs = r.data;

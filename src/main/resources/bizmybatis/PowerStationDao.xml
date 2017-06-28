@@ -40,6 +40,17 @@
 
 	<select id="queryList" resultType="com.power.entity.PowerStationEntity">
 		select * from power_station
+		<where>
+			<if test="code != null and code.trim() != ''">
+				and `code` like concat('%',#{code},'%')
+			</if>
+			<if test="shopName != null and shopName.trim() != ''">
+				and `shop_name` like concat('%',#{shopName},'%')
+			</if>
+			<if test="feescale != null and feescale.trim() != ''">
+				and feescale = #{feescale}
+			</if>
+		</where>
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -56,6 +67,17 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from
 		power_station
+		<where>
+			<if test="code != null and code.trim() != ''">
+				and `code` like concat('%',#{code},'%')
+			</if>
+			<if test="shopName != null and shopName.trim() != ''">
+				and `shop_name` like concat('%',#{shopName},'%')
+			</if>
+			<if test="feescale != null and feescale.trim() != ''">
+				and feescale = #{feescale}
+			</if>
+		</where>
 	</select>
 
 	<insert id="save" parameterType="com.power.entity.PowerStationEntity"

@@ -77,20 +77,17 @@
 
 	<delete id="deleteBatch">
 		delete from dict_common where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>
 
 	<select id="queryStationModel" resultType="java.util.HashMap">
-		select
-		id,model,slot_no slotNo,channel from station_model order by id
+		select id,model,slot_no slotNo,channel from station_model order by id
 	</select>
 
 	<select id="queryPowerModel" resultType="java.util.HashMap">
-		select id,model, from
-		power_model order by id
+		select id,model from power_model order by id
 	</select>
 
 </mapper>
