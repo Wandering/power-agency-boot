@@ -19,7 +19,7 @@
         <where>
 			#foreach( $column in $columns)
                 <!-- $column.comments -->
-                <if test="${column.attrname}!=null">
+                <if test="${column.attrname}!=null and ${column.attrname}.trim()!=null">
                     AND ${column.columnName} = #{${column.attrname}}
                 </if>
 			#end
