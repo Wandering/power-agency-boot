@@ -22,7 +22,7 @@ spring:
 
 # Mybatis配置
 mybatis:
-    mapperLocations: classpath:mapper/*.xml,classpath:bizmybatis/*.xml
+    mapperLocations: classpath*:mapper/**/*.xml,classpath:bizmybatis/**/*.xml
     configLocation: classpath:mybatis.xml
 
 #logging.level.io.renren=DEBUG

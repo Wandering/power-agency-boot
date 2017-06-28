@@ -1,5 +1,7 @@
 package com.power.dao.ex;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import java.util.List;
 
 /**

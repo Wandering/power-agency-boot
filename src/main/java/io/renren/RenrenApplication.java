@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@MapperScan(basePackages = {"io.renren.dao","com.power.dao","com.power.dao.ex"})
+@MapperScan(basePackages = {"io.renren.dao","com.power.dao.**.**"})
 @ComponentScan(basePackages = {"com.power","io.renren"})
 public class RenrenApplication {
 
