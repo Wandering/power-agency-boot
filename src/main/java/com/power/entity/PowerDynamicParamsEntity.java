@@ -10,7 +10,7 @@ import java.util.Date;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-27 11:34:59
+ * @date 2017-06-29 09:13:50
  */
 public class PowerDynamicParamsEntity implements Serializable {
 	private static final long serialVersionUID = 1L;

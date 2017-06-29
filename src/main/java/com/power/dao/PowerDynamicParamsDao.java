@@ -7,7 +7,7 @@ import io.renren.dao.BaseDao;
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-27 11:34:59
+ * @date 2017-06-29 09:13:50
  */
 public interface PowerDynamicParamsDao extends BaseDao<PowerDynamicParamsEntity> {
 	

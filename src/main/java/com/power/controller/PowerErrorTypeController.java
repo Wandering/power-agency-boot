@@ -11,39 +11,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.power.entity.PowerDynamicParamsEntity;
-import com.power.service.PowerDynamicParamsService;
+import com.power.entity.PowerErrorTypeEntity;
+import com.power.service.PowerErrorTypeService;
 import io.renren.utils.PageUtils;
 import io.renren.utils.Query;
 import io.renren.utils.R;
 
 
 /**
- * 动态可配置参数表
+ * 异常类别表
  * 
  * @author chenshun
  * @email sunlightcs@gmail.com
- * @date 2017-06-29 09:13:50
+ * @date 2017-06-29 09:41:28
  */
 @RestController
-@RequestMapping("powerdynamicparams")
-public class PowerDynamicParamsController {
+@RequestMapping("powererrortype")
+public class PowerErrorTypeController {
 	@Autowired
-	private PowerDynamicParamsService powerDynamicParamsService;
+	private PowerErrorTypeService powerErrorTypeService;
 	
 	/**
 	 * 列表
 	 */
 	@RequestMapping("/list")
-	@RequiresPermissions("powerdynamicparams:list")
+	@RequiresPermissions("powererrortype:list")
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
 
-		List<PowerDynamicParamsEntity> powerDynamicParamsList = powerDynamicParamsService.queryList(query);
-		int total = powerDynamicParamsService.queryTotal(query);
+		List<PowerErrorTypeEntity> powerErrorTypeList = powerErrorTypeService.queryList(query);
+		int total = powerErrorTypeService.queryTotal(query);
 		
-		PageUtils pageUtil = new PageUtils(powerDynamicParamsList, total, query.getLimit(), query.getPage());
+		PageUtils pageUtil = new PageUtils(powerErrorTypeList, total, query.getLimit(), query.getPage());
 		
 		return R.ok().put("page", pageUtil);
 	}
@@ -53,20 +53,20 @@ public class PowerDynamicParamsController {
 	 * 信息
 	 */
 	@RequestMapping("/info/{id}")
-	@RequiresPermissions("powerdynamicparams:info")
+	@RequiresPermissions("powererrortype:info")
 	public R info(@PathVariable("id") Integer id){
-		PowerDynamicParamsEntity powerDynamicParams = powerDynamicParamsService.queryObject(id);
+		PowerErrorTypeEntity powerErrorType = powerErrorTypeService.queryObject(id);
 		
-		return R.ok().put("powerDynamicParams", powerDynamicParams);
+		return R.ok().put("powerErrorType", powerErrorType);
 	}
 	
 	/**
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	@RequiresPermissions("powerdynamicparams:save")
-	public R save(@RequestBody PowerDynamicParamsEntity powerDynamicParams){
-		powerDynamicParamsService.save(powerDynamicParams);
+	@RequiresPermissions("powererrortype:save")
+	public R save(@RequestBody PowerErrorTypeEntity powerErrorType){
+		powerErrorTypeService.save(powerErrorType);
 		
 		return R.ok();
 	}
@@ -75,9 +75,9 @@ public class PowerDynamicParamsController {
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("powerdynamicparams:update")
-	public R update(@RequestBody PowerDynamicParamsEntity powerDynamicParams){
-		powerDynamicParamsService.update(powerDynamicParams);
+	@RequiresPermissions("powererrortype:update")
+	public R update(@RequestBody PowerErrorTypeEntity powerErrorType){
+		powerErrorTypeService.update(powerErrorType);
 		
 		return R.ok();
 	}
@@ -86,9 +86,9 @@ public class PowerDynamicParamsController {
 	 * 删除
 	 */
 	@RequestMapping("/delete")
-	@RequiresPermissions("powerdynamicparams:delete")
+	@RequiresPermissions("powererrortype:delete")
 	public R delete(@RequestBody Integer[] ids){
-		powerDynamicParamsService.deleteBatch(ids);
+		powerErrorTypeService.deleteBatch(ids);
 		
 		return R.ok();
 	}

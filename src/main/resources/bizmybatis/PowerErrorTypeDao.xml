@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.PowerErrorTypeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.PowerErrorTypeEntity" id="powerErrorTypeMap">
+        <result property="id" column="id"/>
+        <result property="code" column="code"/>
+        <result property="lv" column="lv"/>
+        <result property="deviceType" column="device_type"/>
+        <result property="type" column="type"/>
+        <result property="note" column="note"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.PowerErrorTypeEntity">
+		select * from power_error_type where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.PowerErrorTypeEntity">
+		select * from power_error_type
+        <where>
+			                <!--  -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 错误码 -->
+                <if test="code != null and code.trim() != ''">
+                    AND code = #{code}
+                </if>
+			                <!-- 故障等级(故障紧急程度,现阶段默认1最高 以后考虑分级) -->
+                <if test="lv != null and lv.trim() != ''">
+                    AND lv = #{lv}
+                </if>
+			                <!-- 异常所属设备(1:桩2：充电宝) -->
+                <if test="deviceType != null and deviceType.trim() != ''">
+                    AND device_type = #{deviceType}
+                </if>
+			                <!-- 故障类别(1:硬严重（硬件故障） 2:软异常（软件故障）) -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 故障描述 -->
+                <if test="note != null and note.trim() != ''">
+                    AND note = #{note}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_error_type
+		<where>
+			                <!--  -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 错误码 -->
+                <if test="code != null and code.trim() != ''">
+                    AND code = #{code}
+                </if>
+			                <!-- 故障等级(故障紧急程度,现阶段默认1最高 以后考虑分级) -->
+                <if test="lv != null and lv.trim() != ''">
+                    AND lv = #{lv}
+                </if>
+			                <!-- 异常所属设备(1:桩2：充电宝) -->
+                <if test="deviceType != null and deviceType.trim() != ''">
+                    AND device_type = #{deviceType}
+                </if>
+			                <!-- 故障类别(1:硬严重（硬件故障） 2:软异常（软件故障）) -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 故障描述 -->
+                <if test="note != null and note.trim() != ''">
+                    AND note = #{note}
+                </if>
+			        </where> 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.PowerErrorTypeEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into power_error_type
+		(
+			`code`, 
+			`lv`, 
+			`device_type`, 
+			`type`, 
+			`note`
+		)
+		values
+		(
+			#{code}, 
+			#{lv}, 
+			#{deviceType}, 
+			#{type}, 
+			#{note}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.PowerErrorTypeEntity">
+		update power_error_type 
+		<set>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="lv != null">`lv` = #{lv}, </if>
+			<if test="deviceType != null">`device_type` = #{deviceType}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="note != null">`note` = #{note}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from power_error_type where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from power_error_type where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
