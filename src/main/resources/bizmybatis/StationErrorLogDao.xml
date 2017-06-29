@@ -22,31 +22,31 @@
 		select * from station_error_log
         <where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩 -->
-                <if test="deviceId!=null and deviceId.trim()!=null">
+                <if test="deviceId != null and deviceId.trim() != ''">
                     AND device_id = #{deviceId}
                 </if>
 			                <!-- 卡槽号 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 错误类型(需要处理，不需要处理[暂定]) -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 错误码 -->
-                <if test="errorCode!=null and errorCode.trim()!=null">
+                <if test="errorCode != null and errorCode.trim() != ''">
                     AND error_code = #{errorCode}
                 </if>
 			                <!-- 上报时间 -->
-                <if test="upTime!=null and upTime.trim()!=null">
+                <if test="upTime != null and upTime.trim() != ''">
                     AND up_time = #{upTime}
                 </if>
 			                <!-- 当前处理状态(被处理1，未处理0) -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			        </where>
@@ -67,31 +67,31 @@
 		select count(*) from station_error_log
 		<where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩 -->
-                <if test="deviceId!=null and deviceId.trim()!=null">
+                <if test="deviceId != null and deviceId.trim() != ''">
                     AND device_id = #{deviceId}
                 </if>
 			                <!-- 卡槽号 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 错误类型(需要处理，不需要处理[暂定]) -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 错误码 -->
-                <if test="errorCode!=null and errorCode.trim()!=null">
+                <if test="errorCode != null and errorCode.trim() != ''">
                     AND error_code = #{errorCode}
                 </if>
 			                <!-- 上报时间 -->
-                <if test="upTime!=null and upTime.trim()!=null">
+                <if test="upTime != null and upTime.trim() != ''">
                     AND up_time = #{upTime}
                 </if>
 			                <!-- 当前处理状态(被处理1，未处理0) -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			        </where> 

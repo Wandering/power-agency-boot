@@ -28,55 +28,55 @@
 		select * from power_bank
         <where>
 			                <!-- ######充电宝表###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 用户ID，充电宝目前被哪个用户借用 -->
-                <if test="customer!=null and customer.trim()!=null">
+                <if test="customer != null and customer.trim() != ''">
                     AND customer = #{customer}
                 </if>
 			                <!-- 充电桩ID，充电宝目前位于哪个充电桩 -->
-                <if test="station!=null and station.trim()!=null">
+                <if test="station != null and station.trim() != ''">
                     AND station = #{station}
                 </if>
 			                <!-- 充电桩卡槽号，充电宝目前位于哪个卡槽中 -->
-                <if test="position!=null and position.trim()!=null">
+                <if test="position != null and position.trim() != ''">
                     AND position = #{position}
                 </if>
 			                <!-- 充电宝IMEI号 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 充电宝型号 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 服务商 -->
-                <if test="agency!=null and agency.trim()!=null">
+                <if test="agency != null and agency.trim() != ''">
                     AND agency = #{agency}
                 </if>
 			                <!-- 充电宝状态，在卡槽中IN_POSITION，借出RENT -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 充电宝被借出次数 -->
-                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
 			        </where>
@@ -97,55 +97,55 @@
 		select count(*) from power_bank
 		<where>
 			                <!-- ######充电宝表###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 用户ID，充电宝目前被哪个用户借用 -->
-                <if test="customer!=null and customer.trim()!=null">
+                <if test="customer != null and customer.trim() != ''">
                     AND customer = #{customer}
                 </if>
 			                <!-- 充电桩ID，充电宝目前位于哪个充电桩 -->
-                <if test="station!=null and station.trim()!=null">
+                <if test="station != null and station.trim() != ''">
                     AND station = #{station}
                 </if>
 			                <!-- 充电桩卡槽号，充电宝目前位于哪个卡槽中 -->
-                <if test="position!=null and position.trim()!=null">
+                <if test="position != null and position.trim() != ''">
                     AND position = #{position}
                 </if>
 			                <!-- 充电宝IMEI号 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 充电宝型号 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 服务商 -->
-                <if test="agency!=null and agency.trim()!=null">
+                <if test="agency != null and agency.trim() != ''">
                     AND agency = #{agency}
                 </if>
 			                <!-- 充电宝状态，在卡槽中IN_POSITION，借出RENT -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 充电宝被借出次数 -->
-                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
 			        </where> 

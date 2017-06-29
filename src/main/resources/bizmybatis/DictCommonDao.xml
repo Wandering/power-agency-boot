@@ -20,23 +20,23 @@
 		select * from dict_common
         <where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 代码 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 名称 -->
-                <if test="name!=null and name.trim()!=null">
+                <if test="name != null and name.trim() != ''">
                     AND name = #{name}
                 </if>
 			                <!-- 字典类型 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 字典描述 -->
-                <if test="note!=null and note.trim()!=null">
+                <if test="note != null and note.trim() != ''">
                     AND note = #{note}
                 </if>
 			        </where>
@@ -57,23 +57,23 @@
 		select count(*) from dict_common
 		<where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 代码 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 名称 -->
-                <if test="name!=null and name.trim()!=null">
+                <if test="name != null and name.trim() != ''">
                     AND name = #{name}
                 </if>
 			                <!-- 字典类型 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 字典描述 -->
-                <if test="note!=null and note.trim()!=null">
+                <if test="note != null and note.trim() != ''">
                     AND note = #{note}
                 </if>
 			        </where> 

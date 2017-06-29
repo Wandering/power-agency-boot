@@ -32,71 +32,71 @@
 		select * from station_model
         <where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩型号 -->
-                <if test="model!=null and model.trim()!=null">
+                <if test="model != null and model.trim() != ''">
                     AND model = #{model}
                 </if>
 			                <!-- 卡槽数量 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 通讯方式 -->
-                <if test="channel!=null and channel.trim()!=null">
+                <if test="channel != null and channel.trim() != ''">
                     AND channel = #{channel}
                 </if>
 			                <!-- 输入电压 -->
-                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                <if test="inputVoltage != null and inputVoltage.trim() != ''">
                     AND input_voltage = #{inputVoltage}
                 </if>
 			                <!-- 最大输入电流 -->
-                <if test="maxInputCurrent!=null and maxInputCurrent.trim()!=null">
+                <if test="maxInputCurrent != null and maxInputCurrent.trim() != ''">
                     AND max_input_current = #{maxInputCurrent}
                 </if>
 			                <!-- 最大输入功耗 -->
-                <if test="maxInputPower!=null and maxInputPower.trim()!=null">
+                <if test="maxInputPower != null and maxInputPower.trim() != ''">
                     AND max_input_power = #{maxInputPower}
                 </if>
 			                <!-- 静态输入功耗 -->
-                <if test="staticInputPower!=null and staticInputPower.trim()!=null">
+                <if test="staticInputPower != null and staticInputPower.trim() != ''">
                     AND static_input_power = #{staticInputPower}
                 </if>
 			                <!-- 认证 -->
-                <if test="authentication!=null and authentication.trim()!=null">
+                <if test="authentication != null and authentication.trim() != ''">
                     AND authentication = #{authentication}
                 </if>
 			                <!-- 尺寸 -->
-                <if test="size!=null and size.trim()!=null">
+                <if test="size != null and size.trim() != ''">
                     AND size = #{size}
                 </if>
 			                <!-- NFC -->
-                <if test="isnfc!=null and isnfc.trim()!=null">
+                <if test="isnfc != null and isnfc.trim() != ''">
                     AND isNFC = #{isnfc}
                 </if>
 			                <!-- 出仓方式 -->
-                <if test="deliveryModel!=null and deliveryModel.trim()!=null">
+                <if test="deliveryModel != null and deliveryModel.trim() != ''">
                     AND delivery_model = #{deliveryModel}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                <if test="manufacturer != null and manufacturer.trim() != ''">
                     AND manufacturer = #{manufacturer}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where>
@@ -117,71 +117,71 @@
 		select count(*) from station_model
 		<where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩型号 -->
-                <if test="model!=null and model.trim()!=null">
+                <if test="model != null and model.trim() != ''">
                     AND model = #{model}
                 </if>
 			                <!-- 卡槽数量 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 通讯方式 -->
-                <if test="channel!=null and channel.trim()!=null">
+                <if test="channel != null and channel.trim() != ''">
                     AND channel = #{channel}
                 </if>
 			                <!-- 输入电压 -->
-                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                <if test="inputVoltage != null and inputVoltage.trim() != ''">
                     AND input_voltage = #{inputVoltage}
                 </if>
 			                <!-- 最大输入电流 -->
-                <if test="maxInputCurrent!=null and maxInputCurrent.trim()!=null">
+                <if test="maxInputCurrent != null and maxInputCurrent.trim() != ''">
                     AND max_input_current = #{maxInputCurrent}
                 </if>
 			                <!-- 最大输入功耗 -->
-                <if test="maxInputPower!=null and maxInputPower.trim()!=null">
+                <if test="maxInputPower != null and maxInputPower.trim() != ''">
                     AND max_input_power = #{maxInputPower}
                 </if>
 			                <!-- 静态输入功耗 -->
-                <if test="staticInputPower!=null and staticInputPower.trim()!=null">
+                <if test="staticInputPower != null and staticInputPower.trim() != ''">
                     AND static_input_power = #{staticInputPower}
                 </if>
 			                <!-- 认证 -->
-                <if test="authentication!=null and authentication.trim()!=null">
+                <if test="authentication != null and authentication.trim() != ''">
                     AND authentication = #{authentication}
                 </if>
 			                <!-- 尺寸 -->
-                <if test="size!=null and size.trim()!=null">
+                <if test="size != null and size.trim() != ''">
                     AND size = #{size}
                 </if>
 			                <!-- NFC -->
-                <if test="isnfc!=null and isnfc.trim()!=null">
+                <if test="isnfc != null and isnfc.trim() != ''">
                     AND isNFC = #{isnfc}
                 </if>
 			                <!-- 出仓方式 -->
-                <if test="deliveryModel!=null and deliveryModel.trim()!=null">
+                <if test="deliveryModel != null and deliveryModel.trim() != ''">
                     AND delivery_model = #{deliveryModel}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                <if test="manufacturer != null and manufacturer.trim() != ''">
                     AND manufacturer = #{manufacturer}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where> 

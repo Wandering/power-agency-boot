@@ -41,107 +41,107 @@
 		select * from power_station
         <where>
 			                <!-- ######充电桩表###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 服务商 -->
-                <if test="agent!=null and agent.trim()!=null">
+                <if test="agent != null and agent.trim() != ''">
                     AND agent = #{agent}
                 </if>
 			                <!-- 充电桩ID -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 充电桩网点地址 -->
-                <if test="address!=null and address.trim()!=null">
+                <if test="address != null and address.trim() != ''">
                     AND address = #{address}
                 </if>
 			                <!-- 表region.地点ID(如深圳南山1000103) -->
-                <if test="region!=null and region.trim()!=null">
+                <if test="region != null and region.trim() != ''">
                     AND region = #{region}
                 </if>
 			                <!-- 网点地址对应纬度 -->
-                <if test="latitude!=null and latitude.trim()!=null">
+                <if test="latitude != null and latitude.trim() != ''">
                     AND latitude = #{latitude}
                 </if>
 			                <!-- 网点地址对应经度 -->
-                <if test="longitude!=null and longitude.trim()!=null">
+                <if test="longitude != null and longitude.trim() != ''">
                     AND longitude = #{longitude}
                 </if>
 			                <!-- 维修人员/负责人 -->
-                <if test="wxUser!=null and wxUser.trim()!=null">
+                <if test="wxUser != null and wxUser.trim() != ''">
                     AND wx_user = #{wxUser}
                 </if>
 			                <!-- 维修人员联系电话 -->
-                <if test="wxUserPhone!=null and wxUserPhone.trim()!=null">
+                <if test="wxUserPhone != null and wxUserPhone.trim() != ''">
                     AND wx_user_phone = #{wxUserPhone}
                 </if>
 			                <!--  -->
-                <if test="dimensionCode!=null and dimensionCode.trim()!=null">
+                <if test="dimensionCode != null and dimensionCode.trim() != ''">
                     AND dimension_code = #{dimensionCode}
                 </if>
 			                <!-- 充电桩状态，启用（正常运营） or 禁用 or 审核  -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!-- 生产日期 -->
-                <if test="productDt!=null and productDt.trim()!=null">
+                <if test="productDt != null and productDt.trim() != ''">
                     AND product_dt = #{productDt}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="productCreator!=null and productCreator.trim()!=null">
+                <if test="productCreator != null and productCreator.trim() != ''">
                     AND product_creator = #{productCreator}
                 </if>
 			                <!-- 充电桩网点名称 -->
-                <if test="shopName!=null and shopName.trim()!=null">
+                <if test="shopName != null and shopName.trim() != ''">
                     AND shop_name = #{shopName}
                 </if>
 			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
-                <if test="connectType!=null and connectType.trim()!=null">
+                <if test="connectType != null and connectType.trim() != ''">
                     AND connect_type = #{connectType}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 开始营业时间 -->
-                <if test="shopStartDt!=null and shopStartDt.trim()!=null">
+                <if test="shopStartDt != null and shopStartDt.trim() != ''">
                     AND shop_start_dt = #{shopStartDt}
                 </if>
 			                <!-- 结束营业时间 -->
-                <if test="shopEndDt!=null and shopEndDt.trim()!=null">
+                <if test="shopEndDt != null and shopEndDt.trim() != ''">
                     AND shop_end_dt = #{shopEndDt}
                 </if>
 			                <!--  -->
-                <if test="activeBankNo!=null and activeBankNo.trim()!=null">
+                <if test="activeBankNo != null and activeBankNo.trim() != ''">
                     AND active_bank_no = #{activeBankNo}
                 </if>
 			                <!-- 网点联系电话 -->
-                <if test="shopPhone!=null and shopPhone.trim()!=null">
+                <if test="shopPhone != null and shopPhone.trim() != ''">
                     AND shop_phone = #{shopPhone}
                 </if>
 			                <!-- 充电桩在网点的摆放位置，如收银台 -->
-                <if test="shopStationPoint!=null and shopStationPoint.trim()!=null">
+                <if test="shopStationPoint != null and shopStationPoint.trim() != ''">
                     AND shop_station_point = #{shopStationPoint}
                 </if>
 			                <!-- 收费模式 -->
-                <if test="feescale!=null and feescale.trim()!=null">
+                <if test="feescale != null and feescale.trim() != ''">
                     AND feescale = #{feescale}
                 </if>
 			                <!-- 最后编辑人员 -->
-                <if test="lasteditor!=null and lasteditor.trim()!=null">
+                <if test="lasteditor != null and lasteditor.trim() != ''">
                     AND lastEditor = #{lasteditor}
                 </if>
 			        </where>
@@ -162,107 +162,107 @@
 		select count(*) from power_station
 		<where>
 			                <!-- ######充电桩表###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 服务商 -->
-                <if test="agent!=null and agent.trim()!=null">
+                <if test="agent != null and agent.trim() != ''">
                     AND agent = #{agent}
                 </if>
 			                <!-- 充电桩ID -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 充电桩网点地址 -->
-                <if test="address!=null and address.trim()!=null">
+                <if test="address != null and address.trim() != ''">
                     AND address = #{address}
                 </if>
 			                <!-- 表region.地点ID(如深圳南山1000103) -->
-                <if test="region!=null and region.trim()!=null">
+                <if test="region != null and region.trim() != ''">
                     AND region = #{region}
                 </if>
 			                <!-- 网点地址对应纬度 -->
-                <if test="latitude!=null and latitude.trim()!=null">
+                <if test="latitude != null and latitude.trim() != ''">
                     AND latitude = #{latitude}
                 </if>
 			                <!-- 网点地址对应经度 -->
-                <if test="longitude!=null and longitude.trim()!=null">
+                <if test="longitude != null and longitude.trim() != ''">
                     AND longitude = #{longitude}
                 </if>
 			                <!-- 维修人员/负责人 -->
-                <if test="wxUser!=null and wxUser.trim()!=null">
+                <if test="wxUser != null and wxUser.trim() != ''">
                     AND wx_user = #{wxUser}
                 </if>
 			                <!-- 维修人员联系电话 -->
-                <if test="wxUserPhone!=null and wxUserPhone.trim()!=null">
+                <if test="wxUserPhone != null and wxUserPhone.trim() != ''">
                     AND wx_user_phone = #{wxUserPhone}
                 </if>
 			                <!--  -->
-                <if test="dimensionCode!=null and dimensionCode.trim()!=null">
+                <if test="dimensionCode != null and dimensionCode.trim() != ''">
                     AND dimension_code = #{dimensionCode}
                 </if>
 			                <!-- 充电桩状态，启用（正常运营） or 禁用 or 审核  -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!-- 生产日期 -->
-                <if test="productDt!=null and productDt.trim()!=null">
+                <if test="productDt != null and productDt.trim() != ''">
                     AND product_dt = #{productDt}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="productCreator!=null and productCreator.trim()!=null">
+                <if test="productCreator != null and productCreator.trim() != ''">
                     AND product_creator = #{productCreator}
                 </if>
 			                <!-- 充电桩网点名称 -->
-                <if test="shopName!=null and shopName.trim()!=null">
+                <if test="shopName != null and shopName.trim() != ''">
                     AND shop_name = #{shopName}
                 </if>
 			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
-                <if test="connectType!=null and connectType.trim()!=null">
+                <if test="connectType != null and connectType.trim() != ''">
                     AND connect_type = #{connectType}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 开始营业时间 -->
-                <if test="shopStartDt!=null and shopStartDt.trim()!=null">
+                <if test="shopStartDt != null and shopStartDt.trim() != ''">
                     AND shop_start_dt = #{shopStartDt}
                 </if>
 			                <!-- 结束营业时间 -->
-                <if test="shopEndDt!=null and shopEndDt.trim()!=null">
+                <if test="shopEndDt != null and shopEndDt.trim() != ''">
                     AND shop_end_dt = #{shopEndDt}
                 </if>
 			                <!--  -->
-                <if test="activeBankNo!=null and activeBankNo.trim()!=null">
+                <if test="activeBankNo != null and activeBankNo.trim() != ''">
                     AND active_bank_no = #{activeBankNo}
                 </if>
 			                <!-- 网点联系电话 -->
-                <if test="shopPhone!=null and shopPhone.trim()!=null">
+                <if test="shopPhone != null and shopPhone.trim() != ''">
                     AND shop_phone = #{shopPhone}
                 </if>
 			                <!-- 充电桩在网点的摆放位置，如收银台 -->
-                <if test="shopStationPoint!=null and shopStationPoint.trim()!=null">
+                <if test="shopStationPoint != null and shopStationPoint.trim() != ''">
                     AND shop_station_point = #{shopStationPoint}
                 </if>
 			                <!-- 收费模式 -->
-                <if test="feescale!=null and feescale.trim()!=null">
+                <if test="feescale != null and feescale.trim() != ''">
                     AND feescale = #{feescale}
                 </if>
 			                <!-- 最后编辑人员 -->
-                <if test="lasteditor!=null and lasteditor.trim()!=null">
+                <if test="lasteditor != null and lasteditor.trim() != ''">
                     AND lastEditor = #{lasteditor}
                 </if>
 			        </where> 

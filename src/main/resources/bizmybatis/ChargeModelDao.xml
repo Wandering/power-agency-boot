@@ -31,67 +31,67 @@
 		select * from charge_model
         <where>
 			                <!-- ######收费模式###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 模式名称 -->
-                <if test="name!=null and name.trim()!=null">
+                <if test="name != null and name.trim() != ''">
                     AND name = #{name}
                 </if>
 			                <!-- 计费机制 0 24小时 1 自然日制 -->
-                <if test="chargeDay!=null and chargeDay.trim()!=null">
+                <if test="chargeDay != null and chargeDay.trim() != ''">
                     AND charge_day = #{chargeDay}
                 </if>
 			                <!-- 每次需要充值多少 -->
-                <if test="firstDeposit!=null and firstDeposit.trim()!=null">
+                <if test="firstDeposit != null and firstDeposit.trim() != ''">
                     AND first_deposit = #{firstDeposit}
                 </if>
 			                <!-- 账号本金最少值 -->
-                <if test="minDeposit!=null and minDeposit.trim()!=null">
+                <if test="minDeposit != null and minDeposit.trim() != ''">
                     AND min_deposit = #{minDeposit}
                 </if>
 			                <!-- 年费 -->
-                <if test="yearFee!=null and yearFee.trim()!=null">
+                <if test="yearFee != null and yearFee.trim() != ''">
                     AND year_fee = #{yearFee}
                 </if>
 			                <!-- 免费时长（分钟） -->
-                <if test="freeTime!=null and freeTime.trim()!=null">
+                <if test="freeTime != null and freeTime.trim() != ''">
                     AND free_time = #{freeTime}
                 </if>
 			                <!-- 逾期单价（元/时） -->
-                <if test="overdueFee!=null and overdueFee.trim()!=null">
+                <if test="overdueFee != null and overdueFee.trim() != ''">
                     AND overdue_fee = #{overdueFee}
                 </if>
 			                <!-- 封顶（元/天） -->
-                <if test="maxOverdueFee!=null and maxOverdueFee.trim()!=null">
+                <if test="maxOverdueFee != null and maxOverdueFee.trim() != ''">
                     AND max_overdue_fee = #{maxOverdueFee}
                 </if>
-			                <!-- 还电缓冲时间 单位s -->
-                <if test="bufferTime!=null and bufferTime.trim()!=null">
+			                <!-- 还电缓冲时间 单位分钟 -->
+                <if test="bufferTime != null and bufferTime.trim() != ''">
                     AND buffer_time = #{bufferTime}
                 </if>
 			                <!-- 扣费比例 -->
-                <if test="borrowScale!=null and borrowScale.trim()!=null">
+                <if test="borrowScale != null and borrowScale.trim() != ''">
                     AND borrow_scale = #{borrowScale}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 订单免费时长 -->
-                <if test="orderFreeTime!=null and orderFreeTime.trim()!=null">
+                <if test="orderFreeTime != null and orderFreeTime.trim() != ''">
                     AND order_free_time = #{orderFreeTime}
                 </if>
 			        </where>
@@ -112,67 +112,67 @@
 		select count(*) from charge_model
 		<where>
 			                <!-- ######收费模式###### -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 模式名称 -->
-                <if test="name!=null and name.trim()!=null">
+                <if test="name != null and name.trim() != ''">
                     AND name = #{name}
                 </if>
 			                <!-- 计费机制 0 24小时 1 自然日制 -->
-                <if test="chargeDay!=null and chargeDay.trim()!=null">
+                <if test="chargeDay != null and chargeDay.trim() != ''">
                     AND charge_day = #{chargeDay}
                 </if>
 			                <!-- 每次需要充值多少 -->
-                <if test="firstDeposit!=null and firstDeposit.trim()!=null">
+                <if test="firstDeposit != null and firstDeposit.trim() != ''">
                     AND first_deposit = #{firstDeposit}
                 </if>
 			                <!-- 账号本金最少值 -->
-                <if test="minDeposit!=null and minDeposit.trim()!=null">
+                <if test="minDeposit != null and minDeposit.trim() != ''">
                     AND min_deposit = #{minDeposit}
                 </if>
 			                <!-- 年费 -->
-                <if test="yearFee!=null and yearFee.trim()!=null">
+                <if test="yearFee != null and yearFee.trim() != ''">
                     AND year_fee = #{yearFee}
                 </if>
 			                <!-- 免费时长（分钟） -->
-                <if test="freeTime!=null and freeTime.trim()!=null">
+                <if test="freeTime != null and freeTime.trim() != ''">
                     AND free_time = #{freeTime}
                 </if>
 			                <!-- 逾期单价（元/时） -->
-                <if test="overdueFee!=null and overdueFee.trim()!=null">
+                <if test="overdueFee != null and overdueFee.trim() != ''">
                     AND overdue_fee = #{overdueFee}
                 </if>
 			                <!-- 封顶（元/天） -->
-                <if test="maxOverdueFee!=null and maxOverdueFee.trim()!=null">
+                <if test="maxOverdueFee != null and maxOverdueFee.trim() != ''">
                     AND max_overdue_fee = #{maxOverdueFee}
                 </if>
-			                <!-- 还电缓冲时间 单位s -->
-                <if test="bufferTime!=null and bufferTime.trim()!=null">
+			                <!-- 还电缓冲时间 单位分钟 -->
+                <if test="bufferTime != null and bufferTime.trim() != ''">
                     AND buffer_time = #{bufferTime}
                 </if>
 			                <!-- 扣费比例 -->
-                <if test="borrowScale!=null and borrowScale.trim()!=null">
+                <if test="borrowScale != null and borrowScale.trim() != ''">
                     AND borrow_scale = #{borrowScale}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			                <!-- 订单免费时长 -->
-                <if test="orderFreeTime!=null and orderFreeTime.trim()!=null">
+                <if test="orderFreeTime != null and orderFreeTime.trim() != ''">
                     AND order_free_time = #{orderFreeTime}
                 </if>
 			        </where> 

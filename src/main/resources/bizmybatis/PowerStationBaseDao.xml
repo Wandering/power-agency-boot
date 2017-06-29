@@ -39,99 +39,99 @@
 		select * from power_station_base
         <where>
 			                <!-- 主键(不参与关联) -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩code，充电桩IMEI编号 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
-                <if test="channel!=null and channel.trim()!=null">
+                <if test="channel != null and channel.trim() != ''">
                     AND channel = #{channel}
                 </if>
 			                <!-- 充电桩型号 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 服务商id(由哪个服务商提供服务，默认是1知路) -->
-                <if test="facilitatorId!=null and facilitatorId.trim()!=null">
+                <if test="facilitatorId != null and facilitatorId.trim() != ''">
                     AND facilitator_id = #{facilitatorId}
                 </if>
 			                <!-- 充电桩槽位 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 充电桩错误状态：0、正常 -->
-                <if test="errorCode!=null and errorCode.trim()!=null">
+                <if test="errorCode != null and errorCode.trim() != ''">
                     AND error_code = #{errorCode}
                 </if>
 			                <!-- 是否同步到知路服务器(1：是 0：否) -->
-                <if test="isSync!=null and isSync.trim()!=null">
+                <if test="isSync != null and isSync.trim() != ''">
                     AND is_sync = #{isSync}
                 </if>
 			                <!-- 是否正在被使用(1，正在使用  2未使用) -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!-- 异常槽位数量 -->
-                <if test="errorSlot!=null and errorSlot.trim()!=null">
+                <if test="errorSlot != null and errorSlot.trim() != ''">
                     AND error_slot = #{errorSlot}
                 </if>
 			                <!-- 空闲槽位 -->
-                <if test="free!=null and free.trim()!=null">
+                <if test="free != null and free.trim() != ''">
                     AND free = #{free}
                 </if>
 			                <!-- 可借(记录当前充电中状态，减少每次统计) -->
-                <if test="canBorrow!=null and canBorrow.trim()!=null">
+                <if test="canBorrow != null and canBorrow.trim() != ''">
                     AND can_borrow = #{canBorrow}
                 </if>
 			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
-                <if test="stateCode!=null and stateCode.trim()!=null">
+                <if test="stateCode != null and stateCode.trim() != ''">
                     AND state_code = #{stateCode}
                 </if>
 			                <!-- 总共借出次数 -->
-                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
 			                <!-- 编辑人 -->
-                <if test="editName!=null and editName.trim()!=null">
+                <if test="editName != null and editName.trim() != ''">
                     AND edit_name = #{editName}
                 </if>
 			                <!-- 编辑人ID -->
-                <if test="editId!=null and editId.trim()!=null">
+                <if test="editId != null and editId.trim() != ''">
                     AND edit_id = #{editId}
                 </if>
 			                <!-- 批次 -->
-                <if test="batch!=null and batch.trim()!=null">
+                <if test="batch != null and batch.trim() != ''">
                     AND batch = #{batch}
                 </if>
 			                <!-- 备注 -->
-                <if test="note!=null and note.trim()!=null">
+                <if test="note != null and note.trim() != ''">
                     AND note = #{note}
                 </if>
 			                <!-- 生产日期 -->
-                <if test="production!=null and production.trim()!=null">
+                <if test="production != null and production.trim() != ''">
                     AND production = #{production}
                 </if>
 			                <!-- 运营商ID -->
-                <if test="agencyid!=null and agencyid.trim()!=null">
+                <if test="agencyid != null and agencyid.trim() != ''">
                     AND agencyId = #{agencyid}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where>
@@ -152,99 +152,99 @@
 		select count(*) from power_station_base
 		<where>
 			                <!-- 主键(不参与关联) -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电桩code，充电桩IMEI编号 -->
-                <if test="code!=null and code.trim()!=null">
+                <if test="code != null and code.trim() != ''">
                     AND code = #{code}
                 </if>
 			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
-                <if test="channel!=null and channel.trim()!=null">
+                <if test="channel != null and channel.trim() != ''">
                     AND channel = #{channel}
                 </if>
 			                <!-- 充电桩型号 -->
-                <if test="type!=null and type.trim()!=null">
+                <if test="type != null and type.trim() != ''">
                     AND type = #{type}
                 </if>
 			                <!-- 服务商id(由哪个服务商提供服务，默认是1知路) -->
-                <if test="facilitatorId!=null and facilitatorId.trim()!=null">
+                <if test="facilitatorId != null and facilitatorId.trim() != ''">
                     AND facilitator_id = #{facilitatorId}
                 </if>
 			                <!-- 充电桩槽位 -->
-                <if test="slotNo!=null and slotNo.trim()!=null">
+                <if test="slotNo != null and slotNo.trim() != ''">
                     AND slot_no = #{slotNo}
                 </if>
 			                <!-- 充电桩错误状态：0、正常 -->
-                <if test="errorCode!=null and errorCode.trim()!=null">
+                <if test="errorCode != null and errorCode.trim() != ''">
                     AND error_code = #{errorCode}
                 </if>
 			                <!-- 是否同步到知路服务器(1：是 0：否) -->
-                <if test="isSync!=null and isSync.trim()!=null">
+                <if test="isSync != null and isSync.trim() != ''">
                     AND is_sync = #{isSync}
                 </if>
 			                <!-- 是否正在被使用(1，正在使用  2未使用) -->
-                <if test="status!=null and status.trim()!=null">
+                <if test="status != null and status.trim() != ''">
                     AND status = #{status}
                 </if>
 			                <!-- 异常槽位数量 -->
-                <if test="errorSlot!=null and errorSlot.trim()!=null">
+                <if test="errorSlot != null and errorSlot.trim() != ''">
                     AND error_slot = #{errorSlot}
                 </if>
 			                <!-- 空闲槽位 -->
-                <if test="free!=null and free.trim()!=null">
+                <if test="free != null and free.trim() != ''">
                     AND free = #{free}
                 </if>
 			                <!-- 可借(记录当前充电中状态，减少每次统计) -->
-                <if test="canBorrow!=null and canBorrow.trim()!=null">
+                <if test="canBorrow != null and canBorrow.trim() != ''">
                     AND can_borrow = #{canBorrow}
                 </if>
 			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
-                <if test="stateCode!=null and stateCode.trim()!=null">
+                <if test="stateCode != null and stateCode.trim() != ''">
                     AND state_code = #{stateCode}
                 </if>
 			                <!-- 总共借出次数 -->
-                <if test="borrowCount!=null and borrowCount.trim()!=null">
+                <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
 			                <!-- 编辑人 -->
-                <if test="editName!=null and editName.trim()!=null">
+                <if test="editName != null and editName.trim() != ''">
                     AND edit_name = #{editName}
                 </if>
 			                <!-- 编辑人ID -->
-                <if test="editId!=null and editId.trim()!=null">
+                <if test="editId != null and editId.trim() != ''">
                     AND edit_id = #{editId}
                 </if>
 			                <!-- 批次 -->
-                <if test="batch!=null and batch.trim()!=null">
+                <if test="batch != null and batch.trim() != ''">
                     AND batch = #{batch}
                 </if>
 			                <!-- 备注 -->
-                <if test="note!=null and note.trim()!=null">
+                <if test="note != null and note.trim() != ''">
                     AND note = #{note}
                 </if>
 			                <!-- 生产日期 -->
-                <if test="production!=null and production.trim()!=null">
+                <if test="production != null and production.trim() != ''">
                     AND production = #{production}
                 </if>
 			                <!-- 运营商ID -->
-                <if test="agencyid!=null and agencyid.trim()!=null">
+                <if test="agencyid != null and agencyid.trim() != ''">
                     AND agencyId = #{agencyid}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where> 

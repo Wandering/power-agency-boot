@@ -32,71 +32,71 @@
 		select * from power_model
         <where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电宝型号 -->
-                <if test="model!=null and model.trim()!=null">
+                <if test="model != null and model.trim() != ''">
                     AND model = #{model}
                 </if>
 			                <!-- 电池容量 -->
-                <if test="capacity!=null and capacity.trim()!=null">
+                <if test="capacity != null and capacity.trim() != ''">
                     AND capacity = #{capacity}
                 </if>
 			                <!-- 电芯类型 -->
-                <if test="coreType!=null and coreType.trim()!=null">
+                <if test="coreType != null and coreType.trim() != ''">
                     AND core_type = #{coreType}
                 </if>
 			                <!-- 输入电流 -->
-                <if test="inputCurrent!=null and inputCurrent.trim()!=null">
+                <if test="inputCurrent != null and inputCurrent.trim() != ''">
                     AND input_current = #{inputCurrent}
                 </if>
 			                <!-- 输出电流 -->
-                <if test="outputCurrent!=null and outputCurrent.trim()!=null">
+                <if test="outputCurrent != null and outputCurrent.trim() != ''">
                     AND output_current = #{outputCurrent}
                 </if>
 			                <!-- 输入电压 -->
-                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                <if test="inputVoltage != null and inputVoltage.trim() != ''">
                     AND input_voltage = #{inputVoltage}
                 </if>
 			                <!-- 输出电压 -->
-                <if test="outputVoltage!=null and outputVoltage.trim()!=null">
+                <if test="outputVoltage != null and outputVoltage.trim() != ''">
                     AND output_voltage = #{outputVoltage}
                 </if>
 			                <!-- 认证 -->
-                <if test="authentication!=null and authentication.trim()!=null">
+                <if test="authentication != null and authentication.trim() != ''">
                     AND authentication = #{authentication}
                 </if>
 			                <!-- 尺寸 -->
-                <if test="size!=null and size.trim()!=null">
+                <if test="size != null and size.trim() != ''">
                     AND size = #{size}
                 </if>
 			                <!-- NFC -->
-                <if test="isnfc!=null and isnfc.trim()!=null">
+                <if test="isnfc != null and isnfc.trim() != ''">
                     AND isNFC = #{isnfc}
                 </if>
 			                <!-- 充电线 -->
-                <if test="chargeLine!=null and chargeLine.trim()!=null">
+                <if test="chargeLine != null and chargeLine.trim() != ''">
                     AND charge_line = #{chargeLine}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                <if test="manufacturer != null and manufacturer.trim() != ''">
                     AND manufacturer = #{manufacturer}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where>
@@ -117,71 +117,71 @@
 		select count(*) from power_model
 		<where>
 			                <!--  -->
-                <if test="id!=null and id.trim()!=null">
+                <if test="id != null and id.trim() != ''">
                     AND id = #{id}
                 </if>
 			                <!-- 充电宝型号 -->
-                <if test="model!=null and model.trim()!=null">
+                <if test="model != null and model.trim() != ''">
                     AND model = #{model}
                 </if>
 			                <!-- 电池容量 -->
-                <if test="capacity!=null and capacity.trim()!=null">
+                <if test="capacity != null and capacity.trim() != ''">
                     AND capacity = #{capacity}
                 </if>
 			                <!-- 电芯类型 -->
-                <if test="coreType!=null and coreType.trim()!=null">
+                <if test="coreType != null and coreType.trim() != ''">
                     AND core_type = #{coreType}
                 </if>
 			                <!-- 输入电流 -->
-                <if test="inputCurrent!=null and inputCurrent.trim()!=null">
+                <if test="inputCurrent != null and inputCurrent.trim() != ''">
                     AND input_current = #{inputCurrent}
                 </if>
 			                <!-- 输出电流 -->
-                <if test="outputCurrent!=null and outputCurrent.trim()!=null">
+                <if test="outputCurrent != null and outputCurrent.trim() != ''">
                     AND output_current = #{outputCurrent}
                 </if>
 			                <!-- 输入电压 -->
-                <if test="inputVoltage!=null and inputVoltage.trim()!=null">
+                <if test="inputVoltage != null and inputVoltage.trim() != ''">
                     AND input_voltage = #{inputVoltage}
                 </if>
 			                <!-- 输出电压 -->
-                <if test="outputVoltage!=null and outputVoltage.trim()!=null">
+                <if test="outputVoltage != null and outputVoltage.trim() != ''">
                     AND output_voltage = #{outputVoltage}
                 </if>
 			                <!-- 认证 -->
-                <if test="authentication!=null and authentication.trim()!=null">
+                <if test="authentication != null and authentication.trim() != ''">
                     AND authentication = #{authentication}
                 </if>
 			                <!-- 尺寸 -->
-                <if test="size!=null and size.trim()!=null">
+                <if test="size != null and size.trim() != ''">
                     AND size = #{size}
                 </if>
 			                <!-- NFC -->
-                <if test="isnfc!=null and isnfc.trim()!=null">
+                <if test="isnfc != null and isnfc.trim() != ''">
                     AND isNFC = #{isnfc}
                 </if>
 			                <!-- 充电线 -->
-                <if test="chargeLine!=null and chargeLine.trim()!=null">
+                <if test="chargeLine != null and chargeLine.trim() != ''">
                     AND charge_line = #{chargeLine}
                 </if>
 			                <!-- 生产厂家 -->
-                <if test="manufacturer!=null and manufacturer.trim()!=null">
+                <if test="manufacturer != null and manufacturer.trim() != ''">
                     AND manufacturer = #{manufacturer}
                 </if>
 			                <!--  -->
-                <if test="createDt!=null and createDt.trim()!=null">
+                <if test="createDt != null and createDt.trim() != ''">
                     AND create_dt = #{createDt}
                 </if>
 			                <!--  -->
-                <if test="updateDt!=null and updateDt.trim()!=null">
+                <if test="updateDt != null and updateDt.trim() != ''">
                     AND update_dt = #{updateDt}
                 </if>
 			                <!--  -->
-                <if test="createBy!=null and createBy.trim()!=null">
+                <if test="createBy != null and createBy.trim() != ''">
                     AND create_by = #{createBy}
                 </if>
 			                <!--  -->
-                <if test="updateBy!=null and updateBy.trim()!=null">
+                <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
 			        </where> 
