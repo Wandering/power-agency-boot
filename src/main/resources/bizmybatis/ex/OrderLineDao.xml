@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.OrderLineDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.OrderLineEntity" id="orderLineMap">
+        <result property="id" column="id"/>
+        <result property="fee" column="fee"/>
+        <result property="userId" column="user_id"/>
+        <result property="agency" column="agency"/>
+        <result property="fromStation" column="from_station"/>
+        <result property="toStation" column="to_station"/>
+        <result property="powerBank" column="power_bank"/>
+        <result property="feeType" column="fee_type"/>
+        <result property="orderId" column="order_id"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="startDt" column="start_dt"/>
+        <result property="endDt" column="end_dt"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.OrderLineEntity">
+		select * from order_line where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.OrderLineEntity">
+		select * from order_line
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from order_line 
+	</select>
+	 
+	 <select id="queryOrderTotal" resultType="double">
+		SELECT SUM(ol.fee) FROM orders ord , order_line ol WHERE ord.id = ol.order_id AND ord.type='CONSUME' 
+		AND  ord.status IN ('PAYED','PART_PAYED') and ol.create_dt between #{param1} and #{param2}
+	</select>
+	
+	<insert id="save" parameterType="com.power.entity.OrderLineEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into order_line
+		(
+			`fee`, 
+			`user_id`, 
+			`agency`, 
+			`from_station`, 
+			`to_station`, 
+			`power_bank`, 
+			`fee_type`, 
+			`order_id`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`, 
+			`start_dt`, 
+			`end_dt`
+		)
+		values
+		(
+			#{fee}, 
+			#{userId}, 
+			#{agency}, 
+			#{fromStation}, 
+			#{toStation}, 
+			#{powerBank}, 
+			#{feeType}, 
+			#{orderId}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{startDt}, 
+			#{endDt}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.OrderLineEntity">
+		update order_line 
+		<set>
+			<if test="fee != null">`fee` = #{fee}, </if>
+			<if test="userId != null">`user_id` = #{userId}, </if>
+			<if test="agency != null">`agency` = #{agency}, </if>
+			<if test="fromStation != null">`from_station` = #{fromStation}, </if>
+			<if test="toStation != null">`to_station` = #{toStation}, </if>
+			<if test="powerBank != null">`power_bank` = #{powerBank}, </if>
+			<if test="feeType != null">`fee_type` = #{feeType}, </if>
+			<if test="orderId != null">`order_id` = #{orderId}, </if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="startDt != null">`start_dt` = #{startDt}, </if>
+			<if test="endDt != null">`end_dt` = #{endDt}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from order_line where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from order_line where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
