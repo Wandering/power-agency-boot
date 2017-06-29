@@ -33,7 +33,7 @@
                 </if>
 			                <!-- 字典类型 -->
                 <if test="type != null and type.trim() != ''">
-                    AND type = #{type}
+                    AND type like concat('%',#{type},'%')  
                 </if>
 			                <!-- 字典描述 -->
                 <if test="note != null and note.trim() != ''">
@@ -70,7 +70,7 @@
                 </if>
 			                <!-- 字典类型 -->
                 <if test="type != null and type.trim() != ''">
-                    AND type = #{type}
+                    AND type like concat('%',#{type},'%')
                 </if>
 			                <!-- 字典描述 -->
                 <if test="note != null and note.trim() != ''">

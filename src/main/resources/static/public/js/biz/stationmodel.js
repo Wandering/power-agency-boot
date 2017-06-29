@@ -6,7 +6,9 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 30, key: true },
 			{ label: '充电桩型号', name: 'model', index: 'model', width: 80 }, 			
 			{ label: '卡槽数量', name: 'slotNo', index: 'slot_no', width: 80 }, 			
-			{ label: '通讯方式', name: 'channel', index: 'channel', width: 80 ,formatter: function(value, options, row){return getDict(vm.channels)[value];}}, 			
+			{ label: '通讯方式', name: 'channel', index: 'channel', width: 80 ,formatter: function(value, options, row){
+				return getDict(vm.channels)[value];
+			}}, 			
 			{ label: '输入电压', name: 'inputVoltage', index: 'input_voltage', width: 80 }, 			
 			{ label: '最大输入电流', name: 'maxInputCurrent', index: 'max_input_current', width: 90 }, 			
 			{ label: '最大输入功耗', name: 'maxInputPower', index: 'max_input_power', width: 90 }, 			

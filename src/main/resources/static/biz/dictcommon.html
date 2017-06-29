@@ -27,6 +27,9 @@
 	<div id="rrapp" v-cloak>
 		<div v-show="showList">
 			<div class="grid-btn">
+				<div class="form-group col-sm-2">
+					<input type="text" class="form-control" v-model="q.type" @input="query" placeholder="字典类型">
+				</div>
 				<a v-if="hasPermission('dictcommon:save')" class="btn btn-primary"
 					@click="add"><i class="fa fa-plus"></i>&nbsp;新增</a> <a
 					v-if="hasPermission('dictcommon:update')" class="btn btn-primary"

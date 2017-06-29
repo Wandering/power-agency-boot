@@ -2,6 +2,7 @@ package com.power.service.ex;
 
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典查询
@@ -16,4 +17,6 @@ public interface DictService {
 	List<?> queryStationModel();
 	
 	List<?> queryPowerModel();
+	
+	List<?> queryErrorType(Map<String, Object> map);
 }

@@ -3,6 +3,7 @@ package com.power.dao.ex;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 字典查询
@@ -17,4 +18,6 @@ public interface DictDao {
 	List<?> queryStationModel();
 	
 	List<?> queryPowerModel();
+	
+	List<?> queryErrorType(Map<String, Object> map);
 }

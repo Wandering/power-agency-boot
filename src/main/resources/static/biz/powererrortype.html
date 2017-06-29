@@ -25,7 +25,7 @@
 		<div class="grid-btn">
 			<div class="form-group col-sm-2">
 				<select class="form-control" v-model="q.deviceType" @change="query">
-				<option value="">全部</option>
+					<option value="">全部</option>
 				  	<option v-for="deviceType in deviceTypes" v-bind:value="deviceType.code">{{deviceType.name}}</option>
 				</select>
 			</div>
@@ -33,7 +33,7 @@
 				<select class="form-control" v-model="q.type" @change="query">
 					<option value="">全部</option>
 				  	<option v-for="errorType in errorTypes" v-bind:value="errorType.code">{{errorType.name}}</option>
-				  </select>
+				</select>
 			</div>
 			<a v-if="hasPermission('powererrortype:save')" class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 			<a v-if="hasPermission('powererrortype:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a>

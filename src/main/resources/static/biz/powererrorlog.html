@@ -26,14 +26,25 @@
 <body>
 	<div id="rrapp" v-cloak>
 		<div v-show="showList">
-			<div class="grid-btn">
-				<a v-if="hasPermission('powererrorlog:save')"
+			<div class="grid-btn" style="height:34px">
+				<div class="form-group col-sm-2">
+				<select class="form-control" v-model="q.type" @change="changType(1)">
+				  	<option v-for="dealType in dealTypes" v-bind:value="dealType.code">{{dealType.name}}</option>
+				</select>
+				</div>
+				<div class="form-group col-sm-2">
+				<select class="form-control" v-model="q.errorCode" @change="query">
+					<option value="">全部</option>
+				  	<option v-for="type in types" v-bind:value="type.code">{{type.note}}</option>
+				</select>
+				</div>
+				<!-- <a v-if="hasPermission('powererrorlog:save')"
 					class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 				<a v-if="hasPermission('powererrorlog:update')"
 					class="btn btn-primary" @click="update"><i
 					class="fa fa-pencil-square-o"></i>&nbsp;修改</a> <a
 					v-if="hasPermission('powererrorlog:delete')"
-					class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+					class="btn btn-primary" @click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a> -->
 			</div>
 			<table id="jqGrid"></table>
 			<div id="jqGridPager"></div>
@@ -43,14 +54,14 @@
 			<div class="panel-heading">{{title}}</div>
 			<form class="form-horizontal">
 				<div class="form-group">
-					<div class="col-sm-2 control-label">充电宝id</div>
+					<div class="col-sm-2 control-label">充电宝IMEI号</div>
 					<div class="col-sm-10">
 						<input type="text" class="form-control"
 							v-model="powerErrorLog.batteryId" placeholder="充电宝id" />
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-2 control-label">幢ID</div>
+					<div class="col-sm-2 control-label">充电桩IMEI号</div>
 					<div class="col-sm-10">
 						<input type="text" class="form-control"
 							v-model="powerErrorLog.deviceId" placeholder="幢ID" />
@@ -64,17 +75,17 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-2 control-label">错误类型(1：认为处理，2：系统处理)</div>
+					<div class="col-sm-2 control-label">处理方式</div>
 					<div class="col-sm-10">
 						<input type="text" class="form-control"
-							v-model="powerErrorLog.type" placeholder="错误类型(1：认为处理，2：系统处理)" />
+							v-model="powerErrorLog.type" placeholder="1：人为处理，2：系统处理" />
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-sm-2 control-label">错误码</div>
+					<div class="col-sm-2 control-label">错误类型</div>
 					<div class="col-sm-10">
 						<input type="text" class="form-control"
-							v-model="powerErrorLog.errorCode" placeholder="错误码" />
+							v-model="powerErrorLog.errorCode" placeholder="错误类型" />
 					</div>
 				</div>
 				<div class="form-group">

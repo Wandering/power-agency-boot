@@ -6,10 +6,15 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '充电桩', name: 'deviceId', index: 'device_id', width: 80 }, 			
 			{ label: '卡槽号', name: 'slotNo', index: 'slot_no', width: 80 }, 			
-			{ label: '错误类型(需要处理，不需要处理[暂定])', name: 'type', index: 'type', width: 80 }, 			
-			{ label: '错误码', name: 'errorCode', index: 'error_code', width: 80 }, 			
+			{ label: '处理方式', name: 'type', index: 'type', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.dealTypes)[value]:"";
+			}}, 			
+			{ label: '类型', name: 'errorCode', index: 'error_code', width: 80 , width: 280 ,formatter: function(value, options, row){
+				for(var i in vm.types){if(value==vm.types[i].code){value=vm.types[i].note}}
+				return value;
+			}}, 			
 			{ label: '上报时间', name: 'upTime', index: 'up_time', width: 80 }, 			
-			{ label: '当前处理状态(被处理1，未处理0)', name: 'status', index: 'status', width: 80 }			
+			{ label: '处理状态', name: 'status', index: 'status', width: 80 }			
         ],
 		viewrecords: true,
         height: 385,
@@ -31,6 +36,24 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.dealTypes.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dict/DEAL_TYPE",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.dealTypes = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        	if(vm.types.length==0){
+        		vm.changType(0);
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -41,14 +64,37 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			deviceType:1,
+			type:1,
+			errorCode:""
+		},
 		showList: true,
 		title: null,
 		status:null,
+		dealTypes:[],
+		types:[],
 		stationErrorLog: {}
 	},
 	methods: {
 		query: function () {
 			vm.reload();
+		},
+		changType:function (e) {
+			vm.q.errorCode="";
+			if(e==1){vm.reload();}
+			$.ajax({
+				type: "POST",
+				data:vm.q,
+			    url: "../dict/queryErrorType",
+			    success: function(r){
+			    	if(r.code === 0){
+			    		vm.types = r.data;
+					}else{
+						alert(r.msg);
+					}
+				}
+			});
 		},
 		add: function(){
 			vm.showList = false;
@@ -117,6 +163,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
 		}

@@ -1,10 +1,12 @@
 package com.power.controller.ex;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.power.service.ex.DictService;
 import io.renren.utils.R;
@@ -47,5 +49,14 @@ public class DictController {
 	public R queryPowerModel(){
 		List<?> models = dictService.queryPowerModel();
 		return R.ok().put("data", models);
+	}
+	
+	/**
+	 * 字典-异常类型
+	 */
+	@RequestMapping("/queryErrorType")
+	public R queryErrorType(@RequestParam Map<String, Object> params){
+		List<?> types = dictService.queryErrorType(params);
+		return R.ok().put("data", types);
 	}
 }

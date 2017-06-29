@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.power.dao.ex.DictDao;
 import com.power.service.ex.DictService;
@@ -29,6 +30,11 @@ public class DictCommonServiceImpl implements DictService {
 	@Override
 	public List<?> queryPowerModel(){
 		return dictDao.queryPowerModel();
+	}
+
+	@Override
+	public List<?> queryErrorType(Map<String, Object> map) {
+		return dictDao.queryErrorType(map);
 	}
 	
 }

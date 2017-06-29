@@ -14,5 +14,18 @@
 	<select id="queryPowerModel" resultType="java.util.HashMap">
 		select id,model from power_model order by id
 	</select>
+	
+	<select id="queryErrorType" resultType="java.util.HashMap">
+		select code,note from power_error_type
+		<where>
+	        <if test="deviceType != null and deviceType.trim() != ''">
+	            AND device_type = #{deviceType}
+	        </if>
+	        <if test="type != null and type.trim() != ''">
+	            AND type = #{type}
+	        </if>
+		</where> 
+		order by code
+	</select>
 
 </mapper>
