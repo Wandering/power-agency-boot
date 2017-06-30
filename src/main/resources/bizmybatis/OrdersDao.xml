@@ -35,11 +35,18 @@
 		           
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                    AND order_owner = #{orderOwner}
+                   AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
 			                <!-- 订单编号 -->
-                <if test="orderNo!=null and orderNo.trim()!=''">
-                    AND order_no = #{orderNo}
+                <if test="id!=null and id.trim()!=''">
+                    AND `id` like concat('%',#{id},'%')
+                </if>
+                
+                 <if test="orderType!=null and orderType.trim()!=''">
+                    AND type = #{orderType}
+                </if>
+                 <if test="orderStatus!=null and orderStatus.trim()!=''">
+                    AND status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
@@ -69,11 +76,18 @@
 		           
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                    AND order_owner = #{orderOwner}
+                    AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
 			                <!-- 订单编号 -->
-                <if test="orderNo!=null and orderNo.trim()!=''">
-                    AND order_no = #{orderNo}
+                <if test="id!=null and id.trim()!=''">
+                     AND `id` like concat('%',#{id},'%')
+                </if>
+                            <!-- 订单type -->
+                <if test="orderType!=null and orderType.trim()!=''">
+                    AND type = #{orderType}
+                </if>
+                 <if test="orderStatus!=null and orderStatus.trim()!=''">
+                    AND status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
@@ -92,9 +106,7 @@
                 order by id desc
 			</otherwise>
         </choose>
-		<if test="offset != null and limit != null">
-			limit #{offset}, #{limit}
-		</if>
+		
 	</select>
 	 
 	<insert id="save" parameterType="com.power.entity.OrdersEntity" useGeneratedKeys="true" keyProperty="id">
