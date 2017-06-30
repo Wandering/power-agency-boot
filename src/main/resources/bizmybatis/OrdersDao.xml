@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.OrdersDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.OrdersEntity" id="ordersMap">
+        <result property="id" column="id"/>
+        <result property="totalFee" column="total_fee"/>
+        <result property="orderOwner" column="order_owner"/>
+        <result property="agency" column="agency"/>
+        <result property="type" column="type"/>
+        <result property="status" column="status"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="orderNo" column="order_no"/>
+        <result property="parentOrder" column="parent_order"/>
+        <result property="tradeType" column="trade_type"/>
+        <result property="tradeIdentify" column="trade_identify"/>
+        <result property="editor" column="editor"/>
+        <result property="des" column="des"/>
+        <result property="editorName" column="editor_name"/>
+        <result property="userRoles" column="user_roles"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.OrdersEntity">
+		select * from orders where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.OrdersEntity">
+		select * from orders
+		<where>
+		           
+			                <!-- ######订单记录###### -->
+                <if test="orderOwner!=null and orderOwner.trim()!=''">
+                    AND order_owner = #{orderOwner}
+                </if>
+			                <!-- 订单编号 -->
+                <if test="orderNo!=null and orderNo.trim()!=''">
+                    AND order_no = #{orderNo}
+                </if>
+                            <!-- 開始結束時間 -->
+				<if test="startDt!=null and startDt!=''">
+				　　AND create_dt&gt;=#{startDt} 
+				</if> 
+				<if test="endDt!=null and endDt!=''">
+				 　　AND  create_dt &lt;=#{endDt} 
+				</if>
+				
+	    </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from orders 
+		<where>
+		           
+			                <!-- ######订单记录###### -->
+                <if test="orderOwner!=null and orderOwner.trim()!=''">
+                    AND order_owner = #{orderOwner}
+                </if>
+			                <!-- 订单编号 -->
+                <if test="orderNo!=null and orderNo.trim()!=''">
+                    AND order_no = #{orderNo}
+                </if>
+                            <!-- 開始結束時間 -->
+				<if test="startDt!=null and startDt!=''">
+				　　AND create_dt&gt;=#{startDt} 
+				</if> 
+				<if test="endDt!=null and endDt!=''">
+				 　　AND  create_dt &lt;=#{endDt} 
+				</if>
+				
+	    </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.OrdersEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into orders
+		(
+			`total_fee`, 
+			`order_owner`, 
+			`agency`, 
+			`type`, 
+			`status`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`, 
+			`order_no`, 
+			`parent_order`, 
+			`trade_type`, 
+			`trade_identify`, 
+			`editor`, 
+			`des`, 
+			`editor_name`, 
+			`user_roles`
+		)
+		values
+		(
+			#{totalFee}, 
+			#{orderOwner}, 
+			#{agency}, 
+			#{type}, 
+			#{status}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{orderNo}, 
+			#{parentOrder}, 
+			#{tradeType}, 
+			#{tradeIdentify}, 
+			#{editor}, 
+			#{des}, 
+			#{editorName}, 
+			#{userRoles}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.OrdersEntity">
+		update orders 
+		<set>
+			<if test="totalFee != null">`total_fee` = #{totalFee}, </if>
+			<if test="orderOwner != null">`order_owner` = #{orderOwner}, </if>
+			<if test="agency != null">`agency` = #{agency}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="status != null">`status` = #{status}, </if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="orderNo != null">`order_no` = #{orderNo}, </if>
+			<if test="parentOrder != null">`parent_order` = #{parentOrder}, </if>
+			<if test="tradeType != null">`trade_type` = #{tradeType}, </if>
+			<if test="tradeIdentify != null">`trade_identify` = #{tradeIdentify}, </if>
+			<if test="editor != null">`editor` = #{editor}, </if>
+			<if test="des != null">`des` = #{des}, </if>
+			<if test="editorName != null">`editor_name` = #{editorName}, </if>
+			<if test="userRoles != null">`user_roles` = #{userRoles}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from orders where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from orders where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
