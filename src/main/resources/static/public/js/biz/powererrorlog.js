@@ -2,6 +2,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '../powererrorlog/list',
         datatype: "json",
+        postData: vm.q,
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '充电宝id', name: 'batteryId', index: 'battery_id', width: 80 }, 			

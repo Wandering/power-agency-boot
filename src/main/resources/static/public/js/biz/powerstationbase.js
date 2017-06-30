@@ -3,33 +3,37 @@ $(function () {
         url: '../powerstationbase/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			//{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '充电桩IMEI号', name: 'code', index: 'code', width: 120 }, 
 			{ label: '充电桩型号', name: 'type', index: 'type', width: 90 ,formatter: function(value, options, row){
 				return value!=null&&value!=""?getModel(vm.models)[value]:"";
 			}},
 			{ label: '通讯方式 ', name: 'channel', index: 'channel', width: 90 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.channels)[value]:"";
+			}}, 
+			{ label: '状态', name: 'status', index: 'status', width: 70 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.stationStatus)[value]:"";
+			}},
+			{ label: '卡槽数（个）', name: 'slotNo', index: 'slot_no', width: 90 },
+			{ label: '可还（个）', name: 'free', index: 'free', width: 80 }, 			
+			{ label: '可借（个）', name: 'canBorrow', index: 'can_borrow', width: 80 }, 			
+			{ label: '已借（个）', name: 'borrowCount', index: 'borrow_count', width: 80 }, 
+			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 60 }, 	
+			{ label: '是否同步', name: 'isSync', index: 'is_sync', width: 80 ,formatter: function(value, options, row){
+				return value==1?"是":"否"
 			}}, 			
-			{ label: '充电桩槽位', name: 'slotNo', index: 'slot_no', width: 100 },
-			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 100 }, 	
-			{ label: '充电桩错误状态', name: 'errorCode', index: 'error_code', width: 100 }, 			
-			{ label: '是否同步', name: 'isSync', index: 'is_sync', width: 100 }, 			
-			{ label: '是否正在被使用', name: 'status', index: 'status', width: 100 }, 			
-			{ label: '异常槽位数量', name: 'errorSlot', index: 'error_slot', width: 100 }, 			
-			{ label: '空闲槽位', name: 'free', index: 'free', width: 100 }, 			
-			{ label: '可借', name: 'canBorrow', index: 'can_borrow', width: 100 }, 			
-			{ label: '充电桩状态', name: 'stateCode', index: 'state_code', width: 100 }, 			
-			{ label: '总借出次数', name: 'borrowCount', index: 'borrow_count', width: 100 }, 			
-			//{ label: '编辑人', name: 'editName', index: 'edit_name', width: 100 }, 			
-			//{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 100 }, 			
+			//{ label: '异常槽位数量', name: 'errorSlot', index: 'error_slot', width: 100 }, 	
+			//{ label: '充电桩错误状态', name: 'errorCode', index: 'error_code', width: 100 },
+			//{ label: '充电桩状态', name: 'stateCode', index: 'state_code', width: 100 },
+			//{ label: '编辑人', name: 'editName', index: 'edit_name', width: 100 },
+			{ label: '导入时间', name: 'createDt', index: 'create_dt', width: 150 },
+			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 150 }, 
 			{ label: '批次', name: 'batch', index: 'batch', width: 100 }, 			
-			{ label: '备注', name: 'note', index: 'note', width: 100 }, 			
-			{ label: '生产日期', name: 'production', index: 'production', width: 100 }, 			
+			{ label: '生产日期', name: 'production', index: 'production', width: 100 },
+			{ label: '备注', name: 'note', index: 'note', width: 100 },
+			{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 100 },
 			//{ label: '运营商ID', name: 'agencyid', index: 'agencyId', width: 100 }, 			
-			/*{ label: '创建时间', name: 'createDt', index: 'create_dt', width: 80 },
-			{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
-			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 80 }, 			
+			/*{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
 			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }*/
         ],
 		viewrecords: true,
@@ -79,6 +83,19 @@ $(function () {
 					}
 				});
         	}
+        	if(vm.stationStatus.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/STATION_STATUS",
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.stationStatus = r.data;
+        				}else{
+        					alert(r.msg);
+        				}
+        			}
+        		});
+        	}
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
@@ -90,11 +107,15 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			code:"",type:""
+		},
 		showList: true,
 		title: null,
 		status:null,
 		models:[],
 		channels:[],
+		stationStatus:[],
 		powerStationBase: {}
 	},
 	methods: {
@@ -106,6 +127,8 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.status = "add";
 			vm.powerStationBase = {};
+			vm.powerStationBase.status = 0;
+			$("#stationStatus").attr("disabled","disabled");
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -116,6 +139,7 @@ var vm = new Vue({
             vm.title = "修改";
             vm.status = "edit";
             vm.getInfo(id)
+            $("#stationStatus").removeAttr("disabled");
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.powerStationBase.id == null ? "../powerstationbase/save" : "../powerstationbase/update";
@@ -168,6 +192,7 @@ var vm = new Vue({
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
 		},

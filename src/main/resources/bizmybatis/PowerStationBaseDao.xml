@@ -44,7 +44,7 @@
                 </if>
 			                <!-- 充电桩code，充电桩IMEI编号 -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
                 <if test="channel != null and channel.trim() != ''">
@@ -157,7 +157,7 @@
                 </if>
 			                <!-- 充电桩code，充电桩IMEI编号 -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 主要通信信道 0：Wi-Fi,1：GPRS,2：4G 字典表STATION_CHANNEL -->
                 <if test="channel != null and channel.trim() != ''">

@@ -3,32 +3,32 @@ $(function () {
         url: '../powerstation/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '服务商', name: 'agent', index: 'agent', width: 80 }, 			
-			{ label: '充电桩ID', name: 'code', index: 'code', width: 80 }, 			
-			{ label: '充电桩网点地址', name: 'address', index: 'address', width: 80 }, 			
-			{ label: '表region.地点ID(如深圳南山1000103)', name: 'region', index: 'region', width: 80 }, 			
+			//{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '网点名称', name: 'shopName', index: 'shop_name', width: 80 },
+			{ label: '充电桩IMEI号', name: 'code', index: 'code', width: 80 }, 			
+			{ label: '网点地址', name: 'address', index: 'address', width: 80 }, 			
+			{ label: '开始营业时间', name: 'shopStartDt', index: 'shop_start_dt', width: 80 }, 			
+			{ label: '结束营业时间', name: 'shopEndDt', index: 'shop_end_dt', width: 80 }, 	
+			{ label: '收费模式', name: 'feescale', index: 'feescale', width: 80 }, 
+			{ label: '摆放位置', name: 'shopStationPoint', index: 'shop_station_point', width: 80 },
+			{ label: '网点联系电话', name: 'shopPhone', index: 'shop_phone', width: 80 },
+			{ label: '负责人', name: 'wxUser', index: 'wx_user', width: 80 }, 			
+			{ label: '联系电话', name: 'wxUserPhone', index: 'wx_user_phone', width: 80 },
+			{ label: '状态 ', name: 'status', index: 'status', width: 80 },
+			{ label: '最后编辑人员', name: 'lasteditor', index: 'lastEditor', width: 80 },
+			/*{ label: '', name: 'dimensionCode', index: 'dimension_code', width: 80 }, 
+			{ label: '表region.地点ID(如深圳南山1000103)', name: 'region', index: 'region', width: 80 },
 			{ label: '网点地址对应纬度', name: 'latitude', index: 'latitude', width: 80 }, 			
-			{ label: '网点地址对应经度', name: 'longitude', index: 'longitude', width: 80 }, 			
-			{ label: '维修人员/负责人', name: 'wxUser', index: 'wx_user', width: 80 }, 			
-			{ label: '维修人员联系电话', name: 'wxUserPhone', index: 'wx_user_phone', width: 80 }, 			
-			{ label: '', name: 'dimensionCode', index: 'dimension_code', width: 80 }, 			
-			{ label: '充电桩状态，启用（正常运营） or 禁用 or 审核 ', name: 'status', index: 'status', width: 80 }, 			
+			{ label: '网点地址对应经度', name: 'longitude', index: 'longitude', width: 80 },
 			{ label: '', name: 'createDt', index: 'create_dt', width: 80 }, 			
 			{ label: '', name: 'updateDt', index: 'update_dt', width: 80 }, 			
 			{ label: '生产日期', name: 'productDt', index: 'product_dt', width: 80 }, 			
 			{ label: '生产厂家', name: 'productCreator', index: 'product_creator', width: 80 }, 			
-			{ label: '充电桩网点名称', name: 'shopName', index: 'shop_name', width: 80 }, 			
 			{ label: '充电桩联网方式，wifi GPRS 4G BLE', name: 'connectType', index: 'connect_type', width: 80 }, 			
 			{ label: '', name: 'createBy', index: 'create_by', width: 80 }, 			
 			{ label: '', name: 'updateBy', index: 'update_by', width: 80 }, 			
-			{ label: '开始营业时间', name: 'shopStartDt', index: 'shop_start_dt', width: 80 }, 			
-			{ label: '结束营业时间', name: 'shopEndDt', index: 'shop_end_dt', width: 80 }, 			
 			{ label: '', name: 'activeBankNo', index: 'active_bank_no', width: 80 }, 			
-			{ label: '网点联系电话', name: 'shopPhone', index: 'shop_phone', width: 80 }, 			
-			{ label: '充电桩在网点的摆放位置，如收银台', name: 'shopStationPoint', index: 'shop_station_point', width: 80 }, 			
-			{ label: '收费模式', name: 'feescale', index: 'feescale', width: 80 }, 			
-			{ label: '最后编辑人员', name: 'lasteditor', index: 'lastEditor', width: 80 }			
+			{ label: '服务商', name: 'agent', index: 'agent', width: 80 }*/
         ],
 		viewrecords: true,
         height: 385,
@@ -53,6 +53,11 @@ $(function () {
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$('#demo').citys({
+        		code:vm.powerStation.region,onChange:function(data){
+        			vm.powerStation.region = data.code;
+        		}
+        	});
         }
     });
 });
@@ -60,10 +65,36 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			shopName:"",code:"",feescale:""
+		},
+		map:null,
+		placeSearch:null,
 		showList: true,
 		title: null,
 		status:null,
-		powerStation: {}
+		powerStation: {region:"440300"}
+	},
+	mounted: function(){
+		this.map = new AMap.Map('mapViewContainer', {
+			resizeEnable: false,
+             zoom: 11,
+             scrollWheel:false,
+		});
+	    this.$watch("powerStation.latitude", function(){
+	    	this.addMarker(this.powerStation.longitude, this.powerStation.latitude);
+		});
+	    this.$watch("powerStation.region", function(){
+		    var autoOptions = {
+		    	city: this.powerStation.region,
+		        input: "shopLocationId"
+		    };
+		    var auto = new AMap.Autocomplete(autoOptions);//输入提示
+		    this.placeSearch = new AMap.PlaceSearch({//构造地点查询类
+		        map: this.map
+		    });
+		    AMap.event.addListener(auto, "select", this.select);//注册监听，当选中某条记录时会触发
+	    });
 	},
 	methods: {
 		query: function () {
@@ -74,6 +105,7 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.status = "add";
 			vm.powerStation = {};
+			vm.powerStation.region = "440300";
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -135,9 +167,26 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
+		},
+		select: function(e){
+			if(e.poi.location==undefined){alert("找不到该地址！");return;}
+			vm.powerStation.address = e.poi.name;
+			vm.powerStation.latitude = e.poi.location.lat;
+	    	vm.powerStation.longitude = e.poi.location.lng;
+	    	vm.placeSearch.setCity(e.poi.adcode);
+	    	vm.placeSearch.search(e.poi.name);  //关键字查询查询
+		},
+		addMarker: function(longitude, latitude) {
+	        vm.map.setZoomAndCenter(14, [longitude, latitude]);
+	        // 在新中心点添加 marker 
+	        var marker = new AMap.Marker({
+	            map: vm.map,
+	            position: [longitude, latitude]
+	        });
 		}
 	}
 });

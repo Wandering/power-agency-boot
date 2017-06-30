@@ -50,7 +50,7 @@
                 </if>
 			                <!-- 充电桩ID -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 充电桩网点地址 -->
                 <if test="address != null and address.trim() != ''">
@@ -102,7 +102,7 @@
                 </if>
 			                <!-- 充电桩网点名称 -->
                 <if test="shopName != null and shopName.trim() != ''">
-                    AND shop_name = #{shopName}
+                    AND shop_name like concat('%',#{shopName},'%')
                 </if>
 			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
                 <if test="connectType != null and connectType.trim() != ''">
@@ -171,7 +171,7 @@
                 </if>
 			                <!-- 充电桩ID -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 充电桩网点地址 -->
                 <if test="address != null and address.trim() != ''">
@@ -223,7 +223,7 @@
                 </if>
 			                <!-- 充电桩网点名称 -->
                 <if test="shopName != null and shopName.trim() != ''">
-                    AND shop_name = #{shopName}
+                    AND shop_name like concat('%',#{shopName},'%')
                 </if>
 			                <!-- 充电桩联网方式，wifi GPRS 4G BLE -->
                 <if test="connectType != null and connectType.trim() != ''">

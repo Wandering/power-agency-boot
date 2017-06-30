@@ -79,6 +79,9 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			code:"",type:""
+		},
 		showList: true,
 		title: null,
 		status:null,
@@ -156,7 +159,8 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
 		}

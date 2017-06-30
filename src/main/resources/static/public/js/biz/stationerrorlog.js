@@ -2,6 +2,7 @@ $(function () {
     $("#jqGrid").jqGrid({
         url: '../stationerrorlog/list',
         datatype: "json",
+        postData: vm.q,
         colModel: [			
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '充电桩', name: 'deviceId', index: 'device_id', width: 80 }, 			

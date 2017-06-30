@@ -45,7 +45,7 @@
                 </if>
 			                <!-- 充电宝IMEI号 -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 充电宝型号 -->
                 <if test="type != null and type.trim() != ''">
@@ -114,7 +114,7 @@
                 </if>
 			                <!-- 充电宝IMEI号 -->
                 <if test="code != null and code.trim() != ''">
-                    AND code = #{code}
+                    AND code like concat('%',#{code},'%')
                 </if>
 			                <!-- 充电宝型号 -->
                 <if test="type != null and type.trim() != ''">
