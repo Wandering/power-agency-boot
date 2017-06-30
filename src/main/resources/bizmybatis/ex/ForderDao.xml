@@ -9,15 +9,18 @@
 			                <!-- ######订单记录###### -->
 			      ord.id= l.order_id 
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                    AND ord.order_owner = #{orderOwner}
+                   AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
-			                <!-- 订单编号 -->
-                <if test="orderNo!=null and orderNo.trim()!=''">
-                    AND ord.order_no = #{orderNo}
+			                <!-- 订单id -->
+                <if test="id!=null and id.trim()!=''">
+                  AND `order_id` like concat('%',#{id},'%')
+                </if>
+                <if test="orderStatus!=null and orderStatus.trim()!=''">
+                    AND ord.status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　AND l.start_dt&gt;=#{startDt} 
+				　　AND l.start_dt &gt;=#{startDt} 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
 				 　　AND  l.end_dt &lt;=#{endDt} 
@@ -34,11 +37,14 @@
 		            ord.id= l.order_id 
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                    AND ord.order_owner = #{orderOwner}
+                    AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
-			                <!-- 订单编号 -->
-                <if test="orderNo!=null and orderNo.trim()!=''">
-                    AND ord.order_no = #{orderNo}
+                            <!-- 订单id -->
+                 <if test="id!=null and id.trim()!=''">
+                   AND `order_id` like concat('%',#{id},'%')
+                </if>
+			    <if test="orderStatus!=null and orderStatus.trim()!=''">
+                    AND ord.status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
@@ -47,9 +53,7 @@
 				<if test="endDt!=null and endDt!=''">
 				 　　AND  end_dt &lt;=#{endDt} 
 				</if>
-				<if test="offset != null and limit != null">
-			       limit #{offset}, #{limit}
-		        </if>
+				
 	    </where>
 	</select>
 	<select id="queryStationModel" resultType="java.util.HashMap">

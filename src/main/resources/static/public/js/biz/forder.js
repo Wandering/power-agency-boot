@@ -3,23 +3,25 @@ $(function () {
         url: '../forder/queryOrderModel',
         datatype: "json",
         colModel: [			
-			{ label: '订单编号', name: 'order_no', index: 'orderNo', width: 100, key: true },
+            { label: '订单ID', name: 'id', index: 'id', width: 40, key: true },
+			{ label: '订单编号', name: 'order_no', index: 'orderNo', width: 100 },
 			{ label: '用户ID', name: 'order_owner', index: 'orderOwner', width: 50 }, 			
 			{ label: '充电宝ID', name: 'power_bank', index: 'powerBank', width: 50 }, 			
 			{ label: '借电时间', name: 'create_dt', index: 'createDt', width: 50 }, 			
 			{ label: '借电桩ID', name: 'from_station', index: 'fromStation', width: 80 }, 			
-			{ label: '还电时间', name: 'end_dt', index: 'endDt', width: 80 }, 			
+			{ label: '还电时间', name: 'end_dt', index: 'endDt', width: 80 ,formatter: function(value, options, row){
+				return  new Date(parseInt(value) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');}}, 			
 			{ label: '还电桩ID', name: 'to_station', index: 'toStation', width: 80 }, 			
 			{ label: '费用', name: 'fee', index: 'fee', width: 80 }, 			
 			{ label: '交易状态', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.orderStatus)[value]:"";
 			}}, 			
-			{ label: '付款方式', name: 'trade_type', index: 'tradeType', width: 80 }, 			
+			{ label: '付款方式', name: 'trade_type', index: 'tradeType', width: 50 }, 			
 			{ label: '租借时长', name: 'borrow_time', index: 'borrowTime', width: 80 }, 			
 			{ label: '实付款', name: 'total_fee', index: 'totalFee', width: 80 }, 			
 			{ label: '付款时间', name: 'update_dt', index: 'updateDt', width: 80 }, 			
-			{ label: '备注', name: 'des', index: 'des', width: 80 },			
-			{ label: '计费模式', name: 'user_roles', index: 'userRoles', width: 80 },			
+			{ label: '备注', name: 'des', index: 'des', width: 50 },			
+			{ label: '计费模式', name: 'user_roles', index: 'userRoles', width: 50 },			
         ],
 		viewrecords: true,
         height: 385,
@@ -55,8 +57,10 @@ $(function () {
 					}
 				});
         	}
+        	
         
         },
+       
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -70,7 +74,7 @@ var vm = new Vue({
 		q:{
 			startDt:null,
 			endDt:null,
-			orderNo:null,
+			id:null,
 			orderOwner: null
 		},
 		showList: true,

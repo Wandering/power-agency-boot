@@ -78,13 +78,15 @@ var vm = new Vue({
 		q:{
 			startDt:null,
 			endDt:null,
-			orderNo:null,
+			id:null,
 			orderOwner: null,
+			orderType:null,
 			
 		},
 		showList: true,
 		title: null,
 		status:null,
+		type:null,
 		orders: {},
 		orderStatus:[],
 		orderType:[]
