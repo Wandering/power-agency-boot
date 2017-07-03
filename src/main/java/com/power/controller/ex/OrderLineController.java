@@ -1,6 +1,7 @@
 package com.power.controller.ex;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -92,7 +93,8 @@ public class OrderLineController {
 	 */
 	@RequestMapping("/total")
 	@RequiresPermissions("orderline:total")
-	public R total(){
+	public R total(@RequestParam Map<String, Object> params){
+		Query query = new Query(params);
 		double yesdaytotal ;
 		double lastmonthtotal;
 		Map <String,String> map =UtilDate.getDate();
@@ -102,11 +104,17 @@ public class OrderLineController {
 		 yesdaytotal=0;
 		}
 		try{
-			 lastmonthtotal = orderLineService.queryOrderTotal(map.get("start2"),map.get("end2"));
-			}catch(Exception e){
-			 lastmonthtotal=0;
-			}
-		return R.ok().put("yesdaytotal", yesdaytotal).put("lastmonthtotal",lastmonthtotal );
+		 lastmonthtotal = orderLineService.queryOrderTotal(map.get("start2"),map.get("end2"));
+		}catch(Exception e){
+		 lastmonthtotal=0;
+		}
+		List<Map> details = new ArrayList<>();
+		Map <String,Object> detail =new HashMap();
+		detail.put("yesdaytotal", yesdaytotal);
+		detail.put("lastmonthtotal", lastmonthtotal);
+		details.add(detail);
+		PageUtils pageUtil = new PageUtils(details, 1, query.getLimit(), query.getPage());
+		return R.ok().put("page",pageUtil);
 	}
 	
 	

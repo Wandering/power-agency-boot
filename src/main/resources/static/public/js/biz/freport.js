@@ -3,13 +3,8 @@ $(function () {
         url: '../orderline/total',
         datatype: "json",
         colModel: [			
-			{ label: '用户id', name: 'total', index: 'user_id', width: 50, key: true },
-			{ label: '用户余额', name: 'balance', index: 'balance', width: 80 }, 			
-			{ label: '用户会员级别', name: 'roles', index: 'roles', width: 80 },
-			{ label: '用户信用分', name: 'credit', index: 'credit', width: 80 }, 			
-			{ label: '进行中借电费', name: 'activebalance', index: 'activebalance', width: 80 },
-			{ label: '结余', name: 'endbalance', index: 'endbalance', width: 80 },
-			
+			{ label: '昨日收益', name: 'yesdaytotal', index: 'balance', width: 80 }, 			
+			{ label: '上月收益', name: 'lastmonthtotal', index: 'roles', width: 80 },
         ],
 		viewrecords: true,
         height: 385,
@@ -36,19 +31,6 @@ $(function () {
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
         }
     });
-//    $("#jqGrid").jqGrid({
-//        url: '../poweruseracounts/allbalance',
-//        datatype: "json",
-//        colModel: [			
-//			{ label: '用户id', name: 'total', index: 'user_id', width: 50, key: true },
-//			{ label: '用户余额', name: 'balance', index: 'balance', width: 80 }, 			
-//			{ label: '用户会员级别', name: 'roles', index: 'roles', width: 80 },
-//			{ label: '用户信用分', name: 'credit', index: 'credit', width: 80 }, 			
-//			{ label: '进行中借电费', name: 'activebalance', index: 'activebalance', width: 80 },
-//			{ label: '结余', name: 'endbalance', index: 'endbalance', width: 80 },
-//			
-//        ],
-//    });
 });
 
 var vm = new Vue({
