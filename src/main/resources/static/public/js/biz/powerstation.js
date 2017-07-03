@@ -9,12 +9,16 @@ $(function () {
 			{ label: '网点地址', name: 'address', index: 'address', width: 80 }, 			
 			{ label: '开始营业时间', name: 'shopStartDt', index: 'shop_start_dt', width: 80 }, 			
 			{ label: '结束营业时间', name: 'shopEndDt', index: 'shop_end_dt', width: 80 }, 	
-			{ label: '收费模式', name: 'feescale', index: 'feescale', width: 80 }, 
+			{ label: '收费模式', name: 'feescale', index: 'feescale', width: 80 ,formatter: function(value, options, row){
+				for(var i in vm.models){if(vm.models[i].id==value){value=vm.models[i].name}};return value;
+			}}, 
 			{ label: '摆放位置', name: 'shopStationPoint', index: 'shop_station_point', width: 80 },
 			{ label: '网点联系电话', name: 'shopPhone', index: 'shop_phone', width: 80 },
 			{ label: '负责人', name: 'wxUser', index: 'wx_user', width: 80 }, 			
 			{ label: '联系电话', name: 'wxUserPhone', index: 'wx_user_phone', width: 80 },
-			{ label: '状态 ', name: 'status', index: 'status', width: 80 },
+			{ label: '状态 ', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.s_status)[value]:"";
+			}},
 			{ label: '最后编辑人员', name: 'lasteditor', index: 'lastEditor', width: 80 },
 			/*{ label: '', name: 'dimensionCode', index: 'dimension_code', width: 80 }, 
 			{ label: '表region.地点ID(如深圳南山1000103)', name: 'region', index: 'region', width: 80 },
@@ -50,6 +54,41 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.channels.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dict/STATION_CHANNEL",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.channels = r.data;
+						}else{alert(r.msg);}
+					}
+				});
+        	}
+        	if(vm.models.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/queryChargerModel",
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.models = r.data;
+        				}else{alert(r.msg);}
+        			}
+        		});
+        	}
+        	if(vm.s_status.length==0){
+        		$.ajax({
+					type: "POST",
+				    url: "../dict/STATION_POS_STATUS",
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.s_status = r.data;
+						}else{alert(r.msg);}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -73,6 +112,10 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		channels:[],
+		models:[],
+		stations:[],
+		s_status:[],
 		powerStation: {region:"440300"}
 	},
 	mounted: function(){
@@ -106,6 +149,8 @@ var vm = new Vue({
 			vm.status = "add";
 			vm.powerStation = {};
 			vm.powerStation.region = "440300";
+			vm.map.clearMap();
+			vm.requestStations();
 		},
 		update: function (event) {
 			var id = getSelectedRow();
@@ -115,6 +160,8 @@ var vm = new Vue({
 			vm.showList = false;
             vm.title = "修改";
             vm.status = "edit";
+            vm.map.clearMap();
+            vm.requestStations();
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
@@ -171,6 +218,27 @@ var vm = new Vue({
 				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
+		},
+		requestStations: function(){
+			$.ajax({
+				type: "POST",
+			    url: "../dict/queryStations",
+			    success: function(r){
+			    	if(r.code === 0){
+			    		vm.stations = r.data;
+					}else{alert(r.msg);}
+				}
+			});
+		},
+		selectcode: function(){
+			for(i in vm.stations){ 
+				if(vm.powerStation.code==vm.stations[i].code){
+					vm.powerStation.connectType = vm.stations[i].channel
+					if(vm.status=='add'){
+						$("select[name='channel']").val(vm.stations[i].channel);
+					}
+				}
+			}
 		},
 		select: function(e){
 			if(e.poi.location==undefined){alert("找不到该地址！");return;}

@@ -52,11 +52,29 @@ public class DictController {
 	}
 	
 	/**
+	 * 字典-收费模式
+	 */
+	@RequestMapping("/queryChargerModel")
+	public R queryChargerModel(){
+		List<?> models = dictService.queryChargeModel();
+		return R.ok().put("data", models);
+	}
+	
+	/**
 	 * 字典-异常类型
 	 */
 	@RequestMapping("/queryErrorType")
 	public R queryErrorType(@RequestParam Map<String, Object> params){
 		List<?> types = dictService.queryErrorType(params);
 		return R.ok().put("data", types);
+	}
+	
+	/**
+	 * 字典-选择充电桩
+	 */
+	@RequestMapping("/queryStations")
+	public R queryStations(){
+		List<?> stations = dictService.queryStations();
+		return R.ok().put("data", stations);
 	}
 }

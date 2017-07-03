@@ -19,5 +19,9 @@ public interface DictDao {
 	
 	List<?> queryPowerModel();
 	
+	List<?> queryChargeModel();
+	
 	List<?> queryErrorType(Map<String, Object> map);
+	
+	List<?> queryStations();
 }

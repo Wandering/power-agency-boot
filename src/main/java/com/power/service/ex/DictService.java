@@ -18,5 +18,9 @@ public interface DictService {
 	
 	List<?> queryPowerModel();
 	
+	List<?> queryChargeModel();
+	
 	List<?> queryErrorType(Map<String, Object> map);
+	
+	List<?> queryStations();
 }

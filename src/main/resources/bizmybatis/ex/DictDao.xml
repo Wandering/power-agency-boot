@@ -15,6 +15,10 @@
 		select id,model from power_model order by id
 	</select>
 	
+	<select id="queryChargeModel" resultType="java.util.HashMap">
+		select id,name from charge_model order by id
+	</select>
+	
 	<select id="queryErrorType" resultType="java.util.HashMap">
 		select code,note from power_error_type
 		<where>
@@ -26,6 +30,13 @@
 	        </if>
 		</where> 
 		order by code
+	</select>
+	
+	<select id="queryStations" resultType="java.util.HashMap">
+		select id,code,channel from power_station_base psb where not exists (
+			select code from power_station ps
+			where ps.code = psb.code
+		) order by id
 	</select>
 
 </mapper>

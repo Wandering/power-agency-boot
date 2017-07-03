@@ -31,10 +31,20 @@ public class DictCommonServiceImpl implements DictService {
 	public List<?> queryPowerModel(){
 		return dictDao.queryPowerModel();
 	}
+	
+	@Override
+	public List<?> queryChargeModel(){
+		return dictDao.queryChargeModel();
+	}
 
 	@Override
 	public List<?> queryErrorType(Map<String, Object> map) {
 		return dictDao.queryErrorType(map);
+	}
+	
+	@Override
+	public List<?> queryStations() {
+		return dictDao.queryStations();
 	}
 	
 }
