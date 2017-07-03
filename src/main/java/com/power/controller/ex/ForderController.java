@@ -33,7 +33,7 @@ public class ForderController {
 	@RequestMapping("/queryOrderModel")
 	@RequiresPermissions("forder:queryOrderModel")
 	public R listbytype(@RequestParam Map<String, Object> params){
-		 Query query = new Query(params);
+		Query query = new Query(params);
 		List<?> orderList = forderService.queryOrderModel(query);
 		int total = forderService.queryTotal(query);
 		PageUtils pageUtil = new PageUtils(orderList, total, query.getLimit(), query.getPage());

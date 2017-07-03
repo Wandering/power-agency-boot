@@ -7,7 +7,9 @@ $(function () {
 			{ label: '订单编号', name: 'order_no', index: 'orderNo', width: 100 },
 			{ label: '用户ID', name: 'order_owner', index: 'orderOwner', width: 50 }, 			
 			{ label: '充电宝ID', name: 'power_bank', index: 'powerBank', width: 50 }, 			
-			{ label: '借电时间', name: 'create_dt', index: 'createDt', width: 50 }, 			
+			{ label: '借电时间', name: 'start_dt', index: 'startDt', width: 50 ,formatter: function(value, options, row){
+				return  new Date(parseInt(value) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');
+				}}, 			
 			{ label: '借电桩ID', name: 'from_station', index: 'fromStation', width: 80 }, 			
 			{ label: '还电时间', name: 'end_dt', index: 'endDt', width: 80 ,formatter: function(value, options, row){
 				return  new Date(parseInt(value) * 1000).toLocaleString().replace(/:\d{1,2}$/,' ');}}, 			
@@ -58,7 +60,7 @@ $(function () {
 				});
         	}
         	
-        
+           
         },
        
         gridComplete:function(){

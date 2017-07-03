@@ -7,7 +7,7 @@
 		SELECT ord.*,l.* FROM orders ord,order_line l 
 		 <where>
 			                <!-- ######订单记录###### -->
-			      ord.id= l.order_id 
+			     ord.id= l.order_id 
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                    AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
@@ -20,10 +20,10 @@
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　AND l.start_dt &gt;=#{startDt} 
+	               and l.start_dt  &gt;=${startDt} 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　　AND  l.end_dt &lt;=#{endDt} 
+				 　　and  l.end_dt  &lt;=${endDt} 
 				</if>
 				<if test="offset != null and limit != null">
 			       limit #{offset}, #{limit}
@@ -34,7 +34,7 @@
 	<select id="queryTotal" resultType="int">
 		SELECT count(*)  FROM orders ord,order_line l 
 		 <where>
-		            ord.id= l.order_id 
+		        ord.id= l.order_id 
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                     AND `order_owner` like concat('%',#{orderOwner},'%')
@@ -48,10 +48,10 @@
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　AND start_dt&gt;=#{startDt} 
+				　　and l.start_dt &gt;=#{startDt} 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　　AND  end_dt &lt;=#{endDt} 
+				 　 and  end_dt &lt;=#{endDt} 
 				</if>
 				
 	    </where>
