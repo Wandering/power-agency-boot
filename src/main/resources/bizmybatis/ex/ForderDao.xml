@@ -4,26 +4,26 @@
 <mapper namespace="com.power.dao.ex.ForderDao">
 
 	<select id="queryOrderModel" resultType="java.util.HashMap">
-		SELECT ord.*,l.* FROM orders ord,order_line l 
+		SELECT ord.*,ol.* FROM orders ord,order_line ol 
 		 <where>
 			                <!-- ######订单记录###### -->
-			     ord.id= l.order_id 
+			     ord.id= ol.order_id 
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                   AND `order_owner` like concat('%',#{orderOwner},'%')
+                	AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
 			                <!-- 订单id -->
                 <if test="id!=null and id.trim()!=''">
-                  AND `order_id` like concat('%',#{id},'%')
+                	AND `order_id` like concat('%',#{id},'%')
                 </if>
                 <if test="orderStatus!=null and orderStatus.trim()!=''">
                     AND ord.status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-	               and l.start_dt  &gt;=${startDt} 
+	                AND ol.start_dt  &gt;=UNIX_TIMESTAMP(#{startDt}) 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　　and  l.end_dt  &lt;=${endDt} 
+					AND  ol.end_dt  &lt;=UNIX_TIMESTAMP(#{endDt})  
 				</if>
 				<if test="offset != null and limit != null">
 			       limit #{offset}, #{limit}
@@ -32,26 +32,26 @@
 	</select>
 
 	<select id="queryTotal" resultType="int">
-		SELECT count(*)  FROM orders ord,order_line l 
+		SELECT count(*)  FROM orders ord,order_line ol 
 		 <where>
-		        ord.id= l.order_id 
+		        ord.id= ol.order_id 
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                     AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
                             <!-- 订单id -->
-                 <if test="id!=null and id.trim()!=''">
-                   AND `order_id` like concat('%',#{id},'%')
+                <if test="id!=null and id.trim()!=''">
+                	AND `order_id` like concat('%',#{id},'%')
                 </if>
 			    <if test="orderStatus!=null and orderStatus.trim()!=''">
                     AND ord.status = #{orderStatus}
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　and l.start_dt &gt;=#{startDt} 
+					AND ol.start_dt &gt;=UNIX_TIMESTAMP(#{startDt}) 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　 and  end_dt &lt;=#{endDt} 
+					AND  ol.end_dt  &lt;=UNIX_TIMESTAMP(#{endDt})  
 				</if>
 				
 	    </where>

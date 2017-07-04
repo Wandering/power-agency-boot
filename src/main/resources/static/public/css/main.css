@@ -55,7 +55,9 @@ html {
 		width: 24%;
 	}
 }
-
+.form-half{
+	width:48%;float:left;
+}
 @media ( min-width : 768px) {
 	.form-biz .control-label {
 		padding-top: 7px;

@@ -14,8 +14,10 @@ $(function () {
 				return value!=null?getDict(vm.orderStatus)[value]:"";
 			}}, 			
 			{ label: '交易时间', name: 'createDt', index: 'create_dt', width: 80 }, 			
-			{ label: '订单编号', name: 'orderNo', index: 'order_no', width: 80 }, 			
-			{ label: '计费模式', name: 'userRoles', index: 'user_roles', width: 80 }			
+			{ label: '订单编号', name: 'orderNo', index: 'order_no', width: 140 }, 			
+			{ label: '计费模式', name: 'userRoles', index: 'user_roles', width: 80 ,formatter: function(value, options, row){
+				for(var i in vm.models){if(vm.models[i].id==value){value=vm.models[i].name}};return value!=null?value:"";
+			}}			
         ],
 		viewrecords: true,
         height: 385,
@@ -45,9 +47,7 @@ $(function () {
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.orderType = r.data;
-						}else{
-							alert(r.msg);
-						}
+						}else{alert(r.msg);}
 					}
 				});
         	}
@@ -58,16 +58,31 @@ $(function () {
         			success: function(r){
         				if(r.code === 0){
         					vm.orderStatus = r.data;
-        				}else{
-        					alert(r.msg);
-        				}
+        				}else{alert(r.msg);}
+        			}
+        		});
+        	}
+        	if(vm.models.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/queryChargerModel",
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.models = r.data;
+        				}else{alert(r.msg);}
         			}
         		});
         	}
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" });
+        	$('#startDt').datetimepicker({autoclose:true,todayBtn:true,language:'zh-CN'}).on('hide', function(ev){
+        	    vm.q.startDt=$('#startDt').val();
+        	});
+        	$('#endDt').datetimepicker({autoclose:true,todayBtn:true,language:'zh-CN'}).on('hide', function(ev){
+        		vm.q.endDt=$('#endDt').val();
+        	});
         }
     });
 });
@@ -89,7 +104,8 @@ var vm = new Vue({
 		type:null,
 		orders: {},
 		orderStatus:[],
-		orderType:[]
+		orderType:[],
+		models:[]
 	},
 	methods: {
 		query: function () {

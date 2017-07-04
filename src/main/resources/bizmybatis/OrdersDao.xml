@@ -35,7 +35,7 @@
 		           
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                   AND `order_owner` like concat('%',#{orderOwner},'%')
+                	AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
 			                <!-- 订单编号 -->
                 <if test="id!=null and id.trim()!=''">
@@ -50,10 +50,10 @@
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　AND create_dt&gt;=#{startDt} 
+					AND create_dt &gt;=#{startDt} 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　　AND  create_dt &lt;=#{endDt} 
+					AND create_dt &lt;=#{endDt} 
 				</if>
 				
 	    </where>
@@ -76,11 +76,11 @@
 		           
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
-                    AND `order_owner` like concat('%',#{orderOwner},'%')
+                	AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
 			                <!-- 订单编号 -->
                 <if test="id!=null and id.trim()!=''">
-                     AND `id` like concat('%',#{id},'%')
+                    AND `id` like concat('%',#{id},'%')
                 </if>
                             <!-- 订单type -->
                 <if test="orderType!=null and orderType.trim()!=''">
@@ -91,10 +91,10 @@
                 </if>
                             <!-- 開始結束時間 -->
 				<if test="startDt!=null and startDt!=''">
-				　　AND create_dt&gt;=#{startDt} 
+					AND create_dt&gt;=#{startDt} 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-				 　　AND  create_dt &lt;=#{endDt} 
+					AND create_dt&lt;=#{endDt} 
 				</if>
 				
 	    </where>
