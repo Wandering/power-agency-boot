@@ -9,13 +9,12 @@ $(function () {
 			{ label: '充电宝ID', name: 'power_bank', index: 'powerBank', width:70 }, 			
 			{ label: '借电时间', name: 'start_dt', index: 'startDt', width: 80 ,formatter: function(value, options, row){
 				return  value!=undefined?vm.parseDate(value):"";
-				}}, 			
+			}}, 			
 			{ label: '借电桩ID', name: 'from_station', index: 'fromStation', width: 70 }, 			
 			{ label: '还电时间', name: 'end_dt', index: 'endDt', width: 80 ,formatter: function formatDate(value, options, row)
 			{ 
-				 	
 				return value!=undefined?vm.parseDate(value):""; 
-				} }, 			
+			}}, 			
 			{ label: '还电桩ID', name: 'to_station', index: 'toStation', width: 70 }, 			
 			{ label: '费用', name: 'fee', index: 'fee', width: 40 }, 			
 			{ label: '交易状态', name: 'status', index: 'status', width: 70 ,formatter: function(value, options, row){
@@ -105,6 +104,7 @@ var vm = new Vue({
 	},
 	methods: {
 		query: function () {
+			$("#jqGrid").jqGrid('setGridParam',{page:1});
 			vm.reload();
 		},
 		add: function(){
@@ -179,18 +179,18 @@ var vm = new Vue({
             }).trigger("reloadGrid");
 		},
 		parseDate: function(value){
-			if(value==null||value==""){
-				return undefined;
+			if(value==null){
+				return "";
 			}else{
-			value = new Date(value*1000);
-			var year=value.getFullYear(); 
-			var month=value.getMonth()+1; 
-			var date=value.getDate(); 
-			var hour=value.getHours(); 
-			var minute=value.getMinutes(); 
-			var second=value.getSeconds(); 
-			return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
-		}
+				value = new Date(value*1000);
+				var year=value.getFullYear(); 
+				var month=value.getMonth()+1; 
+				var date=value.getDate(); 
+				var hour=value.getHours(); 
+				var minute=value.getMinutes(); 
+				var second=value.getSeconds(); 
+				return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
+			}
 		}
 	}
 });

@@ -11,7 +11,7 @@ $(function () {
 			{ label: '首次充值', name: 'firstDeposit', index: 'first_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
 			{ label: '最低余额', name: 'minDeposit', index: 'min_deposit', width: 80 ,formatter: function(value){return value+"元";}}, 			
 			{ label: '年费', name: 'yearFee', index: 'year_fee', width: 80 ,formatter: function(value){return value+"元";}}, 			
-			{ label: '免费时长', name: 'freeTime', index: 'free_time', width: 80 ,formatter: function(value){return value+"小时";}}, 			
+			{ label: '免费时长', name: 'freeTime', index: 'free_time', width: 80 ,formatter: function(value){return value+"分钟";}}, 			
 			{ label: '逾期单价', name: 'overdueFee', index: 'overdue_fee', width: 80 ,formatter: function(value){return value+"元/时";}}, 			
 			{ label: '封顶', name: 'maxOverdueFee', index: 'max_overdue_fee', width: 80 ,formatter: function(value){return value+"元/天";}}, 			
 			{ label: '还电缓冲时间', name: 'bufferTime', index: 'buffer_time', width: 80 ,formatter: function(value){return value+"秒";}}, 			
@@ -74,6 +74,7 @@ var vm = new Vue({
 	},
 	methods: {
 		query: function () {
+			$("#jqGrid").jqGrid('setGridParam',{page:1});
 			vm.reload();
 		},
 		add: function(){

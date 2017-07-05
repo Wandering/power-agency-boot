@@ -88,7 +88,10 @@ public class SysUserServiceImpl implements SysUserService {
 		if(StringUtils.isBlank(user.getPassword())){
 			user.setPassword(null);
 		}else{
-			user.setPassword(new Sha256Hash(user.getPassword()).toHex());
+			String oldPwd = sysUserDao.queryObject(user.getUserId()).getPassword();
+			if(!user.getPassword().equals(oldPwd)){
+				user.setPassword(new Sha256Hash(user.getPassword()).toHex());
+			}
 		}
 		sysUserDao.update(user);
 		
