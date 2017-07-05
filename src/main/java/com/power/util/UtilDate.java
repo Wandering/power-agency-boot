@@ -7,8 +7,9 @@ import java.util.Map;
 
 public class UtilDate {
  
-public static Map getDate(){
-	Calendar cal = Calendar.getInstance();
+	//得到传入时间的昨日开始与结束时间，上月的开始与结束时间
+public static Map getDate(Calendar cal){
+	
 	cal.add(Calendar.DATE, -1);
 	String yesterday = new SimpleDateFormat( "yyyy-MM-dd ").format(cal.getTime());
 	String startFix =  " 00:00:00";
@@ -38,7 +39,7 @@ public static Map getDate(){
 	timeMap.put("end2", end2);
 
 	return timeMap;
-	
-	
 }
+	
+
 }

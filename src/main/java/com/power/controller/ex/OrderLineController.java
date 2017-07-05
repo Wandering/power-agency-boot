@@ -97,7 +97,8 @@ public class OrderLineController {
 		Query query = new Query(params);
 		double yesdaytotal ;
 		double lastmonthtotal;
-		Map <String,String> map =UtilDate.getDate();
+		Calendar cal = Calendar.getInstance();
+		Map <String,String> map =UtilDate.getDate(cal);
 		try{
 		 yesdaytotal = orderLineService.queryOrderTotal(map.get("start"),map.get("end"));
 		}catch(Exception e){

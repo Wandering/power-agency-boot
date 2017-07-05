@@ -7,7 +7,7 @@
 		SELECT ord.*,ol.* FROM orders ord,order_line ol 
 		 <where>
 			                <!-- ######订单记录###### -->
-			     ord.id= ol.order_id 
+			     ord.id= ol.order_id and ord.type = 'CONSUME'
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                 	AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>
@@ -34,7 +34,7 @@
 	<select id="queryTotal" resultType="int">
 		SELECT count(*)  FROM orders ord,order_line ol 
 		 <where>
-		        ord.id= ol.order_id 
+		        ord.id= ol.order_id and ord.type = 'CONSUME'
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                     AND `order_owner` like concat('%',#{orderOwner},'%')
