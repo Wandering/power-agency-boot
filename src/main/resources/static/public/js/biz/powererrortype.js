@@ -39,6 +39,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/DEVICE_TYPE",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.deviceTypes = r.data;
@@ -52,6 +53,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/POWER_ERROR_TYPE",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.errorTypes = r.data;

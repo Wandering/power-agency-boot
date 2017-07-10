@@ -42,6 +42,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/DEAL_TYPE",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.dealTypes = r.data;

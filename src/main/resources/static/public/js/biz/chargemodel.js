@@ -46,6 +46,7 @@ $(function () {
 	        	$.ajax({
 					type: "POST",
 				    url: "../dict/CHARGE_COF",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.chargeConfigs = r.data;

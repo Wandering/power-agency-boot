@@ -46,6 +46,7 @@ $(function () {
 	        	$.ajax({
 					type: "POST",
 				    url: "../dict/BANK_STATUS",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.bankStatus = r.data;
@@ -59,6 +60,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/queryStationModel",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.models = r.data;

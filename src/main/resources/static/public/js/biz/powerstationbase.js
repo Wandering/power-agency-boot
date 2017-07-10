@@ -61,6 +61,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/STATION_CHANNEL",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.channels = r.data;
@@ -74,6 +75,7 @@ $(function () {
         		$.ajax({
 					type: "POST",
 				    url: "../dict/queryStationModel",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.models = r.data;
@@ -87,6 +89,7 @@ $(function () {
         		$.ajax({
         			type: "POST",
         			url: "../dict/STATION_STATUS",
+        			async: false,
         			success: function(r){
         				if(r.code === 0){
         					vm.stationStatus = r.data;

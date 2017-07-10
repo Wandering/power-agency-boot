@@ -54,6 +54,7 @@ $(function () {
 	        	$.ajax({
 					type: "POST",
 				    url: "../dict/ORDER_STATUS",
+				    async: false,
 				    success: function(r){
 				    	if(r.code === 0){
 				    		vm.orderStatus = r.data;
@@ -65,6 +66,7 @@ $(function () {
         		$.ajax({
         			type: "POST",
         			url: "../dict/queryChargerModel",
+        			async: false,
         			success: function(r){
         				if(r.code === 0){
         					vm.models = r.data;
