@@ -38,7 +38,7 @@ public class AutoConfigAgency {
             logger.debug("用户未登录，跳出切入点！");
             return;
         }
-        String pointcut = joinPoint.getSignature().getDeclaringTypeName();
+        String pointcut = joinPoint.getSignature().toString();
         logger.debug("当前切入方法为:{}",pointcut);
         Object[] args = joinPoint.getArgs();
 

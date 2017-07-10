@@ -11,6 +11,7 @@ import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -26,8 +27,8 @@ public class AgencyConfig {
 
     static {
         //init
-        mapAopConfigs.add(new MapConfig("com.power.service.*.*.queryList(..) ","agencyId",0));
-        entityConfigs.add(new EntityConfig("com.power.service..*.add(..) ","agencyId",0,AgenciesEntity.class));
+        mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","agencyId",0));
+//        entityConfigs.add(new EntityConfig("^* com.power.service.*.*.add(..)","agencyId",0,AgenciesEntity.class));
     }
 
     /**
@@ -38,7 +39,7 @@ public class AgencyConfig {
      */
     public static void write(String pointcut,String value,Object[] args){
         for (MapConfig mapConfig :mapAopConfigs){
-            if (Pattern.matches(mapConfig.getRegex(),pointcut)){
+            if (pointcut.matches(mapConfig.getRegex())){
                 Object object = args[mapConfig.getIndex()];
                 if (ArrayUtils.toString(object.getClass().getInterfaces()).startsWith("java.util.Map")){
                     Map map = (Map)object;
@@ -133,4 +134,12 @@ public class AgencyConfig {
 
     }
 
+
+    public static void main(String[] args) {
+        String s = "List com.power.service.impl.StationErrorLogServiceImpl.queryList(Map)";
+        String regex = "^* com.power.service.*.*.queryList(..)";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(s);
+        System.out.println(matcher.find());
+    }
 }
