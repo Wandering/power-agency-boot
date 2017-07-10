@@ -3,7 +3,7 @@
     <include resource="org/springframework/boot/logging/logback/base.xml" />
 
     <!--文件路径-->
-    <property name="FILE_PATH" value="./logs/power-user.log" />
+    <property name="FILE_PATH" value="./logs/power-admin.log" />
     <!-- 生产环境 -->
     <springProfile name="prod">
         <!-- 每天产生一个文件 -->
