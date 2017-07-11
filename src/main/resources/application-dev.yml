@@ -2,6 +2,15 @@ spring:
     profiles:
         active: dev
     datasource:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driverClassName: com.mysql.jdbc.Driver
+        # jackson时间格式化
+    jackson:
+        time-zone: GMT+8
+        date-format: yyyy-MM-dd HH:mm:ss
+    thymeleaf:
+        cache: false
+    datasource:
         url: jdbc:mysql://139.224.16.177:5522/power?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
         username: poweruser
         password: password

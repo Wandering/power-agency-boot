@@ -2,6 +2,15 @@ spring:
     profiles:
         active: test
     datasource:
+            type: com.alibaba.druid.pool.DruidDataSource
+            driverClassName: com.mysql.jdbc.Driver
+            # jackson时间格式化
+        jackson:
+            time-zone: GMT+8
+            date-format: yyyy-MM-dd HH:mm:ss
+        thymeleaf:
+            cache: false
+    datasource:
         url: jdbc:mysql://localhost:3306/renren-security-boot?allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8&zeroDateTimeBehavior=convertToNull
         username: renren
         password: 123456
