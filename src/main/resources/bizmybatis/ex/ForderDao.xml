@@ -7,7 +7,7 @@
 		SELECT ord.*,ol.* FROM orders ord,order_line ol 
 		 <where>
 			                <!-- ######订单记录###### -->
-			     ord.id= ol.order_id and ord.type = 'CONSUME'
+			     ord.id= ol.order_id and ord.type = 'CONSUME' 
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                 	AND `order_owner` like concat('%',#{orderOwner},'%')
                 </if>

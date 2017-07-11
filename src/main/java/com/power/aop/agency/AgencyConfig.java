@@ -2,6 +2,10 @@ package com.power.aop.agency;
 
 import com.google.common.collect.Lists;
 import com.power.entity.AgenciesEntity;
+import com.power.entity.PowerBankEntity;
+import com.power.entity.PowerStationBaseEntity;
+import com.power.entity.PowerStationEntity;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
@@ -27,8 +31,27 @@ public class AgencyConfig {
 
     static {
         //init
-        mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","agencyId",0));
-//        entityConfigs.add(new EntityConfig("^* com.power.service.*.*.add(..)","agencyId",0,AgenciesEntity.class));
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.ForderServiceImpl.queryTotal(..)","agency",0));
+           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
+           
+           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
+           
+           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerBankServiceImpl.queryList(..) ","agency",0));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.save(..) ","agency",0,PowerBankEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.delete(..) ","agency",0,PowerBankEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.update(..) ","agency",0,PowerBankEntity.class));
+           
+           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.queryList(..) ","agencyId",0));
+           
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.save(..) ","agencyId",0,PowerStationBaseEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.delete(..) ","agencyId",0,PowerStationBaseEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.update(..) ","agencyId",0,PowerStationBaseEntity.class));
+           
+           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationServiceImpl.queryList(..) ","agent",0));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.save(..) ","agent",0,PowerStationEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.delete(..) ","agent",0,PowerStationEntity.class));
+           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.update(..) ","agent",0,PowerStationEntity.class));
+         
     }
 
     /**
