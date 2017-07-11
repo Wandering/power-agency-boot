@@ -5,7 +5,7 @@
     <!--文件路径-->
     <property name="FILE_PATH" value="./logs/power-admin.log" />
     <!-- 生产环境 -->
-    <springProfile name="prod">
+    <springProfile name="pro">
         <!-- 每天产生一个文件 -->
         <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <!-- 文件路径 -->
