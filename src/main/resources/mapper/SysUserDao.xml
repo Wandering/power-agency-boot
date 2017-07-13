@@ -127,7 +127,7 @@
 	
     <!-- queryByParentId根据parentId查询所有用户 -->
         <select id="queryByParentId" resultType="io.renren.entity.SysUserEntity">
-		select su from sys_user su where su.parent_id = #{agencyId}
+		select * from sys_user su where parent_id = #{agencyId}
 	</select>
 	
 	
