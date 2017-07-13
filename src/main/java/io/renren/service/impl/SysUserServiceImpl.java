@@ -10,6 +10,7 @@ import io.renren.utils.RRException;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -134,4 +135,27 @@ public class SysUserServiceImpl implements SysUserService {
 			throw new RRException("新增用户所选角色，不是本人创建");
 		}
 	}
+/**
+ * 查询用户的可视用户范围
+ */
+	@Override
+	public List<SysUserEntity> queryByAgencyId(String username) {
+		SysUserEntity user = sysUserDao.queryByUserName(username);
+		List<SysUserEntity> userList = sysUserDao.queryByParentId(user.getAgencyId());
+		userList.add(user);
+		for(SysUserEntity u:userList){
+		   if(queryByAgencyId(u.getUsername()).size()!=0){
+			   userList.addAll(queryByAgencyId(u.getUsername()));
+		   }
+		}
+		 if(!userList.isEmpty()){
+             HashSet<SysUserEntity> hs = new HashSet<SysUserEntity>(userList);//以传参的形式new一个HashSet
+             userList.clear();
+             userList.addAll(hs);
+         }
+		
+		return userList;
+	}
+	
+
 }

@@ -70,4 +70,6 @@ public interface SysUserService {
 	 * @param newPassword  新密码
 	 */
 	int updatePassword(Long userId, String password, String newPassword);
+	
+	List <SysUserEntity> queryByAgencyId(String username);
 }
