@@ -23,8 +23,8 @@ public class AgencyConfig {
 
     static {
         //init
-    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryTotal(..)","agencyId",0));
-    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","agencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryTotal(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","authAgencyId",0));
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
 //
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
