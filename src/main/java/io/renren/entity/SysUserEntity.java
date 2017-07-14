@@ -69,6 +69,19 @@ public class SysUserEntity implements Serializable {
 	private Date createTime;
 
 	private Integer agencyId;
+	
+	/**
+	 * 用户权限可视范围
+	 */
+	private String authAgencyId;
+
+	public String getAuthAgencyId() {
+		return authAgencyId;
+	}
+
+	public void setAuthAgencyId(String authAgencyId) {
+		this.authAgencyId = authAgencyId;
+	}
 
 	/**
 	 * 设置：
