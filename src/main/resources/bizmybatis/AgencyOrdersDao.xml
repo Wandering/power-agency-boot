@@ -37,6 +37,9 @@
 				order by id desc
 			</otherwise>
 		</choose>
+		  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			agencyId in ${agencyId]
+			</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -45,6 +48,9 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from
 		agency_orders
+		  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			agencyId in ${agencyId]
+			</if>
 	</select>
 
 	<insert id="save" parameterType="com.power.entity.AgencyOrdersEntity"

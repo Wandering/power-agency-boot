@@ -44,10 +44,9 @@ public class AutoConfigAgency {
 
         SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
         Integer agencyId = userEntity.getAgencyId();
-        String authAgencyId = userEntity.getAuthAgencyId();        
 
-            AgencyConfig.write(pointcut,authAgencyId,args);
-            
+        //0为超级管理员
+        AgencyConfig.write(pointcut,agencyId.toString(),args);
     }
 
 }

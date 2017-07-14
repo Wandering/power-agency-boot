@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.google.common.base.Joiner;
 
 import io.renren.RenrenApplication;
 import io.renren.RenrenApplicationTests;
@@ -26,11 +27,10 @@ public class SysUserDaoTest extends RenrenApplicationTests{
     
 	@Test
 	public void testQueryByUserName() {
-		List<SysUserEntity> userList =  impl.queryByAgencyId("123");
+		List<SysUserEntity> userList =  impl.queryByAgencyId("123456789");
+		String str = Joiner.on(",").join(userList);  
 		
-		for(SysUserEntity u:userList){
-			System.out.println(u.getUserId()+"----------------");
+			System.out.println(str);
 
-	}
 
 }}

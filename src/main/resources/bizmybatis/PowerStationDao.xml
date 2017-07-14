@@ -144,6 +144,10 @@
                 <if test="lasteditor != null and lasteditor.trim() != ''">
                     AND lastEditor = #{lasteditor}
                 </if>
+                
+                  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -265,6 +269,10 @@
                 <if test="lasteditor != null and lasteditor.trim() != ''">
                     AND lastEditor = #{lasteditor}
                 </if>
+                
+                  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where> 
 	</select>
 	 

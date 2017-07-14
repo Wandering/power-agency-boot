@@ -32,6 +32,10 @@
 			<if test="createDt != null">
 				and create_dt = #{createDt}
 			</if>
+			
+			  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -60,6 +64,10 @@
 			<if test="createDt != null">
 				and create_dt = #{createDt}
 			</if>
+			
+			  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 		</where>
 	</select>
 	 

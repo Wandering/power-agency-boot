@@ -1,21 +1,13 @@
 package com.power.aop.agency;
 
 import com.google.common.collect.Lists;
-import com.power.entity.AgenciesEntity;
-import com.power.entity.PowerBankEntity;
-import com.power.entity.PowerStationBaseEntity;
-import com.power.entity.PowerStationEntity;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.aspectj.lang.annotation.Aspect;
-import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -31,27 +23,28 @@ public class AgencyConfig {
 
     static {
         //init
-    	   mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.ForderServiceImpl.queryTotal(..)","agency",0));
-           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
-           
-           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
-           
-           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerBankServiceImpl.queryList(..) ","agency",0));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.save(..) ","agency",0,PowerBankEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.delete(..) ","agency",0,PowerBankEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.update(..) ","agency",0,PowerBankEntity.class));
-           
-           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.queryList(..) ","agencyId",0));
-           
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.save(..) ","agencyId",0,PowerStationBaseEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.delete(..) ","agencyId",0,PowerStationBaseEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.update(..) ","agencyId",0,PowerStationBaseEntity.class));
-           
-           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationServiceImpl.queryList(..) ","agent",0));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.save(..) ","agent",0,PowerStationEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.delete(..) ","agent",0,PowerStationEntity.class));
-           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.update(..) ","agent",0,PowerStationEntity.class));
-         
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryTotal(..)","agencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","agencyId",0));
+//           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
+//
+//           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
+//
+//           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerBankServiceImpl.queryList(..) ","agency",0));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.save(..) ","agency",0,PowerBankEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.delete(..) ","agency",0,PowerBankEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.update(..) ","agency",0,PowerBankEntity.class));
+//
+//           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.queryList(..) ","agencyId",0));
+//
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.save(..) ","agencyId",0,PowerStationBaseEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.delete(..) ","agencyId",0,PowerStationBaseEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.update(..) ","agencyId",0,PowerStationBaseEntity.class));
+//
+//           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.PowerStationServiceImpl.queryList(..) ","agent",0));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.save(..) ","agent",0,PowerStationEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.delete(..) ","agent",0,PowerStationEntity.class));
+//           entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.update(..) ","agent",0,PowerStationEntity.class));
+//
     }
 
     /**
@@ -62,9 +55,9 @@ public class AgencyConfig {
      */
     public static void write(String pointcut,String value,Object[] args){
         for (MapConfig mapConfig :mapAopConfigs){
-            if (pointcut.matches(mapConfig.getRegex())){
+            if (Pattern.compile(mapConfig.getRegex()).matcher(pointcut).find()){
                 Object object = args[mapConfig.getIndex()];
-                if (ArrayUtils.toString(object.getClass().getInterfaces()).startsWith("java.util.Map")){
+                if (ArrayUtils.toString(object.getClass().getSuperclass().getInterfaces()).contains("Map")){
                     Map map = (Map)object;
                     map.put(mapConfig.getField(),value);
                     return;
@@ -72,7 +65,7 @@ public class AgencyConfig {
             }
         }
         for (EntityConfig entityConfig : entityConfigs){
-            if (Pattern.matches(entityConfig.getRegex(),pointcut)){
+            if (Pattern.compile(entityConfig.getRegex()).matcher(pointcut).find()){
                 Object object = args[entityConfig.getIndex()];
                 if (object.getClass() == entityConfig.getClazz()){
                     Field field = ReflectionUtils.findField(entityConfig.getClazz(),entityConfig.getField());
@@ -159,10 +152,9 @@ public class AgencyConfig {
 
 
     public static void main(String[] args) {
-        String s = "List com.power.service.impl.StationErrorLogServiceImpl.queryList(Map)";
+        String s = "List com.power.service.ex.impl.StationErrorLogServiceImpl.queryList(Map)";
         String regex = "^* com.power.service.*.*.queryList(..)";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(s);
-        System.out.println(matcher.find());
+        System.out.println(Pattern.compile(regex).matcher(s).find());
+        System.out.println(s.matches(regex));
     }
 }

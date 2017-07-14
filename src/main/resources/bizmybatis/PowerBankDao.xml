@@ -79,6 +79,11 @@
                 <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
+                
+                
+                 <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -148,6 +153,10 @@
                 <if test="borrowCount != null and borrowCount.trim() != ''">
                     AND borrow_count = #{borrowCount}
                 </if>
+                
+                 <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where> 
 	</select>
 	 

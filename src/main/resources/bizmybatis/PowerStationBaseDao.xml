@@ -134,6 +134,10 @@
                 <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
+                
+                 <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -247,6 +251,10 @@
                 <if test="updateBy != null and updateBy.trim() != ''">
                     AND update_by = #{updateBy}
                 </if>
+                
+                  <if test = "agencyId !=null and agencyId.trim() != ''" >
+			      agencyId in ${agencyId]
+			     </if>
 			        </where> 
 	</select>
 	 
