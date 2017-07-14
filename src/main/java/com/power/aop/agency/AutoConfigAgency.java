@@ -46,9 +46,7 @@ public class AutoConfigAgency {
         Integer agencyId = userEntity.getAgencyId();
 
         //0为超级管理员
-        if (agencyId ==0){
-            AgencyConfig.write(pointcut,agencyId.toString(),args);
-        }
+        AgencyConfig.write(pointcut,agencyId.toString(),args);
     }
 
 }

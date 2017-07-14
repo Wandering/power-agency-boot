@@ -68,7 +68,20 @@ public class SysUserEntity implements Serializable {
 	 */
 	private Date createTime;
 
+	/**
+	 * 代理商id  超级管理员为null
+	 */
 	private Integer agencyId;
+
+	/**
+	 * 父代理id 如果系统管理员为null
+	 */
+	private Integer parentId;
+
+	/**
+	 * 账号类型(0:运维账号,1:代理商账号)
+	 */
+	private Integer type;
 
 	/**
 	 * 设置：
@@ -204,5 +217,21 @@ public class SysUserEntity implements Serializable {
 
 	public void setAgencyId(Integer agencyId) {
 		this.agencyId = agencyId;
+	}
+
+	public Integer getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(Integer parentId) {
+		this.parentId = parentId;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 }
