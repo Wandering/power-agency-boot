@@ -124,5 +124,11 @@
 			#{userId}
 		</foreach>
 	</delete>
-
+	
+    <!-- queryByParentId根据parentId查询所有用户 -->
+        <select id="queryByParentId" resultType="io.renren.entity.SysUserEntity">
+		select * from sys_user su where parent_id = #{agencyId}
+	</select>
+	
+	
 </mapper>

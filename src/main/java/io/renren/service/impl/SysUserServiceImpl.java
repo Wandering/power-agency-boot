@@ -8,8 +8,10 @@ import io.renren.service.SysUserService;
 import io.renren.utils.Constant;
 import io.renren.utils.RRException;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -134,4 +136,40 @@ public class SysUserServiceImpl implements SysUserService {
 			throw new RRException("新增用户所选角色，不是本人创建");
 		}
 	}
+/**
+ * 查询用户的可视用户范围
+ */
+	@Override
+	public List<SysUserEntity> queryByAgencyId(String username) {
+		List <SysUserEntity> list ;
+		List <SysUserEntity> userlist;
+		list=new ArrayList<SysUserEntity>();
+		userlist = this.queryUserList(username);
+		list.addAll(userlist);
+		list.add(sysUserDao.queryByUserName(username));
+		if(userlist.size()!=0&&userlist!=null){
+			for(SysUserEntity u :userlist){
+			List<SysUserEntity> ulist = this.queryByAgencyId(u.getUsername());
+			list.addAll(ulist);
+			}
+			for (int i = 0; i < list.size() - 1; i++) {
+				for (int j = list.size() - 1; j > i; j--) {
+					if (list.get(j).getUserId() == list.get(i).getUserId()) {
+						list.remove(j);
+					}
+				}
+			}
+			return list;
+		}else{
+			return list;
+		}
+	}
+		
+	public  List<SysUserEntity> queryUserList(String username){
+		SysUserEntity user = sysUserDao.queryByUserName(username);
+		List<SysUserEntity> userList = sysUserDao.queryByParentId(user.getAgencyId());
+		return userList;
+	}
+		
+
 }
