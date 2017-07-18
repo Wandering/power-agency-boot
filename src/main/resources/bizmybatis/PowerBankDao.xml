@@ -153,7 +153,7 @@
                     AND borrow_count = #{borrowCount}
                 </if>
                 
-                 < <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
+                 <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
 			        authAgenciesId in ${authAgenciesId]
 			     </if>
 			        </where> 
