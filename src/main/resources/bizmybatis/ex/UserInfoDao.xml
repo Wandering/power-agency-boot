@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.UserInfoDao">
+
+	<select id="queryUserList" resultType="java.util.HashMap">
+		SELECT account.id, userplatform.openId, expand.nickname ,userplatform.status,expand.headimgurl ,expand.sex ,expand.city,expand.country,expand.province 
+		FROM power_platform_info platforminfo 
+		INNER JOIN power_user_platform  userplatform ON platforminfo.id = userplatform.platformId
+		INNER JOIN power_user puser ON userplatform.userId = puser.id
+		INNER JOIN power_user_account account ON account.agencyId = platforminfo.agencyId AND account.userId = puser.id
+		INNER JOIN power_user_expand expand ON expand.userId = account.id
+        <where>
+			<!-- ######服务商Id###### -->
+	        <if test="agencyId != null and agencyId.trim() != ''">
+	            AND platforminfo.agencyId = #{agencyId}
+	        </if>
+	        <!-- ######userId###### -->
+	        <if test="userId != null and userId.trim() != ''">
+	            AND account.id = #{userId}
+	        </if>
+		</where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id 
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		SELECT count(*) FROM power_platform_info platforminfo 
+		INNER JOIN power_user_platform  userplatform ON platforminfo.id = userplatform.platformId
+		INNER JOIN power_user puser ON userplatform.userId = puser.id
+		INNER JOIN power_user_account account ON account.agencyId = platforminfo.agencyId AND account.userId = puser.id
+		INNER JOIN power_user_expand expand ON expand.userId = account.id
+		<where>
+			<!-- ######服务商Id###### -->
+	        <if test="agencyId != null and agencyId.trim() != ''">
+	            AND platforminfo.agencyId = #{agencyId}
+	        </if>
+	        <!-- ######userId###### -->
+	        <if test="userId != null and userId.trim() != ''">
+	            AND account.id = #{userId}
+	        </if>
+		</where> 
+	</select>
+
+</mapper>
