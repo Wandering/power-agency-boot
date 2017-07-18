@@ -38,8 +38,8 @@
 				order by id desc
 			</otherwise>
 		</choose>
-	        <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			authAgenciesId in ${authAgenciesId}
+	       <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			agency_id in ${authAgencyId}
 			</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -49,8 +49,8 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from
 		agency_order_line
-		   <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			authAgenciesId in ${authAgenciesId}
+		   <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			agency_id in ${authAgencyId}
 			</if>
 	</select>
 
