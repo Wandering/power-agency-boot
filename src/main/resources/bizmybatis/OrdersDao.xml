@@ -56,7 +56,7 @@
 					AND create_dt &lt;=#{endDt} 
 				</if>
 				<if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			    agency_id in ${authAgencyId}
+			        AND agency in  ${authAgencyId}
 		     	</if>
 				
 	    </where>
@@ -99,9 +99,9 @@
 				<if test="endDt!=null and endDt!=''">
 					AND create_dt&lt;=#{endDt} 
 				</if>
-				<if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			    agency_id in ${authAgencyId}
-			    </if>
+			   <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			        AND agency in ${authAgencyId}
+		     	</if>
 				
 	    </where>
         <choose>

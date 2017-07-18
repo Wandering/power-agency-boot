@@ -136,7 +136,7 @@
                 </if>
                 
                <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			   agency_id in ${authAgencyId}
+			     AND facilitator_id in ${authAgencyId}
 			   </if>
 			        </where>
         <choose>
@@ -252,9 +252,9 @@
                     AND update_by = #{updateBy}
                 </if>
                 
-                 <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			      agency_id in ${authAgencyId}
-			     </if>
+                <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			     AND facilitator_id in ${authAgencyId}
+			   </if>
 			        </where> 
 	</select>
 	 

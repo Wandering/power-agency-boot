@@ -29,6 +29,11 @@
 
 	<select id="queryList" resultType="com.power.entity.AgencyOrdersEntity">
 		select * from agency_orders
+		<where>
+		  <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			agency in ${authAgencyId}
+			</if>
+		</where>
 		<choose>
 			<when test="sidx != null and sidx.trim() != ''">
 				order by ${sidx} ${order}
@@ -37,9 +42,6 @@
 				order by id desc
 			</otherwise>
 		</choose>
-		  <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			agency_id in ${authAgencyId}
-			</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
@@ -48,9 +50,12 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from
 		agency_orders
-		 <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			agency_id in ${authAgencyId}
+		<where>
+		  <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
+			agency in ${authAgencyId}
 			</if>
+		</where>
+		
 	</select>
 
 	<insert id="save" parameterType="com.power.entity.AgencyOrdersEntity"

@@ -3,6 +3,7 @@ package com.power.aop.agency;
 import com.alibaba.fastjson.JSON;
 import io.renren.entity.SysUserEntity;
 import io.renren.service.SysUserService;
+import io.renren.service.impl.SysUserServiceImpl;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -28,7 +29,7 @@ import java.util.*;
 public class AutoConfigAgency {
 
     private final static Logger logger = LoggerFactory.getLogger(AutoConfigAgency.class);
-    private static SysUserService sysUserService;
+    private static SysUserServiceImpl sysUserServiceImpl;
 
     @Pointcut("execution(* com.power.service..*.*(..))")
     public void autoConfig(){}
@@ -47,21 +48,8 @@ public class AutoConfigAgency {
 
         SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
         Integer agencyId = userEntity.getAgencyId();
-        
-        List <SysUserEntity> list = sysUserService.queryByAgencyId(userEntity.getUsername());
-        StringBuffer str = new StringBuffer();
-        boolean flag=false;
-        for(SysUserEntity u : list) {
-            if(flag) {
-            	str.append(",");
-            }else{
-                flag=true;
-            }
-            str.append(u.getAgencyId());
-        }
-        
-        userEntity.setAuthAgencyId(str.toString());
-        
+       
+               
         
         //0为超级管理员
         AgencyConfig.write(pointcut,userEntity.getAuthAgencyId(),args);

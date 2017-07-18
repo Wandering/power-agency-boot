@@ -154,7 +154,7 @@ public class SysUserServiceImpl implements SysUserService {
 			}
 			for (int i = 0; i < list.size() - 1; i++) {
 				for (int j = list.size() - 1; j > i; j--) {
-					if (list.get(j).getUserId() == list.get(i).getUserId()) {
+					if (list.get(j).getAgencyId() == list.get(i).getAgencyId()) {
 						list.remove(j);
 					}
 				}

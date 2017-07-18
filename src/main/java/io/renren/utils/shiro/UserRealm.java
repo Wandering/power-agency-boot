@@ -74,14 +74,19 @@ public class UserRealm extends AuthorizingRealm {
         List <SysUserEntity> list = sysUserService.queryByAgencyId(user.getUsername());
     	StringBuffer sb=new StringBuffer();
     	boolean flag=false;
-		for(SysUserEntity u:list){
+    	sb.append("(");
+    	for(SysUserEntity u:list){
 			if (flag) {
-				sb.append(",");
+				sb.append("',");
 			}else {
 				flag=true;
 			}
-			sb.append(u.getUserId());
+			sb.append("'");
+			sb.append(u.getAgencyId());
+			
+			
 		}
+		sb.append("')");
 		user.setAuthAgencyId(sb.toString());
 		
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
