@@ -34,7 +34,7 @@
 			</if>
 			
 			   <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			        authAgenciesId in ${authAgenciesId]
+			        authAgenciesId in ${authAgenciesId}
 			    </if>
 		</where>
         <choose>
@@ -65,7 +65,7 @@
 				and create_dt = #{createDt}
 			</if>
 			 <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			        authAgenciesId in ${authAgenciesId]
+			        authAgenciesId in ${authAgenciesId}
 			    </if>
 		</where>
 	</select>

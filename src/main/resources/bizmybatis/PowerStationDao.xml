@@ -146,7 +146,7 @@
                 </if>
                 
                    <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			        authAgenciesId in ${authAgenciesId]
+			        authAgenciesId in ${authAgenciesId}
 			    </if>
 			        </where>
         <choose>
@@ -271,7 +271,7 @@
                 </if>
                 
                   <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			        authAgenciesId in ${authAgenciesId]
+			        authAgenciesId in ${authAgenciesId}
 			    </if>
 			        </where> 
 	</select>

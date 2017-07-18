@@ -56,7 +56,7 @@
 					AND create_dt &lt;=#{endDt} 
 				</if>
 				<if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			     authAgenciesId in ${authAgenciesId]
+			     authAgenciesId in ${authAgenciesId}
 			    </if>
 				
 	    </where>
@@ -100,7 +100,7 @@
 					AND create_dt&lt;=#{endDt} 
 				</if>
 				<if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			     authAgenciesId in ${authAgenciesId]
+			     authAgenciesId in ${authAgenciesId}
 			    </if>
 				
 	    </where>

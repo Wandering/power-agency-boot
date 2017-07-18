@@ -35,7 +35,7 @@
 			</otherwise>
 		</choose>
 		    <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			authAgenciesId in ${authAgenciesId]
+			authAgenciesId in ${authAgenciesId}
 			</if>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
@@ -45,7 +45,7 @@
 	<select id="queryTotal" resultType="int">
 		select count(*) from agencies
 		    <if test = "authAgenciesId !=null and authAgenciesId.trim() != ''" >
-			authAgenciesId in ${authAgenciesId]
+			authAgenciesId in ${authAgenciesId}
 			</if>
 	</select>
 
