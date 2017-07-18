@@ -37,6 +37,12 @@ $(function () {
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$('#demo').citys({
+        		  required:false,nodata:'disabled',onChange:function(data){
+        			vm.user.agency.region = data.code;
+        			vm.user.agency.address = data.province+data.city+data.area;
+        		}
+        	});
         }
     });
 });
@@ -52,7 +58,9 @@ var vm = new Vue({
 		roleList:{},
 		user:{
 			status:1,
-			roleIdList:[]
+			type:0,
+			roleIdList:[],
+			agency:{}
 		}
 	},
 	methods: {
@@ -64,7 +72,7 @@ var vm = new Vue({
 			vm.showList = false;
 			vm.title = "新增";
 			vm.roleList = {};
-			vm.user = {status:1,roleIdList:[]};
+			vm.user = {status:1,type:0,roleIdList:[],agency:{}};
 			
 			//获取角色信息
 			this.getRoleList();
@@ -127,6 +135,7 @@ var vm = new Vue({
 		getUser: function(userId){
 			$.get("../sys/user/info/"+userId, function(r){
 				vm.user = r.user;
+				$('#demo').citys({code:vm.user.agency.region});
 			});
 		},
 		getRoleList: function(){

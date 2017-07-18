@@ -11,10 +11,15 @@ import io.renren.utils.validator.Assert;
 import io.renren.utils.validator.ValidatorUtils;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import com.power.entity.AgenciesEntity;
+import com.power.service.AgenciesService;
 
 import java.util.List;
 import java.util.Map;
@@ -33,6 +38,8 @@ public class SysUserController extends AbstractController {
 	private SysUserService sysUserService;
 	@Autowired
 	private SysUserRoleService sysUserRoleService;
+	@Autowired
+	private AgenciesService agenciesService;
 	
 	/**
 	 * 所有用户列表
@@ -96,6 +103,9 @@ public class SysUserController extends AbstractController {
 	public R info(@PathVariable("userId") Long userId){
 		SysUserEntity user = sysUserService.queryObject(userId);
 		
+		//获取用户对应的代理商信息
+		AgenciesEntity agency =  agenciesService.queryObject(user.getAgencyId());
+		user.setAgency(agency);
 		//获取用户所属的角色列表
 		List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
 		user.setRoleIdList(roleIdList);
@@ -111,8 +121,18 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:save")
 	public R save(@RequestBody SysUserEntity user){
 		ValidatorUtils.validateEntity(user, AddGroup.class);
-		
-		user.setCreateUserId(getUserId());
+		//获取登录用户的信息
+		SysUserEntity userEntity = getUser();
+		//判断是否代理商
+		AgenciesEntity agency = user.getAgency();
+		if(user.getType().equals(1)){
+			agenciesService.save(agency);
+			user.setAgencyId(agency.getId());
+		}else{
+			user.setAgencyId(userEntity.getAgencyId());
+		}
+		user.setCreateUserId(userEntity.getUserId());
+		user.setParentId(userEntity.getAgencyId());
 		sysUserService.save(user);
 		
 		return R.ok();
@@ -126,8 +146,14 @@ public class SysUserController extends AbstractController {
 	@RequiresPermissions("sys:user:update")
 	public R update(@RequestBody SysUserEntity user){
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
-		
-		user.setCreateUserId(getUserId());
+		//获取登录用户的信息
+		SysUserEntity userEntity = getUser();
+		//判断是否代理商
+		AgenciesEntity agency = user.getAgency();
+		if(user.getType().equals(1)){
+			agenciesService.update(agency);
+		}else{}
+		user.setCreateUserId(userEntity.getUserId());
 		sysUserService.update(user);
 		
 		return R.ok();

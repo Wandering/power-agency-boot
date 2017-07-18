@@ -47,7 +47,7 @@ public class AutoConfigAgency {
         Object[] args = joinPoint.getArgs();
 
         SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
-        Integer agencyId = userEntity.getAgencyId();
+        Long agencyId = userEntity.getAgencyId();
        
                
         

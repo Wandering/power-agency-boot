@@ -74,7 +74,10 @@
 		`email`,
 		`mobile`,
 		`status`,
+		`type`,
 		`create_user_id`,
+		`agency_id`,
+		`parent_id`,
 		`create_time`
 		)
 		values
@@ -85,7 +88,10 @@
 		#{email},
 		#{mobile},
 		#{status},
+		#{type},
 		#{createUserId},
+		#{agencyId},
+		#{parentId},
 		#{createTime}
 		)
 	</insert>
@@ -98,6 +104,9 @@
 			<if test="email != null">`email` = #{email}, </if>
 			<if test="mobile != null">`mobile` = #{mobile}, </if>
 			<if test="status != null">`status` = #{status}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="agencyId != null">`agency_id` = #{agencyId}, </if>
+			<if test="parentId != null">`parent_id` = #{parentId}, </if>
 		</set>
 		where user_id = #{userId}
 		<if test="createUserId != null">

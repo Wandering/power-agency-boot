@@ -5,6 +5,8 @@ import io.renren.utils.validator.group.UpdateGroup;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 
+import com.power.entity.AgenciesEntity;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -71,17 +73,23 @@ public class SysUserEntity implements Serializable {
 	/**
 	 * 代理商id  超级管理员为null
 	 */
-	private Integer agencyId;
+	private Long agencyId;
 
 	/**
 	 * 父代理id 如果系统管理员为null
 	 */
-	private Integer parentId;
+	private Long parentId;
 
 	/**
 	 * 账号类型(0:运维账号,1:代理商账号)
 	 */
 	private Integer type;
+	
+	/**
+	 * 代理商信息
+	 */
+	private AgenciesEntity agency;
+
 	/**
 	 * 权限可视范围
 	 */
@@ -223,19 +231,19 @@ public class SysUserEntity implements Serializable {
 		this.createUserId = createUserId;
 	}
 
-	public Integer getAgencyId() {
+	public Long getAgencyId() {
 		return agencyId;
 	}
 
-	public void setAgencyId(Integer agencyId) {
+	public void setAgencyId(Long agencyId) {
 		this.agencyId = agencyId;
 	}
 
-	public Integer getParentId() {
+	public Long getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(Integer parentId) {
+	public void setParentId(Long parentId) {
 		this.parentId = parentId;
 	}
 
@@ -245,5 +253,13 @@ public class SysUserEntity implements Serializable {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+	
+	public AgenciesEntity getAgency() {
+		return agency;
+	}
+
+	public void setAgency(AgenciesEntity agency) {
+		this.agency = agency;
 	}
 }
