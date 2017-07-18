@@ -1,4 +1,4 @@
-userinfo.js$(function () {
+$(function () {
     $("#jqGrid").jqGrid({
         url: '../powerbank/list',
         datatype: "json",
