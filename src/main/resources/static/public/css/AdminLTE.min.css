@@ -241,12 +241,20 @@ a:hover, a:active, a:focus {
 	float: left;
 	background-color: transparent;
 	background-image: none;
-	padding: 15px 15px;
+	padding: 15px 19px;
 	font-family: fontAwesome
 }
 
 .main-header .sidebar-toggle:before {
 	content: "\f0c9"
+}
+
+.sidebar-collapse .main-header .sidebar-toggle ,.sidebar-open .main-header .sidebar-toggle{
+	transform:rotate(90deg);
+	-ms-transform:rotate(90deg); 	/* IE 9 */
+	-moz-transform:rotate(90deg); 	/* Firefox */
+	-webkit-transform:rotate(90deg); /* Safari 和 Chrome */
+	-o-transform:rotate(90deg); 		/* Opera */
 }
 
 .main-header .sidebar-toggle:hover {

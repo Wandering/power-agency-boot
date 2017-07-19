@@ -14,11 +14,11 @@ $(function () {
 			{ label: '状态', name: 'status', index: 'status', width: 70 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.stationStatus)[value]:"";
 			}},
-			{ label: '卡槽数（个）', name: 'slotNo', index: 'slot_no', width: 90 },
+			{ label: '卡槽数（个）', name: 'slotNo', index: 'slot_no', width: 100 },
 			{ label: '可还（个）', name: 'free', index: 'free', width: 80 }, 			
 			{ label: '可借（个）', name: 'canBorrow', index: 'can_borrow', width: 80 }, 			
 			{ label: '已借（个）', name: 'borrowCount', index: 'borrow_count', width: 80 }, 
-			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 60 }, 	
+			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 80 }, 	
 			{ label: '是否同步', name: 'isSync', index: 'is_sync', width: 80 ,formatter: function(value, options, row){
 				return value==1?"是":"否"
 			}}, 			
@@ -28,10 +28,10 @@ $(function () {
 			//{ label: '编辑人', name: 'editName', index: 'edit_name', width: 100 },
 			{ label: '导入时间', name: 'createDt', index: 'create_dt', width: 150 },
 			{ label: '更新时间', name: 'updateDt', index: 'update_dt', width: 150 }, 
-			{ label: '批次', name: 'batch', index: 'batch', width: 100 }, 			
-			{ label: '生产日期', name: 'production', index: 'production', width: 100 },
+			{ label: '批次', name: 'batch', index: 'batch', width: 110 }, 			
+			{ label: '生产日期', name: 'production', index: 'production', width: 110 },
 			{ label: '备注', name: 'note', index: 'note', width: 100 },
-			{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 100 },
+			{ label: '编辑人ID', name: 'editId', index: 'edit_id', width: 105 },
 			//{ label: '运营商ID', name: 'agencyid', index: 'agencyId', width: 100 }, 			
 			/*{ label: '创建人', name: 'createBy', index: 'create_by', width: 80 },
 			{ label: '更新人', name: 'updateBy', index: 'update_by', width: 80 }*/
@@ -44,6 +44,8 @@ $(function () {
         rownumWidth: 25, 
         autowidth:true,
         multiselect: true,
+        shrinkToFit:false,  
+        autowidth:true,
         pager: "#jqGridPager",
         jsonReader : {
             root: "page.list",
@@ -102,7 +104,7 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-y" : "hidden" }); 
         }
     });
 });

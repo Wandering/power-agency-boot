@@ -24,64 +24,65 @@
 		select * from power_bank where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.power.entity.PowerBankEntity">
-		select * from power_bank
+	<select id="queryList" resultType="com.power.entity.ex.PowerBankDTO">
+		SELECT pb.*,pbs.capacity FROM power_bank pb
+		LEFT JOIN power_station_position pbs ON pb.code = pbs.power_bank AND pbs.status='ENABLE'
         <where>
 			                <!-- ######充电宝表###### -->
                 <if test="id != null and id.trim() != ''">
-                    AND id = #{id}
+                    AND pb.id = #{id}
                 </if>
 			                <!-- 用户ID，充电宝目前被哪个用户借用 -->
                 <if test="customer != null and customer.trim() != ''">
-                    AND customer = #{customer}
+                    AND pb.customer = #{customer}
                 </if>
 			                <!-- 充电桩ID，充电宝目前位于哪个充电桩 -->
                 <if test="station != null and station.trim() != ''">
-                    AND station = #{station}
+                    AND pb.station = #{station}
                 </if>
 			                <!-- 充电桩卡槽号，充电宝目前位于哪个卡槽中 -->
                 <if test="position != null and position.trim() != ''">
-                    AND position = #{position}
+                    AND pb.position = #{position}
                 </if>
 			                <!-- 充电宝IMEI号 -->
                 <if test="code != null and code.trim() != ''">
-                    AND code like concat('%',#{code},'%')
+                    AND pb.code like concat('%',#{code},'%')
                 </if>
 			                <!-- 充电宝型号 -->
                 <if test="type != null and type.trim() != ''">
-                    AND type = #{type}
+                    AND pb.type = #{type}
                 </if>
 			                <!-- 服务商 -->
                 <if test="agency != null and agency.trim() != ''">
-                    AND agency = #{agency}
+                    AND pb.agency = #{agency}
                 </if>
 			                <!-- 充电宝状态，在卡槽中IN_POSITION，借出RENT -->
                 <if test="status != null and status.trim() != ''">
-                    AND status = #{status}
+                    AND pb.status = #{status}
                 </if>
 			                <!--  -->
                 <if test="createDt != null and createDt.trim() != ''">
-                    AND create_dt = #{createDt}
+                    AND pb.create_dt = #{createDt}
                 </if>
 			                <!--  -->
                 <if test="updateDt != null and updateDt.trim() != ''">
-                    AND update_dt = #{updateDt}
+                    AND pb.update_dt = #{updateDt}
                 </if>
 			                <!--  -->
                 <if test="createBy != null and createBy.trim() != ''">
-                    AND create_by = #{createBy}
+                    AND pb.create_by = #{createBy}
                 </if>
 			                <!--  -->
                 <if test="updateBy != null and updateBy.trim() != ''">
-                    AND update_by = #{updateBy}
+                    AND pb.update_by = #{updateBy}
                 </if>
 			                <!-- 充电宝被借出次数 -->
                 <if test="borrowCount != null and borrowCount.trim() != ''">
-                    AND borrow_count = #{borrowCount}
+                    AND pb.borrow_count = #{borrowCount}
                 </if>
                 
                <if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-			    AND agency in ${authAgencyId}
+			    AND pb.agency in ${authAgencyId}
 			   </if>
 			        </where>
         <choose>

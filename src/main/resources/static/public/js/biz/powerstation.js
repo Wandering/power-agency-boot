@@ -4,22 +4,23 @@ $(function () {
         datatype: "json",
         colModel: [			
 			//{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '网点名称', name: 'shopName', index: 'shop_name', width: 80 },
-			{ label: '充电桩IMEI号', name: 'code', index: 'code', width: 80 }, 			
-			{ label: '网点地址', name: 'address', index: 'address', width: 80 }, 			
-			{ label: '开始营业时间', name: 'shopStartDt', index: 'shop_start_dt', width: 80 }, 			
-			{ label: '结束营业时间', name: 'shopEndDt', index: 'shop_end_dt', width: 80 }, 	
-			{ label: '收费模式', name: 'feescale', index: 'feescale', width: 80 ,formatter: function(value, options, row){
+			{ label: '网点名称', name: 'shopName', index: 'shop_name' },
+			{ label: '充电桩IMEI号', name: 'code', index: 'code'}, 			
+			{ label: '网点地址', name: 'address', index: 'address' , width: 250}, 			
+			{ label: '营业时间', name: 'shopStartDt', index: 'shop_start_dt' ,formatter: function(value, options, row){
+				return vm.getTime(row.shopStartDt)+"-"+vm.getTime(row.shopEndDt);
+			}}, 		
+			{ label: '收费模式', name: 'feescale', index: 'feescale' ,formatter: function(value, options, row){
 				for(var i in vm.models){if(vm.models[i].id==value){value=vm.models[i].name}};return value;
 			}}, 
-			{ label: '摆放位置', name: 'shopStationPoint', index: 'shop_station_point', width: 80 },
-			{ label: '网点联系电话', name: 'shopPhone', index: 'shop_phone', width: 80 },
-			{ label: '负责人', name: 'wxUser', index: 'wx_user', width: 80 }, 			
-			{ label: '联系电话', name: 'wxUserPhone', index: 'wx_user_phone', width: 80 },
-			{ label: '状态 ', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
+			{ label: '摆放位置', name: 'shopStationPoint', index: 'shop_station_point' },
+			{ label: '网点联系电话', name: 'shopPhone', index: 'shop_phone' },
+			{ label: '负责人', name: 'wxUser', index: 'wx_user' , width: 110}, 			
+			{ label: '联系电话', name: 'wxUserPhone', index: 'wx_user_phone' , width: 110 },
+			{ label: '状态 ', name: 'status', index: 'status' , width: 110,formatter: function(value, options, row){
 				return value!=null?getDict(vm.s_status)[value]:"";
 			}},
-			{ label: '最后编辑人员', name: 'lasteditor', index: 'lastEditor', width: 80 },
+			{ label: '最后编辑人员', name: 'lasteditor', index: 'lastEditor' , width: 115},
 			/*{ label: '', name: 'dimensionCode', index: 'dimension_code', width: 80 }, 
 			{ label: '表region.地点ID(如深圳南山1000103)', name: 'region', index: 'region', width: 80 },
 			{ label: '网点地址对应纬度', name: 'latitude', index: 'latitude', width: 80 }, 			
@@ -39,9 +40,10 @@ $(function () {
         rowNum: 10,
 		rowList : [10,30,50],
         rownumbers: true, 
-        rownumWidth: 25, 
-        autowidth:true,
+        rownumWidth: 25,
         multiselect: true,
+        shrinkToFit:false,  
+        autowidth:true,
         pager: "#jqGridPager",
         jsonReader : {
             root: "page.list",
@@ -94,7 +96,7 @@ $(function () {
         },
         gridComplete:function(){
         	//隐藏grid底部滚动条
-        	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	//$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-y" : "hidden" }); 
         	$('#demo').citys({
         		code:vm.powerStation.region,onChange:function(data){
         			vm.powerStation.region = data.code;
@@ -111,6 +113,7 @@ var vm = new Vue({
 			shopName:"",code:"",feescale:""
 		},
 		map:null,
+		geolocation:null,
 		placeSearch:null,
 		showList: true,
 		title: null,
@@ -122,24 +125,36 @@ var vm = new Vue({
 		powerStation: {region:"440300"}
 	},
 	mounted: function(){
-		this.map = new AMap.Map('mapViewContainer', {
-			resizeEnable: false,
-             zoom: 11,
-             scrollWheel:false,
+		let vue= this;
+		vue.map = new AMap.Map('mapViewContainer', {
+			resizeEnable: true,
 		});
-	    this.$watch("powerStation.latitude", function(){
-	    	this.addMarker(this.powerStation.longitude, this.powerStation.latitude);
+		vue.map.plugin('AMap.Geolocation', function() {
+			vue.geolocation = new AMap.Geolocation({
+	            enableHighAccuracy: true,//是否使用高精度定位，默认:true
+	            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
+	            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
+	            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
+	            buttonPosition:'LB'
+	        });
+			vue.map.addControl(vue.geolocation);
+	        //vue.geolocation.getCurrentPosition();
+	        AMap.event.addListener(vue.geolocation, 'complete', vue.onComplete);//返回定位信息
 		});
-	    this.$watch("powerStation.region", function(){
+        
+		vue.$watch("powerStation.latitude", function(){
+			vue.addMarker(vue.powerStation.longitude, vue.powerStation.latitude);
+		});
+		vue.$watch("powerStation.region", function(){
 		    var autoOptions = {
-		    	city: this.powerStation.region,
+		    	city: vue.powerStation.region,
 		        input: "shopLocationId"
 		    };
 		    var auto = new AMap.Autocomplete(autoOptions);//输入提示
-		    this.placeSearch = new AMap.PlaceSearch({//构造地点查询类
-		        map: this.map
+		    vue.placeSearch = new AMap.PlaceSearch({//构造地点查询类
+		        map: vue.map
 		    });
-		    AMap.event.addListener(auto, "select", this.select);//注册监听，当选中某条记录时会触发
+		    AMap.event.addListener(auto, "select", vue.select);//注册监听，当选中某条记录时会触发
 	    });
 	},
 	methods: {
@@ -154,6 +169,7 @@ var vm = new Vue({
 			vm.powerStation = {};
 			vm.powerStation.region = "440300";
 			vm.map.clearMap();
+			vm.geolocation.getCurrentPosition();
 			vm.requestStations();
 		},
 		update: function (event) {
@@ -234,6 +250,11 @@ var vm = new Vue({
 				}
 			});
 		},
+		getTime: function(num){
+			var min = Math.ceil((num-num.toFixed(0))*60);
+			min = min<= 9 ? "0"+min : min;
+			return num.toFixed(0)+":"+min;
+		},
 		selectcode: function(){
 			for(i in vm.stations){ 
 				if(vm.powerStation.code==vm.stations[i].code){
@@ -252,6 +273,12 @@ var vm = new Vue({
 	    	vm.placeSearch.setCity(e.poi.adcode);
 	    	vm.placeSearch.search(e.poi.name);  //关键字查询查询
 		},
+		onComplete: function(data) {
+	        vm.powerStation.latitude = data.position.getLat();
+	    	vm.powerStation.longitude = data.position.getLng();
+	    	vm.powerStation.address = data.formattedAddress;
+	    	$("input[id='shopLocationId']").val(data.formattedAddress);
+	    },
 		addMarker: function(longitude, latitude) {
 	        vm.map.setZoomAndCenter(14, [longitude, latitude]);
 	        // 在新中心点添加 marker 
