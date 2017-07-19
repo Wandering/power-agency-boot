@@ -125,36 +125,36 @@ var vm = new Vue({
 		powerStation: {region:"440300"}
 	},
 	mounted: function(){
-		let vue= this;
-		vue.map = new AMap.Map('mapViewContainer', {
+		this.map = new AMap.Map('mapViewContainer', {
 			resizeEnable: true,
+             zoom: 11
 		});
-		vue.map.plugin('AMap.Geolocation', function() {
-			vue.geolocation = new AMap.Geolocation({
+		var that = this;
+		 this.map.plugin('AMap.Geolocation', function() {
+			 that.geolocation = new AMap.Geolocation({
 	            enableHighAccuracy: true,//是否使用高精度定位，默认:true
 	            timeout: 10000,          //超过10秒后停止定位，默认：无穷大
 	            buttonOffset: new AMap.Pixel(10, 20),//定位按钮与设置的停靠位置的偏移量，默认：Pixel(10, 20)
 	            zoomToAccuracy: true,      //定位成功后调整地图视野范围使定位位置及精度范围视野内可见，默认：false
 	            buttonPosition:'LB'
 	        });
-			vue.map.addControl(vue.geolocation);
-	        //vue.geolocation.getCurrentPosition();
-	        AMap.event.addListener(vue.geolocation, 'complete', vue.onComplete);//返回定位信息
+	        that.map.addControl(that.geolocation);
+	        //that.geolocation.getCurrentPosition();
+	        AMap.event.addListener(that.geolocation, 'complete', that.onComplete);//返回定位信息
+	    });
+	    this.$watch("powerStation.latitude", function(){
+	    	this.addMarker(this.powerStation.longitude, this.powerStation.latitude);
 		});
-        
-		vue.$watch("powerStation.latitude", function(){
-			vue.addMarker(vue.powerStation.longitude, vue.powerStation.latitude);
-		});
-		vue.$watch("powerStation.region", function(){
+	    this.$watch("powerStation.region", function(){
 		    var autoOptions = {
-		    	city: vue.powerStation.region,
+		    	city: this.powerStation.region,
 		        input: "shopLocationId"
 		    };
 		    var auto = new AMap.Autocomplete(autoOptions);//输入提示
-		    vue.placeSearch = new AMap.PlaceSearch({//构造地点查询类
-		        map: vue.map
+		    this.placeSearch = new AMap.PlaceSearch({//构造地点查询类
+		        map: this.map
 		    });
-		    AMap.event.addListener(auto, "select", vue.select);//注册监听，当选中某条记录时会触发
+		    AMap.event.addListener(auto, "select", this.select);//注册监听，当选中某条记录时会触发
 	    });
 	},
 	methods: {
