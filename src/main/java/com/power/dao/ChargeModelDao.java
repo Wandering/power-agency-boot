@@ -10,5 +10,7 @@ import io.renren.dao.BaseDao;
  * @date 2017-06-28 19:17:40
  */
 public interface ChargeModelDao extends BaseDao<ChargeModelEntity> {
+
+	ChargeModelEntity queryByUserId(Long userId);
 	
 }

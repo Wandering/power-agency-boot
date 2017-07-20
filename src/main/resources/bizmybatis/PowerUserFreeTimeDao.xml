@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.PowerUserFreeTimeDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.PowerUserFreeTimeEntity" id="powerUserFreeTimeMap">
+        <result property="id" column="id"/>
+        <result property="tempDayFreeTime" column="temp_day_free_time"/>
+        <result property="currDayFreeTime" column="curr_day_free_time"/>
+        <result property="tempModelLv" column="temp_model_lv"/>
+        <result property="tempDayFreeFee" column="temp_day_free_fee"/>
+        <result property="currDayFreeFee" column="curr_day_free_fee"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.PowerUserFreeTimeEntity">
+		select * from power_user_free_time where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.PowerUserFreeTimeEntity">
+		select * from power_user_free_time
+        <where>
+			                <!-- 非主键，不自增，与全局key唯一对应，生成用户时自动创建 -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 订单生成时候的缓存时间和订单 订单weikey 形式{1:50，2:20} 标识订单1:50分钟,订单2:20分钟,临时存在使用过之后即删除 -->
+                <if test="tempDayFreeTime != null and tempDayFreeTime.trim() != ''">
+                    AND temp_day_free_time = #{tempDayFreeTime}
+                </if>
+			                <!-- 日免费时长(每日刷新) -->
+                <if test="currDayFreeTime != null and currDayFreeTime.trim() != ''">
+                    AND curr_day_free_time = #{currDayFreeTime}
+                </if>
+			                <!-- 订单生成时候的用户等级 订单weikey 形式{1:1，2:2} 标识订单1:计费模式1,订单2:计费模式2,临时存在使用过之后即删除 -->
+                <if test="tempModelLv != null and tempModelLv.trim() != ''">
+                    AND temp_model_lv = #{tempModelLv}
+                </if>
+			                <!-- 订单生成时候的缓存剩余封顶费用和订单 订单weikey 形式{1:50，2:20} 标识订单1:50,订单2:20 单位:分,临时存在使用过之后即删除 -->
+                <if test="tempDayFreeFee != null and tempDayFreeFee.trim() != ''">
+                    AND temp_day_free_fee = #{tempDayFreeFee}
+                </if>
+			                <!-- 日封顶费用(每日刷新) -->
+                <if test="currDayFreeFee != null and currDayFreeFee.trim() != ''">
+                    AND curr_day_free_fee = #{currDayFreeFee}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from power_user_free_time
+		<where>
+			                <!-- 非主键，不自增，与全局key唯一对应，生成用户时自动创建 -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 订单生成时候的缓存时间和订单 订单weikey 形式{1:50，2:20} 标识订单1:50分钟,订单2:20分钟,临时存在使用过之后即删除 -->
+                <if test="tempDayFreeTime != null and tempDayFreeTime.trim() != ''">
+                    AND temp_day_free_time = #{tempDayFreeTime}
+                </if>
+			                <!-- 日免费时长(每日刷新) -->
+                <if test="currDayFreeTime != null and currDayFreeTime.trim() != ''">
+                    AND curr_day_free_time = #{currDayFreeTime}
+                </if>
+			                <!-- 订单生成时候的用户等级 订单weikey 形式{1:1，2:2} 标识订单1:计费模式1,订单2:计费模式2,临时存在使用过之后即删除 -->
+                <if test="tempModelLv != null and tempModelLv.trim() != ''">
+                    AND temp_model_lv = #{tempModelLv}
+                </if>
+			                <!-- 订单生成时候的缓存剩余封顶费用和订单 订单weikey 形式{1:50，2:20} 标识订单1:50,订单2:20 单位:分,临时存在使用过之后即删除 -->
+                <if test="tempDayFreeFee != null and tempDayFreeFee.trim() != ''">
+                    AND temp_day_free_fee = #{tempDayFreeFee}
+                </if>
+			                <!-- 日封顶费用(每日刷新) -->
+                <if test="currDayFreeFee != null and currDayFreeFee.trim() != ''">
+                    AND curr_day_free_fee = #{currDayFreeFee}
+                </if>
+			        </where> 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.PowerUserFreeTimeEntity">
+		insert into power_user_free_time
+		(
+			`id`, 
+			`temp_day_free_time`, 
+			`curr_day_free_time`, 
+			`temp_model_lv`, 
+			`temp_day_free_fee`, 
+			`curr_day_free_fee`
+		)
+		values
+		(
+			#{id}, 
+			#{tempDayFreeTime}, 
+			#{currDayFreeTime}, 
+			#{tempModelLv}, 
+			#{tempDayFreeFee}, 
+			#{currDayFreeFee}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.PowerUserFreeTimeEntity">
+		update power_user_free_time 
+		<set>
+			<if test="tempDayFreeTime != null">`temp_day_free_time` = #{tempDayFreeTime}, </if>
+			<if test="currDayFreeTime != null">`curr_day_free_time` = #{currDayFreeTime}, </if>
+			<if test="tempModelLv != null">`temp_model_lv` = #{tempModelLv}, </if>
+			<if test="tempDayFreeFee != null">`temp_day_free_fee` = #{tempDayFreeFee}, </if>
+			<if test="currDayFreeFee != null">`curr_day_free_fee` = #{currDayFreeFee}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from power_user_free_time where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from power_user_free_time where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>

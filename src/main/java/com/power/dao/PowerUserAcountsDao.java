@@ -18,5 +18,7 @@ create_dt 创建时间
 public interface PowerUserAcountsDao extends BaseDao<PowerUserAcountsEntity> {
 
 	double queryAllBalane();
+
+	PowerUserAcountsEntity queryByUserId(Long userId);
 	
 }

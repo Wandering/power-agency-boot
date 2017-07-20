@@ -51,5 +51,12 @@ public class ChargeModelServiceImpl implements ChargeModelService {
 	public void deleteBatch(Long[] ids){
 		chargeModelDao.deleteBatch(ids);
 	}
+
+	@Override
+	public ChargeModelEntity queryByUserId(Long userId) {
+		chargeModelDao.queryByUserId(userId);
+		return chargeModelDao.queryByUserId(userId);
+	}
+	
 	
 }

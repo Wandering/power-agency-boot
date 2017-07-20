@@ -35,4 +35,6 @@ public interface PowerUserAcountsService {
 	void deleteBatch(Long[] ids);
 
 	double queryAllBalane();
+	
+	PowerUserAcountsEntity queryByUserId(Long userId);
 }

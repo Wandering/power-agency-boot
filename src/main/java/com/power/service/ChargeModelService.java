@@ -27,4 +27,6 @@ public interface ChargeModelService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
+	
+	ChargeModelEntity queryByUserId(Long userId);
 }

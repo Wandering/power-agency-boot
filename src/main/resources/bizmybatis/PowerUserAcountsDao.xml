@@ -122,5 +122,9 @@
 			#{id}
 		</foreach>
 	</delete>
+	
+	<select id="queryByUserId" parameterType="com.power.entity.PowerUserAcountsEntity">
+	select * from power_user_acounts where user_id = #{value}
+	</select>
 
 </mapper>

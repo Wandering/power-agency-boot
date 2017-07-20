@@ -57,5 +57,10 @@ public class OrderLineServiceImpl implements OrderLineService {
 		double totalfee = orderLineDao.queryOrderTotal( object,  object2);
 		return totalfee;
 	}
+
+	@Override
+	public OrderLineEntity queryByUserId(Long userId) {
+		return orderLineDao.queryByUserId(userId);
+	}
 	
 }

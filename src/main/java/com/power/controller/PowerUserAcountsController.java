@@ -1,5 +1,7 @@
 package com.power.controller;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +13,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
+import com.power.entity.ChargeModelEntity;
+import com.power.entity.OrderLineEntity;
 import com.power.entity.PowerUserAcountsEntity;
+import com.power.entity.PowerUserFreeTimeEntity;
+import com.power.service.ChargeModelService;
 import com.power.service.PowerUserAcountsService;
+import com.power.service.PowerUserFreeTimeService;
+import com.power.service.ex.OrderLineService;
+import com.power.util.FeeUtil;
+
 import io.renren.utils.PageUtils;
 import io.renren.utils.Query;
 import io.renren.utils.R;
@@ -36,6 +47,13 @@ create_dt 创建时间
 public class PowerUserAcountsController {
 	@Autowired
 	private PowerUserAcountsService powerUserAcountsService;
+	@Autowired
+	private PowerUserFreeTimeService powerUserFreeTimeService;
+	@Autowired
+	private ChargeModelService chargeModelService;
+	@Autowired
+	private OrderLineService orderLineService;
+	
 	
 	/**
 	 * 列表
@@ -105,5 +123,46 @@ public class PowerUserAcountsController {
 		
 		return R.ok().put("allBalance", allBalance);
 	}
+	
+	@RequestMapping("/qureyfee/{userId}")
+	@RequiresPermissions("poweruseracounts:qureyfee")
+	public R qureyfee(@PathVariable("userId") Long userId){
+		PowerUserFreeTimeEntity  powerUserFreeTimeEntity = powerUserFreeTimeService.queryObject(userId);
+		PowerUserAcountsEntity powerUserAcountsEntity = powerUserAcountsService.queryByUserId(userId);
+		ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(powerUserAcountsEntity.getRoles());
+		OrderLineEntity orderLineEntity = orderLineService.queryByUserId(userId);
+		long[] rtnFee;
+		long messageDt = new Date().getTime()/1000;
+		@SuppressWarnings("unchecked")
+		Map<Long,Integer> temp1 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeTime(), HashMap.class);
+		@SuppressWarnings("unchecked")
+		Map<Long,Integer> temp2 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeFee(), HashMap.class);
+		
+		if (chargeModelEntity.getChargeDay() == 1) {
+            rtnFee = FeeUtil.feeSettlement(
+            		chargeModelEntity.getOrderFreeTime(),
+            		chargeModelEntity.getFreeTime(),
+            		temp1.get(orderLineEntity.getOrderId()),
+            		chargeModelEntity.getOverdueFee(),
+            		chargeModelEntity.getMaxOverdueFee(),
+            		temp2.get(orderLineEntity.getOrderId()),
+            		orderLineEntity.getStartDt(), messageDt,chargeModelEntity.getBufferTime());
+        }else {
+            rtnFee = FeeUtil.feeSettlement24(
+            		chargeModelEntity.getOrderFreeTime(),
+            		chargeModelEntity.getFreeTime(),
+            		temp1.get(orderLineEntity.getOrderId()),
+            		
+            		chargeModelEntity.getOverdueFee(),
+            		chargeModelEntity.getMaxOverdueFee(),
+            		chargeModelEntity.getMaxOverdueFee(),
+            		orderLineEntity.getStartDt(), messageDt,chargeModelEntity.getBufferTime());
+        }
+		double fee = rtnFee[0]/100d;
+		return R.ok().put("fee", fee);
+		
+		
+	}
+	
 	
 }

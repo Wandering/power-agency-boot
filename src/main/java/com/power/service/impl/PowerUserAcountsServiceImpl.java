@@ -57,5 +57,10 @@ public class PowerUserAcountsServiceImpl implements PowerUserAcountsService {
 		double allbalance = powerUserAcountsDao.queryAllBalane();
 		return allbalance;
 	}
+
+	@Override
+	public PowerUserAcountsEntity queryByUserId(Long userId) {
+		return powerUserAcountsDao.queryByUserId(userId);
+	}
 	
 }

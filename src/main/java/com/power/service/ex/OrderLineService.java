@@ -29,4 +29,6 @@ public interface OrderLineService {
 	void deleteBatch(Long[] ids);
 
 	double queryOrderTotal(String object, String object2);
+
+	OrderLineEntity queryByUserId(Long userId);
 }
