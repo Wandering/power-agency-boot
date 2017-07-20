@@ -27,4 +27,7 @@ public interface OrdersService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
+
+
+	OrdersEntity queryByUserId(Long userId);
 }

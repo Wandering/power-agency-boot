@@ -12,5 +12,5 @@ import io.renren.dao.BaseDao;
 public interface OrderLineDao extends BaseDao<OrderLineEntity> {
 	double queryOrderTotal(String object, String object2);
 
-	OrderLineEntity queryByUserId(Long userId);
+	OrderLineEntity queryByOrderId(Long OrderId);
 }

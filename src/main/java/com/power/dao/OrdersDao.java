@@ -10,5 +10,7 @@ import io.renren.dao.BaseDao;
  * @date 2017-06-28 17:02:05
  */
 public interface OrdersDao extends BaseDao<OrdersEntity> {
+
+	OrdersEntity queryByUserId(Long userId);
 	
 }

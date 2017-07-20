@@ -7,8 +7,8 @@ $(function () {
 			{ label: '用户余额', name: 'balance', index: 'balance', width: 80 }, 			
 			{ label: '用户会员级别', name: 'roles', index: 'roles', width: 80 },
 			{ label: '用户信用分', name: 'credit', index: 'credit', width: 80 }, 			
-			{ label: '进行中借电费', name: 'user_id', index: 'userId', width: 80 }, 			
-			{ label: '结余', name: 'endbalance', index: 'endbalance', width: 80 },
+			{ label: '进行中借电费', name: 'fee', index: 'fee', width: 80 }, 			
+			{ label: '结余', name: 'lastFee', index: 'lastFee', width: 80 },
 			
         ],
 		viewrecords: true,

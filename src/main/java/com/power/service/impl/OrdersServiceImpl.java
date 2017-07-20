@@ -51,5 +51,10 @@ public class OrdersServiceImpl implements OrdersService {
 	public void deleteBatch(Long[] ids){
 		ordersDao.deleteBatch(ids);
 	}
+
+	@Override
+	public OrdersEntity queryByUserId(Long userId) {
+		return ordersDao.queryByUserId(userId);
+	}
 	
 }

@@ -16,9 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.power.entity.ChargeModelEntity;
 import com.power.entity.OrderLineEntity;
+import com.power.entity.OrdersEntity;
 import com.power.entity.PowerUserAcountsEntity;
 import com.power.entity.PowerUserFreeTimeEntity;
 import com.power.service.ChargeModelService;
+import com.power.service.OrdersService;
 import com.power.service.PowerUserAcountsService;
 import com.power.service.PowerUserFreeTimeService;
 import com.power.service.ex.OrderLineService;
@@ -53,6 +55,8 @@ public class PowerUserAcountsController {
 	private ChargeModelService chargeModelService;
 	@Autowired
 	private OrderLineService orderLineService;
+	@Autowired
+	private OrdersService ordersService;
 	
 	
 	/**
@@ -65,11 +69,60 @@ public class PowerUserAcountsController {
         Query query = new Query(params);
 
 		List<PowerUserAcountsEntity> powerUserAcountsList = powerUserAcountsService.queryList(query);
+		
+		
+		long[] rtnFee;
+		long messageDt = new Date().getTime()/1000;
+		double fee =0.00;
+		double lastFee =0.00;
+		for(PowerUserAcountsEntity entity:powerUserAcountsList){
+			
+			PowerUserFreeTimeEntity  powerUserFreeTimeEntity = powerUserFreeTimeService.queryObject(entity.getUserId());
+			PowerUserAcountsEntity powerUserAcountsEntity = powerUserAcountsService.queryByUserId(entity.getUserId());
+			ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(powerUserAcountsEntity.getRoles());
+			OrdersEntity  ordersEntity = ordersService.queryByUserId(entity.getUserId());
+			if(ordersEntity!=null){
+				OrderLineEntity orderLineEntity = orderLineService.queryByOrderId(ordersEntity.getId());
+				@SuppressWarnings("unchecked")
+				Map<Long,Integer> temp1 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeTime(), HashMap.class);
+				@SuppressWarnings("unchecked")
+				Map<Long,Integer> temp2 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeFee(), HashMap.class);
+				
+				if (chargeModelEntity.getChargeDay() == 1) {
+					rtnFee = FeeUtil.feeSettlement(
+							chargeModelEntity.getOrderFreeTime(),
+							chargeModelEntity.getFreeTime(),
+							temp1.get(orderLineEntity.getOrderId()),
+							chargeModelEntity.getOverdueFee(),
+							chargeModelEntity.getMaxOverdueFee(),
+							temp2.get(orderLineEntity.getOrderId()),
+							orderLineEntity.getStartDt(), messageDt,chargeModelEntity.getBufferTime());
+				}else {
+					rtnFee = FeeUtil.feeSettlement24(
+							chargeModelEntity.getOrderFreeTime(),
+							chargeModelEntity.getFreeTime(),
+							temp1.get(orderLineEntity.getOrderId()),
+							
+							chargeModelEntity.getOverdueFee(),
+							chargeModelEntity.getMaxOverdueFee(),
+							chargeModelEntity.getMaxOverdueFee(),
+							orderLineEntity.getStartDt(), messageDt,chargeModelEntity.getBufferTime());
+					fee = rtnFee[0]/100d;
+				}
+			}else {
+				fee =0.00;
+			}
+				
+		lastFee = entity.getBalance()-fee;
+		entity.setFee(fee);
+		entity.setLastFee(lastFee);
+		}
+		
 		int total = powerUserAcountsService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(powerUserAcountsList, total, query.getLimit(), query.getPage());
 		
-		return R.ok().put("page", pageUtil);
+		return R.ok().put("page", pageUtil).put("fee", fee).put("lastFee", lastFee);
 	}
 	
 	
@@ -130,7 +183,7 @@ public class PowerUserAcountsController {
 		PowerUserFreeTimeEntity  powerUserFreeTimeEntity = powerUserFreeTimeService.queryObject(userId);
 		PowerUserAcountsEntity powerUserAcountsEntity = powerUserAcountsService.queryByUserId(userId);
 		ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(powerUserAcountsEntity.getRoles());
-		OrderLineEntity orderLineEntity = orderLineService.queryByUserId(userId);
+		OrderLineEntity orderLineEntity = orderLineService.queryByOrderId(userId);
 		long[] rtnFee;
 		long messageDt = new Date().getTime()/1000;
 		@SuppressWarnings("unchecked")

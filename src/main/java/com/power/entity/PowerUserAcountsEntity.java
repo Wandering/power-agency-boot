@@ -45,7 +45,25 @@ public class PowerUserAcountsEntity implements Serializable {
 	private Long createBy;
 	//
 	private Long updateBy;
+	
+	private Double fee;
+	
+	private Double lastFee;
+	
+	
 
+	public Double getFee() {
+		return fee;
+	}
+	public void setFee(Double fee) {
+		this.fee = fee;
+	}
+	public Double getLastFee() {
+		return lastFee;
+	}
+	public void setLastFee(Double lastFee) {
+		this.lastFee = lastFee;
+	}
 	/**
 	 * 设置：###账户资金表###
 	 */
@@ -190,4 +208,6 @@ public class PowerUserAcountsEntity implements Serializable {
 	public Long getUpdateBy() {
 		return updateBy;
 	}
+	
+	
 }

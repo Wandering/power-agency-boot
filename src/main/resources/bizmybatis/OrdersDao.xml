@@ -28,6 +28,11 @@
 	<select id="queryObject" resultType="com.power.entity.OrdersEntity">
 		select * from orders where id = #{value}
 	</select>
+	
+	<select id="queryByUserId" resultType="com.power.entity.OrdersEntity">
+		select * from orders where  type = 'CONSUME' and status in ('ACTIVE','PENDING') and order_owner = #{value} 
+	</select>
+	
 
 	<select id="queryList" resultType="com.power.entity.OrdersEntity">
 		select * from orders

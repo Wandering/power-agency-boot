@@ -22,6 +22,10 @@
 	<select id="queryObject" resultType="com.power.entity.PowerUserAcountsEntity">
 		select * from power_user_acounts where id = #{value}
 	</select>
+	
+	<select id="queryByUserId" resultType="com.power.entity.PowerUserAcountsEntity">
+	    select * from power_user_acounts where user_id = #{value}
+	</select>
 
 	<select id="queryList" resultType="com.power.entity.PowerUserAcountsEntity">
 		select * from power_user_acounts
@@ -123,8 +127,6 @@
 		</foreach>
 	</delete>
 	
-	<select id="queryByUserId" parameterType="com.power.entity.PowerUserAcountsEntity">
-	select * from power_user_acounts where user_id = #{value}
-	</select>
+
 
 </mapper>

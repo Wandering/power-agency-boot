@@ -30,5 +30,5 @@ public interface OrderLineService {
 
 	double queryOrderTotal(String object, String object2);
 
-	OrderLineEntity queryByUserId(Long userId);
+	OrderLineEntity queryByOrderId(Long orderId);
 }

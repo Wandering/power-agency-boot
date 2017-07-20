@@ -59,8 +59,8 @@ public class OrderLineServiceImpl implements OrderLineService {
 	}
 
 	@Override
-	public OrderLineEntity queryByUserId(Long userId) {
-		return orderLineDao.queryByUserId(userId);
+	public OrderLineEntity queryByOrderId(Long orderId) {
+		return orderLineDao.queryByOrderId(orderId);
 	}
 	
 }
