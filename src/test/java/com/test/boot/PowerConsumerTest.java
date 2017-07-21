@@ -17,7 +17,7 @@ import org.springframework.util.Assert;
  */
 @RunWith(SpringRunner.class)
 //@SpringBootTest
-@ContextConfiguration(locations = "classpath*:config/zgk-dubbo-consumer.xml")
+@ContextConfiguration(locations = "classpath*:config/zgk-dubbo-consumer-test.xml")
 public class PowerConsumerTest {
     private final static Logger logger = LoggerFactory.getLogger(PowerConsumerTest.class);
 //
