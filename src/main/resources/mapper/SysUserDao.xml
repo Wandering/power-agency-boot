@@ -7,7 +7,7 @@
 		user_id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.power.entity.ex.SysUserEntity">
+	<select id="queryList" resultType="com.power.entity.ex.SysUserEntityDTO">
 		SELECT sysUser.*,agency.name,agency.address FROM sys_user sysUser
 		LEFT JOIN agencies agency ON sysUser.agency_id = agency.id
 		<where>

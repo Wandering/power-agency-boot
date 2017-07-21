@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans.xsd        http://code.alibabatech.com/schema/dubbo        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+    <description>gaokao dubbo 服务提供配置 </description>
+
+    <!-- 提供方应用信息，用于计算依赖关系 -->
+    <dubbo:application name="zhiluClientTest"/>
+
+    <dubbo:registry address="zookeeper://192.168.10.49:2181" file="/tmp/dubbo.cache"/>
+
+    <dubbo:protocol name="dubbo" port="-1" />
+
+    <!--测试dubbo服务-->
+    <dubbo:reference id="powerConsumer" interface="com.power.yuneng.nonparty.api.IPowerConsumer" check="false"
+                     timeout="60000"/>
+
+</beans>

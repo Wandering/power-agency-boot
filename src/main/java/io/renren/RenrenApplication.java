@@ -6,7 +6,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 
-@ImportResource(locations = {"classpath:config/context.xml"})
+@ImportResource(locations={"classpath*:config/context.xml"})
 @SpringBootApplication
 @MapperScan(basePackages = {"io.renren.dao","com.power.dao.**.**"})
 @ComponentScan(basePackages = {"com.power","io.renren"})
