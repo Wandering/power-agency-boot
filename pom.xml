@@ -35,6 +35,12 @@
 		<aliyun.oss.version>2.5.0</aliyun.oss.version>
 		<qcloud.cos.version>4.4</qcloud.cos.version>
 		<velocity.version>1.7</velocity.version>
+		<!--宇能云版本-->
+		<yunengcloud.version>0.0.2-SNAPSHOT</yunengcloud.version>
+		<dubbo.version>2.5.3</dubbo.version>
+		<zkclient.version>0.10</zkclient.version>
+		<zhiluapi.version>0.0.1-SNAPSHOT</zhiluapi.version>
+		<zk.version>3.5.1-alpha</zk.version>
         <!--wagon plugin 配置-->
 		<service-path>deploy_path</service-path>
 		<pack-name>full_jar_name</pack-name>
@@ -183,6 +189,45 @@
 			<groupId>org.apache.velocity</groupId>
 			<version>${velocity.version}</version>
 		</dependency>
+
+		<!--宇能云-->
+		<dependency>
+			<artifactId>cloud-dynconfig-client</artifactId>
+			<groupId>com.power.yuneng.cloud</groupId>
+			<version>${yunengcloud.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>cloud-spring-client</artifactId>
+			<groupId>com.power.yuneng.cloud</groupId>
+			<version>${yunengcloud.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>dubbo</artifactId>
+			<groupId>com.alibaba</groupId>
+			<version>${dubbo.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<artifactId>zkclient</artifactId>-->
+			<!--<groupId>com.101tec</groupId>-->
+			<!--<version>${zkclient.version}</version>-->
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.apache.zookeeper</groupId>-->
+					<!--<artifactId>zookeeper</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
+		<!--</dependency>-->
+		<dependency>
+			<artifactId>zhilu-client-api</artifactId>
+			<groupId>com.power.yuneng.nonparty</groupId>
+			<version>${zhiluapi.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<artifactId>zookeeper</artifactId>-->
+			<!--<groupId>org.apache.zookeeper</groupId>-->
+			<!--<version>${zk.version}</version>-->
+		<!--</dependency>-->
+		<!--宇能云-->
 	</dependencies>
 
 	<build>
@@ -225,6 +270,14 @@
 			<id>public</id>
 			<name>aliyun nexus</name>
 			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+			<releases>
+				<enabled>true</enabled>
+			</releases>
+		</repository>
+		<repository>
+			<id>power</id>
+			<name>power</name>
+			<url>http://192.168.10.49:8081/repository/maven-public/</url>
 			<releases>
 				<enabled>true</enabled>
 			</releases>
