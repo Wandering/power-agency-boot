@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 //package com.test.boot;
 //
 //import com.power.yuneng.nonparty.api.IPowerConsumer;
@@ -47,7 +46,6 @@
 //    }
 //
 //}
-=======
 package com.test.boot;
 
 import com.power.yuneng.nonparty.api.IPowerConsumer;
@@ -96,4 +94,3 @@ public class PowerConsumerTest {
     }
 
 }
->>>>>>> origin/master

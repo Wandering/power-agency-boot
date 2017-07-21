@@ -189,6 +189,45 @@
 			<groupId>org.apache.velocity</groupId>
 			<version>${velocity.version}</version>
 		</dependency>
+
+		<!--宇能云-->
+		<dependency>
+			<artifactId>cloud-dynconfig-client</artifactId>
+			<groupId>com.power.yuneng.cloud</groupId>
+			<version>${yunengcloud.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>cloud-spring-client</artifactId>
+			<groupId>com.power.yuneng.cloud</groupId>
+			<version>${yunengcloud.version}</version>
+		</dependency>
+		<dependency>
+			<artifactId>dubbo</artifactId>
+			<groupId>com.alibaba</groupId>
+			<version>${dubbo.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<artifactId>zkclient</artifactId>-->
+			<!--<groupId>com.101tec</groupId>-->
+			<!--<version>${zkclient.version}</version>-->
+			<!--<exclusions>-->
+				<!--<exclusion>-->
+					<!--<groupId>org.apache.zookeeper</groupId>-->
+					<!--<artifactId>zookeeper</artifactId>-->
+				<!--</exclusion>-->
+			<!--</exclusions>-->
+		<!--</dependency>-->
+		<dependency>
+			<artifactId>zhilu-client-api</artifactId>
+			<groupId>com.power.yuneng.nonparty</groupId>
+			<version>${zhiluapi.version}</version>
+		</dependency>
+		<!--<dependency>-->
+			<!--<artifactId>zookeeper</artifactId>-->
+			<!--<groupId>org.apache.zookeeper</groupId>-->
+			<!--<version>${zk.version}</version>-->
+		<!--</dependency>-->
+		<!--宇能云-->
 	</dependencies>
 
 	<build>
