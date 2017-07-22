@@ -169,6 +169,26 @@ var vm = new Vue({
 				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
+		},
+		lockSwich: function(type){
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}else{
+				var rowData = $("#jqGrid").jqGrid('getRowData',id);
+				$.ajax({
+					type: "POST",
+				    url: "../operate/lockSwich",
+				    data: {deviceId:rowData.deviceId,slotNo:rowData.slotNo,slotSwitch:type},
+				    success: function(r){
+						if(r.code == 0){
+							alert('操作成功');
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}
 		}
 	}
 });

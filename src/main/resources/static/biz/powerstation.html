@@ -52,6 +52,10 @@
 					@click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;修改</a> <a
 					v-if="hasPermission('powerstation:delete')" class="btn btn-primary"
 					@click="del"><i class="fa fa-trash-o"></i>&nbsp;删除</a>
+				<a v-if="hasPermission('powerstationbase:delete')"
+					class="btn btn-primary" @click="setStation(0)"><i class="fa fa fa-arrow-up"></i>&nbsp;上架</a>
+				<a v-if="hasPermission('powerstationbase:delete')"
+					class="btn btn-primary" @click="setStation(1)"><i class="fa fa fa-arrow-down"></i>&nbsp;下架</a>
 			</div>
 			<table id="jqGrid" style="overflow-x:auto"></table>
 			<div id="jqGridPager"></div>
