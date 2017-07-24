@@ -18,6 +18,5 @@
             <ref bean="zkResource" />
         </property>
     </bean>
-    <import resource="classpath*:config/zgk-dubbo-consumer.xml"/>
 
 </beans>
