@@ -38,6 +38,12 @@
 				  	<option v-for="type in types" v-bind:value="type.code">{{type.note}}</option>
 				</select>
 				</div>
+				<a v-if="hasPermission('operate:lockSwich')"
+					class="btn btn-primary" @click="lockSwich(1)"><i
+					class="fa fa-unlock-alt"></i>&nbsp;开锁</a>
+				<a v-if="hasPermission('operate:lockSwich')"
+					class="btn btn-primary" @click="lockSwich(0)"><i
+					class="fa fa-lock"></i>&nbsp;关锁</a>
 				<!-- <a v-if="hasPermission('stationerrorlog:save')"
 					class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
 				<a v-if="hasPermission('stationerrorlog:update')"

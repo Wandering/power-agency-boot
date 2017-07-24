@@ -137,7 +137,13 @@ var vm = new Vue({
 		getUser: function(userId){
 			$.get("../sys/user/info/"+userId, function(r){
 				vm.user = r.user;
-				$('#demo').citys({code:vm.user.agency.region});
+				console.log(vm.user)
+				if(vm.user.agency!=null){
+					$('#demo').citys({code:vm.user.agency.region});
+				}else{
+					vm.user.agency={name:''};
+				}
+				
 			});
 		},
 		getRoleList: function(){

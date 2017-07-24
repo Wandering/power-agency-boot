@@ -286,6 +286,32 @@ var vm = new Vue({
 	            map: vm.map,
 	            position: [longitude, latitude]
 	        });
+		},
+		setStation: function(state){
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}else{
+				switch(state){
+					case 0:vm.powerStation={id:id,status:'ENABLE'} ; break;
+					case 1:vm.powerStation={id:id,status:'DISABLE'} ; break;
+				}
+				$.ajax({
+					type: "POST",
+				    url: "../powerstation/update",
+				    contentType: "application/json",
+				    data: JSON.stringify(vm.powerStation),
+				    success: function(r){
+				    	if(r.code === 0){
+							alert('操作成功', function(index){
+								vm.reload();
+							});
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+			}
 		}
 	}
 });
