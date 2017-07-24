@@ -206,17 +206,17 @@
 			<groupId>com.alibaba</groupId>
 			<version>${dubbo.version}</version>
 		</dependency>
-		<!--<dependency>-->
-			<!--<artifactId>zkclient</artifactId>-->
-			<!--<groupId>com.101tec</groupId>-->
-			<!--<version>${zkclient.version}</version>-->
-			<!--<exclusions>-->
-				<!--<exclusion>-->
-					<!--<groupId>org.apache.zookeeper</groupId>-->
-					<!--<artifactId>zookeeper</artifactId>-->
-				<!--</exclusion>-->
-			<!--</exclusions>-->
-		<!--</dependency>-->
+		<dependency>
+			<artifactId>zkclient</artifactId>
+			<groupId>com.101tec</groupId>
+			<version>${zkclient.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>org.apache.zookeeper</groupId>
+					<artifactId>zookeeper</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<artifactId>zhilu-client-api</artifactId>
 			<groupId>com.power.yuneng.nonparty</groupId>
