@@ -30,7 +30,7 @@ import io.renren.utils.R;
 public class AgenciesController {
 	@Autowired
 	private AgenciesService agenciesService;
-	
+
 	/**
 	 * 列表
 	 */
