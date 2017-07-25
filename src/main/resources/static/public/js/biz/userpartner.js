@@ -3,8 +3,10 @@ $(function () {
         url: '../userpartner/list',
         datatype: "json",
         colModel: [			
-			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
-			{ label: '加盟类型 shop_partner 合作商家 user_partner 合伙人', name: 'type', index: 'type', width: 80 }, 			
+			//{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '加盟类型', name: 'type', index: 'type', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.types)[value]:"";
+			}}, 			
 			{ label: '联系人名称', name: 'name', index: 'name', width: 80 }, 			
 			{ label: '联系人手机号', name: 'phone', index: 'phone', width: 80 }, 			
 			{ label: '店铺名称', name: 'shopName', index: 'shop_name', width: 80 }, 			
@@ -34,6 +36,22 @@ $(function () {
             rows:"limit", 
             order: "order"
         },
+        beforeRequest:function(e){
+        	if(vm.types.length==0){
+	        	$.ajax({
+					type: "POST",
+				    url: "../dict/PARTNER_TYPE",
+				    async: false,
+				    success: function(r){
+				    	if(r.code === 0){
+				    		vm.types = r.data;
+						}else{
+							alert(r.msg);
+						}
+					}
+				});
+        	}
+        },
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
@@ -44,9 +62,13 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			type:""
+		},
 		showList: true,
 		title: null,
 		status:null,
+		types: [],
 		userPartner: {}
 	},
 	methods: {
@@ -120,7 +142,8 @@ var vm = new Vue({
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
-			$("#jqGrid").jqGrid('setGridParam',{ 
+			$("#jqGrid").jqGrid('setGridParam',{
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
 		}
