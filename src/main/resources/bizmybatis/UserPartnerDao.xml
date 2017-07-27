@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.UserPartnerDao">
+
+	<!-- 可根据自己的需求，是否要使用 -->
+    <resultMap type="com.power.entity.UserPartnerEntity" id="userPartnerMap">
+        <result property="id" column="id"/>
+        <result property="type" column="type"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="shopName" column="shop_name"/>
+        <result property="shopAdress" column="shop_adress"/>
+        <result property="city" column="city"/>
+        <result property="teamInfo" column="team_info"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+    </resultMap>
+
+	<select id="queryObject" resultType="com.power.entity.UserPartnerEntity">
+		select * from user_partner where id = #{value}
+	</select>
+
+	<select id="queryList" resultType="com.power.entity.UserPartnerEntity">
+		select * from user_partner
+        <where>
+			                <!--  -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 加盟类型 shop_partner 合作商家 user_partner 合伙人 -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 联系人名称 -->
+                <if test="name != null and name.trim() != ''">
+                    AND name = #{name}
+                </if>
+			                <!-- 联系人手机号 -->
+                <if test="phone != null and phone.trim() != ''">
+                    AND phone = #{phone}
+                </if>
+			                <!-- 店铺名称 -->
+                <if test="shopName != null and shopName.trim() != ''">
+                    AND shop_name = #{shopName}
+                </if>
+			                <!-- 商铺地址 -->
+                <if test="shopAdress != null and shopAdress.trim() != ''">
+                    AND shop_adress = #{shopAdress}
+                </if>
+			                <!-- 所在城市 -->
+                <if test="city != null and city.trim() != ''">
+                    AND city = #{city}
+                </if>
+			                <!-- 团队情况 -->
+                <if test="teamInfo != null and teamInfo.trim() != ''">
+                    AND team_info = #{teamInfo}
+                </if>
+			                <!--  -->
+                <if test="createDt != null and createDt.trim() != ''">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt != null and updateDt.trim() != ''">
+                    AND update_dt = #{updateDt}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
+			<otherwise>
+                order by id desc
+			</otherwise>
+        </choose>
+		<if test="offset != null and limit != null">
+			limit #{offset}, #{limit}
+		</if>
+	</select>
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) from user_partner
+		<where>
+			                <!--  -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 加盟类型 shop_partner 合作商家 user_partner 合伙人 -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- 联系人名称 -->
+                <if test="name != null and name.trim() != ''">
+                    AND name = #{name}
+                </if>
+			                <!-- 联系人手机号 -->
+                <if test="phone != null and phone.trim() != ''">
+                    AND phone = #{phone}
+                </if>
+			                <!-- 店铺名称 -->
+                <if test="shopName != null and shopName.trim() != ''">
+                    AND shop_name = #{shopName}
+                </if>
+			                <!-- 商铺地址 -->
+                <if test="shopAdress != null and shopAdress.trim() != ''">
+                    AND shop_adress = #{shopAdress}
+                </if>
+			                <!-- 所在城市 -->
+                <if test="city != null and city.trim() != ''">
+                    AND city = #{city}
+                </if>
+			                <!-- 团队情况 -->
+                <if test="teamInfo != null and teamInfo.trim() != ''">
+                    AND team_info = #{teamInfo}
+                </if>
+			                <!--  -->
+                <if test="createDt != null and createDt.trim() != ''">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!--  -->
+                <if test="updateDt != null and updateDt.trim() != ''">
+                    AND update_dt = #{updateDt}
+                </if>
+			        </where> 
+	</select>
+	 
+	<insert id="save" parameterType="com.power.entity.UserPartnerEntity" useGeneratedKeys="true" keyProperty="id">
+		insert into user_partner
+		(
+			`type`, 
+			`name`, 
+			`phone`, 
+			`shop_name`, 
+			`shop_adress`, 
+			`city`, 
+			`team_info`, 
+			`create_dt`, 
+			`update_dt`
+		)
+		values
+		(
+			#{type}, 
+			#{name}, 
+			#{phone}, 
+			#{shopName}, 
+			#{shopAdress}, 
+			#{city}, 
+			#{teamInfo}, 
+			#{createDt}, 
+			#{updateDt}
+		)
+	</insert>
+	 
+	<update id="update" parameterType="com.power.entity.UserPartnerEntity">
+		update user_partner 
+		<set>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="phone != null">`phone` = #{phone}, </if>
+			<if test="shopName != null">`shop_name` = #{shopName}, </if>
+			<if test="shopAdress != null">`shop_adress` = #{shopAdress}, </if>
+			<if test="city != null">`city` = #{city}, </if>
+			<if test="teamInfo != null">`team_info` = #{teamInfo}, </if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete from user_partner where id = #{value}
+	</delete>
+	
+	<delete id="deleteBatch">
+		delete from user_partner where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
