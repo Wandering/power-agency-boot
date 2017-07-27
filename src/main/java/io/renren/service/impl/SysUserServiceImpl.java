@@ -149,8 +149,10 @@ public class SysUserServiceImpl implements SysUserService {
 		list.add(sysUserDao.queryByUserName(username));
 		if(userlist.size()!=0&&userlist!=null){
 			for(SysUserEntity u :userlist){
+			if(u.getAgencyId()!=u.getParentId()){	
 			List<SysUserEntity> ulist = this.queryByAgencyId(u.getUsername());
 			list.addAll(ulist);
+			}
 			}
 			for (int i = 0; i < list.size() - 1; i++) {
 				for (int j = list.size() - 1; j > i; j--) {
