@@ -24,26 +24,27 @@ public class SysUserDaoTest extends RenrenApplicationTests{
 
     @Autowired 
     private SysUserServiceImpl impl;
-    
-	@Test
-	public void testQueryByUserName() {
-		List<SysUserEntity> userList =  impl.queryByAgencyId("admin");
-		StringBuffer sb=new StringBuffer();
-    	boolean flag=false;
-		for(SysUserEntity u:userList){
-			if (flag) {
-				sb.append("',");
-			}else {
-				flag=true;
-			}
-			sb.append("'");
-			sb.append(u.getAgencyId());
-			
-			
-		}
-		sb.append("'");
-		
-			System.out.println(sb);
-
-
-}}
+//
+//	@Test
+//	public void testQueryByUserName() {
+//		List<SysUserEntity> userList =  impl.queryByAgencyId("admin");
+//		StringBuffer sb=new StringBuffer();
+//    	boolean flag=false;
+//		for(SysUserEntity u:userList){
+//			if (flag) {
+//				sb.append("',");
+//			}else {
+//				flag=true;
+//			}
+//			sb.append("'");
+//			sb.append(u.getAgencyId());
+//
+//
+//		}
+//		sb.append("'");
+//
+//			System.out.println(sb);
+//
+//
+//}
+}
