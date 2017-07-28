@@ -115,6 +115,9 @@ var vm = new Vue({
 		q:{
 			code:"",type:""
 		},
+		name:'',
+		product:'tFMuGvSaMJ6UHtmD',
+		devices:'',
 		showList: true,
 		title: null,
 		status:null,
@@ -213,6 +216,43 @@ var vm = new Vue({
 					}
 				}
 			}
+		},
+		syncZhilu: function(){
+			var ids = getSelectedRows();
+			if(ids == null){
+				return ;
+			}
+			vm.devices = [];
+			for(i in ids){
+				var code = $("#jqGrid").jqGrid('getRowData',ids[i]).code;
+				if(vm.devices != ''){vm.devices += ","+code;}else{vm.devices = code;}
+			}
+			layer.open({
+				type: 1,
+				skin: 'layui-layer-lan',
+				title: "同步知路",
+				area: ['550px', '230px'],
+				shadeClose: false,
+				content: $("#syncLayer"),
+				btn: ['确定','取消'],
+				btn1: function (index) {
+					var data = {devices:vm.devices,name:vm.name,product:vm.product};
+					$.ajax({
+						type: "POST",
+						url: "../operate/syncZhilu",
+					    data: data,
+					    success: function(r){
+					    	if(r.code === 0){
+								alert('操作成功', function(index){
+									vm.reload();
+								});
+							}else{
+								alert(r.msg);
+							}
+						}
+					});
+	            }
+			});
 		}
 	}
 });
