@@ -8,6 +8,8 @@ import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -27,7 +29,7 @@ public class UserRealm extends AuthorizingRealm {
     private SysUserService sysUserService;
     @Autowired
     private SysMenuService sysMenuService;
-    
+    private final static Logger logger = LoggerFactory.getLogger(UserRealm.class);
     /**
      * 授权(验证权限时调用)
      */
@@ -83,7 +85,7 @@ public class UserRealm extends AuthorizingRealm {
 			}
 			sb.append("'");
 			sb.append(u.getAgencyId());
-			
+
 			
 		}
 		sb.append("')");
