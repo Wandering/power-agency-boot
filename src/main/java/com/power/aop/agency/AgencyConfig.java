@@ -28,6 +28,8 @@ public class AgencyConfig {
     	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryTotal(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryList(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.save(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.update(..)","authAgencyId",0));
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
 //
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
