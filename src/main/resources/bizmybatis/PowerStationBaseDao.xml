@@ -17,6 +17,7 @@
         <result property="errorSlot" column="error_slot"/>
         <result property="free" column="free"/>
         <result property="canBorrow" column="can_borrow"/>
+        <result property="onlineStatus" column="online_status"/>
         <result property="stateCode" column="state_code"/>
         <result property="borrowCount" column="borrow_count"/>
         <result property="editName" column="edit_name"/>
@@ -85,6 +86,10 @@
 			                <!-- 可借(记录当前充电中状态，减少每次统计) -->
                 <if test="canBorrow != null and canBorrow.trim() != ''">
                     AND can_borrow = #{canBorrow}
+                </if>
+                			<!-- 设备上下线状态 1：上线 0：下线 -->
+                <if test="onlineStatus != null and onlineStatus.trim() != ''">
+                    AND online_status = #{onlineStatus}
                 </if>
 			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
                 <if test="stateCode != null and stateCode.trim() != ''">
@@ -203,6 +208,10 @@
                 <if test="canBorrow != null and canBorrow.trim() != ''">
                     AND can_borrow = #{canBorrow}
                 </if>
+                			<!-- 设备上下线状态 1：上线 0：下线 -->
+                <if test="onlineStatus != null and onlineStatus.trim() != ''">
+                    AND online_status = #{onlineStatus}
+                </if>
 			                <!-- 充电桩状态码：0、正常、1、禁用 2、删除 -->
                 <if test="stateCode != null and stateCode.trim() != ''">
                     AND state_code = #{stateCode}
@@ -272,6 +281,7 @@
 			`error_slot`, 
 			`free`, 
 			`can_borrow`, 
+			`online_status`, 
 			`state_code`, 
 			`borrow_count`, 
 			`edit_name`, 
@@ -298,6 +308,7 @@
 			#{errorSlot}, 
 			#{free}, 
 			#{canBorrow}, 
+			#{onlineStatus}, 
 			#{stateCode}, 
 			#{borrowCount}, 
 			#{editName}, 
@@ -327,6 +338,7 @@
 			<if test="errorSlot != null">`error_slot` = #{errorSlot}, </if>
 			<if test="free != null">`free` = #{free}, </if>
 			<if test="canBorrow != null">`can_borrow` = #{canBorrow}, </if>
+			<if test="onlineStatus != null">`online_status` = #{onlineStatus}, </if>
 			<if test="stateCode != null">`state_code` = #{stateCode}, </if>
 			<if test="borrowCount != null">`borrow_count` = #{borrowCount}, </if>
 			<if test="editName != null">`edit_name` = #{editName}, </if>

@@ -35,7 +35,11 @@ html {
 	margin-right: 10px;
 	margin-bottom: 5px;
 }
-
+@media (max-width: 968px){
+	.grid-btn .form-group {
+		width: 100%;
+	}
+}
 .pointer {
 	cursor: pointer;
 }
@@ -55,11 +59,6 @@ html {
 	.form-horizontal .col-sm-2 {
 		width: 24%;
 	}
-}
-.form-half{
-	width:48%;float:left;
-}
-@media ( min-width : 768px) {
 	.form-biz .control-label {
 		padding-top: 7px;
 		margin-bottom: 0;
@@ -74,13 +73,16 @@ html {
 		width: 100%;
 		padding-top: 20px;
 	}
-	.form-group:after, .form-group:before {
+	.form-biz .form-group:after, .form-group:before {
 		display: table;
 		content: " ";
 	}
-	.form-group:after {
+	.form-biz .form-group:after {
 		clear: both;
 	}
+}
+.form-half{
+	width:48%;float:left;
 }
 
 tbody>tr>th {

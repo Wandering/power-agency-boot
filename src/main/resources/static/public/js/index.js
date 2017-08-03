@@ -111,6 +111,7 @@ function routerList(router, menuList){
 			    vm.main = url.replace('#', '');
 			    
 			    //导航菜单展开
+			    $("body").removeClass("sidebar-open");
 			    $(".treeview-menu li").removeClass("active");
 			    $("a[href='"+url+"']").parents("li").addClass("active");
 			    

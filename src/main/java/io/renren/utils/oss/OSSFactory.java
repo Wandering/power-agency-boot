@@ -18,9 +18,9 @@ public final class OSSFactory {
         OSSFactory.sysConfigService = (SysConfigService) SpringContextUtils.getBean("sysConfigService");
     }
 
-    public static CloudStorageService build(){
+    public static CloudStorageService build(String KEY){
         //获取云存储配置信息
-        CloudStorageConfig config = sysConfigService.getConfigObject(ConfigConstant.CLOUD_STORAGE_CONFIG_KEY, CloudStorageConfig.class);
+        CloudStorageConfig config = sysConfigService.getConfigObject(KEY, CloudStorageConfig.class);
 
         if(config.getType() == Constant.CloudService.QINIU.getValue()){
             return new QiniuCloudStorageService(config);

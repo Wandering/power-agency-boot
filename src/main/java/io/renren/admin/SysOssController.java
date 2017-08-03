@@ -47,6 +47,7 @@ public class SysOssController {
     private SysConfigService sysConfigService;
 
     private final static String KEY = ConfigConstant.CLOUD_STORAGE_CONFIG_KEY;
+    private final static String IMGKEY = ConfigConstant.STATION_IMG_CONFIG_KEY;
 	
 	/**
 	 * 列表
@@ -115,7 +116,7 @@ public class SysOssController {
 		}
 
 		//上传文件
-		String url = OSSFactory.build().upload(file.getBytes());
+		String url = OSSFactory.build(KEY).upload(file.getBytes());
 
 		//保存文件信息
 		SysOssEntity ossEntity = new SysOssEntity();
@@ -123,6 +124,28 @@ public class SysOssController {
 		ossEntity.setCreateDate(new Date());
 		sysOssService.save(ossEntity);
 
+		return R.ok().put("url", url);
+	}
+	
+	/**
+	 * 上传文件
+	 */
+	@RequestMapping("/Station/Imgupload")
+	@RequiresPermissions("sys:oss:all")
+	public R IMGupload(@RequestParam("file") MultipartFile file) throws Exception {
+		if (file.isEmpty()) {
+			throw new RRException("上传文件不能为空");
+		}
+		
+		//上传文件
+		String url = OSSFactory.build(IMGKEY).upload(file.getBytes());
+		
+		//保存文件信息
+		SysOssEntity ossEntity = new SysOssEntity();
+		ossEntity.setUrl(url);
+		ossEntity.setCreateDate(new Date());
+		sysOssService.save(ossEntity);
+		
 		return R.ok().put("url", url);
 	}
 
