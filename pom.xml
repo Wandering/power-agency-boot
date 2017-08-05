@@ -282,7 +282,7 @@
 		<repository>
 			<id>power</id>
 			<name>power</name>
-			<url>http://192.168.10.49:8081/repository/maven-public/</url>
+			<url>http://192.168.1.47:8081/repository/maven-public/</url>
 		</repository>
 	</repositories>
 	<pluginRepositories>
