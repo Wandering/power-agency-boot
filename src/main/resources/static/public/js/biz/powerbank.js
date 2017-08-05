@@ -94,6 +94,10 @@ var vm = new Vue({
 		models:[],
 		powerBank: {}
 	},
+	mounted: function(){
+		var bodywidth = $(document.body).width();
+		$(".grid-btn").css("width",bodywidth);
+	},
 	methods: {
 		query: function () {
 			$("#jqGrid").jqGrid('setGridParam',{page:1});

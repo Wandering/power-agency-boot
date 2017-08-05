@@ -65,6 +65,8 @@ public class PowerStationEntity implements Serializable {
 	private String shopStationPoint;
 	//收费模式
 	private String feescale;
+	//网点图片
+	private String pictures;
 	//最后编辑人员
 	private String lasteditor;
 
@@ -367,6 +369,18 @@ public class PowerStationEntity implements Serializable {
 	 */
 	public String getFeescale() {
 		return feescale;
+	}
+	/**
+	 * 网点图片
+	 */
+	public void setPictures(String pictures) {
+		this.pictures = pictures;
+	}
+	/**
+	 * 网点图片
+	 */
+	public String getPictures() {
+		return pictures;
 	}
 	/**
 	 * 设置：最后编辑人员

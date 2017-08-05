@@ -30,6 +30,7 @@
         <result property="shopPhone" column="shop_phone"/>
         <result property="shopStationPoint" column="shop_station_point"/>
         <result property="feescale" column="feescale"/>
+        <result property="pictures" column="pictures"/>
         <result property="lasteditor" column="lastEditor"/>
     </resultMap>
 
@@ -303,6 +304,7 @@
 			`shop_phone`, 
 			`shop_station_point`, 
 			`feescale`, 
+			`pictures`, 
 			`lastEditor`
 		)
 		values
@@ -331,6 +333,7 @@
 			#{shopPhone}, 
 			#{shopStationPoint}, 
 			#{feescale}, 
+			#{pictures}, 
 			#{lasteditor}
 		)
 	</insert>
@@ -362,6 +365,7 @@
 			<if test="shopPhone != null">`shop_phone` = #{shopPhone}, </if>
 			<if test="shopStationPoint != null">`shop_station_point` = #{shopStationPoint}, </if>
 			<if test="feescale != null">`feescale` = #{feescale}, </if>
+			<if test="pictures != null">`pictures` = #{pictures}, </if>
 			<if test="lasteditor != null">`lastEditor` = #{lasteditor}</if>
 		</set>
 		where id = #{id}

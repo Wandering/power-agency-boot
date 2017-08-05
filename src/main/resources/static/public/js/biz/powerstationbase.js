@@ -11,7 +11,7 @@ $(function () {
 			{ label: '通讯方式 ', name: 'channel', index: 'channel', width: 90 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.channels)[value]:"";
 			}}, 
-			{ label: '状态', name: 'status', index: 'status', width: 70 ,formatter: function(value, options, row){
+			{ label: '状态', name: 'onlineStatus', index: 'onlineStatus', width: 70 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.stationStatus)[value]:"";
 			}},
 			{ label: '卡槽数（个）', name: 'slotNo', index: 'slot_no', width: 100 },
@@ -42,7 +42,6 @@ $(function () {
 		rowList : [10,30,50],
         rownumbers: true, 
         rownumWidth: 25, 
-        autowidth:true,
         multiselect: true,
         shrinkToFit:false,  
         autowidth:true,
@@ -126,6 +125,10 @@ var vm = new Vue({
 		stationStatus:[],
 		powerStationBase: {}
 	},
+	mounted: function(){
+		var bodywidth = $(document.body).width();
+		$(".grid-btn").css("width",bodywidth);
+	},
 	methods: {
 		query: function () {
 			$("#jqGrid").jqGrid('setGridParam',{page:1});
@@ -136,7 +139,7 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.status = "add";
 			vm.powerStationBase = {};
-			vm.powerStationBase.status = 0;
+			vm.powerStationBase.onlineStatus = 0;
 			$("#stationStatus").attr("disabled","disabled");
 		},
 		update: function (event) {

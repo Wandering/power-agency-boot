@@ -104,6 +104,26 @@ $(function () {
         	});
         }
     });
+    
+    new AjaxUpload('#upload', {
+        action: '../sys/oss/Station/Imgupload',
+        name: 'file',
+        autoSubmit:true,
+        responseType:"json",
+        onSubmit:function(file, extension){
+            if (!(extension && /^(jpg|jpeg|png|gif)$/.test(extension.toLowerCase()))){
+                alert('只支持jpg、png、gif格式的图片！');
+                return false;
+            }
+        },
+        onComplete : function(file, r){
+            if(r.code == 0){
+                vm.addImg(r.url);
+            }else{
+                alert(r.msg);
+            }
+        }
+    });
 });
 
 var vm = new Vue({
@@ -122,9 +142,13 @@ var vm = new Vue({
 		models:[],
 		stations:[],
 		s_status:[],
+		pictures:[],
+		delStatus:false,
 		powerStation: {region:"440300"}
 	},
 	mounted: function(){
+		var bodywidth = $(document.body).width();
+		$(".grid-btn").css("width",bodywidth);
 		this.map = new AMap.Map('mapViewContainer', {
 			resizeEnable: true,
              zoom: 11
@@ -167,6 +191,7 @@ var vm = new Vue({
 			vm.title = "新增";
 			vm.status = "add";
 			vm.powerStation = {};
+			vm.pictures = [];
 			vm.powerStation.region = "440300";
 			vm.map.clearMap();
 			vm.geolocation.getCurrentPosition();
@@ -186,6 +211,7 @@ var vm = new Vue({
 		},
 		saveOrUpdate: function (event) {
 			var url = vm.powerStation.id == null ? "../powerstation/save" : "../powerstation/update";
+			if(vm.pictures!=''){vm.powerStation.pictures=JSON.stringify(vm.pictures)}else{vm.powerStation.pictures=null}
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -229,6 +255,9 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../powerstation/info/"+id, function(r){
                 vm.powerStation = r.powerStation;
+                if(r.powerStation.pictures==null){vm.pictures=[]}else{
+                	vm.pictures = eval(r.powerStation.pictures);
+                }
             });
 		},
 		reload: function (event) {
@@ -312,6 +341,46 @@ var vm = new Vue({
 					}
 				});
 			}
+		},
+		showImg: function(url){
+			var photos = {
+	    	  "title": "", //相册标题
+	    	  "id": 123, //相册id
+	    	  "start": 0, //初始显示的图片序号，默认0
+	    	  "data": [{   //相册包含的图片，数组格式
+	    	      "alt": "图片名","src": url, //原图地址
+	    	  }]
+	    	}
+			for(var i=0;i<vm.pictures.length;i++){
+				if(vm.pictures[i].img==url){
+					if(vm.delStatus){vm.pictures.splice(i,1);return;}
+				}else{
+					photos.data.push({
+		    	      "alt": "图片名", "src": vm.pictures[i].img, //原图地址
+		    	    })
+				}
+			}
+			layer.photos({
+			    photos: photos,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+			});
+		},
+		addImg: function(url){
+			vm.pictures.push({img:url});
+		},
+		deleteImg: function(){
+			vm.delStatus = true;
+			layer.open({
+			  type: 1,
+			  title: false,
+			  closeBtn: 0,
+			  shade: 0.8,
+			  skin: 'layui-layer-nobg', //没有背景色
+			  shadeClose: true,
+			  content: $('#photos-box'),
+			  end: function(){
+				  vm.delStatus = false; 
+			  }
+			});
 		}
 	}
 });

@@ -3,6 +3,7 @@ package com.power.aop.agency;
 import com.google.common.collect.Lists;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -25,6 +26,10 @@ public class AgencyConfig {
         //init
     	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryTotal(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryTotal(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryList(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.save(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.update(..)","authAgencyId",0));
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
 //
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));

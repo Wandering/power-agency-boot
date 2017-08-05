@@ -39,6 +39,8 @@ public class PowerStationBaseEntity implements Serializable {
 	private Integer free;
 	//可借(记录当前充电中状态，减少每次统计)
 	private Integer canBorrow;
+	//设备上下线状态 1：上线 0：下线
+	private Integer onlineStatus;
 	//充电桩状态码：0、正常、1、禁用 2、删除
 	private Integer stateCode;
 	//总共借出次数
@@ -207,6 +209,18 @@ public class PowerStationBaseEntity implements Serializable {
 	 */
 	public Integer getCanBorrow() {
 		return canBorrow;
+	}
+	/**
+	 * 设备上下线状态 1：上线 0：下线
+	 */
+	public void setonlineStatus(Integer onlineStatus) {
+		this.onlineStatus = onlineStatus;
+	}
+	/**
+	 * 设备上下线状态 1：上线 0：下线
+	 */
+	public Integer getonlineStatus() {
+		return onlineStatus;
 	}
 	/**
 	 * 设置：充电桩状态码：0、正常、1、禁用 2、删除
