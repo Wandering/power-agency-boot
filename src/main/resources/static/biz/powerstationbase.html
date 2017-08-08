@@ -38,7 +38,7 @@
 					</select>
 				</div>
 				<a class="btn btn-default" @click="query">查询</a>
-				<a v-if="hasPermission('powerstationbase:save')"
+				<a v-if="hasPermission('powerstationbase:sync')"
 					class="btn btn-primary" @click="syncZhilu"><i class="fa fa fa-refresh"></i>&nbsp;同步</a>
 				<a v-if="hasPermission('powerstationbase:save')"
 					class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
