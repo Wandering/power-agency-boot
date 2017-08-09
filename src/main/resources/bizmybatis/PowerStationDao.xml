@@ -280,61 +280,61 @@
 	<insert id="save" parameterType="com.power.entity.PowerStationEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_station
 		(
-			`agent`, 
-			`code`, 
-			`address`, 
-			`region`, 
-			`latitude`, 
-			`longitude`, 
-			`wx_user`, 
-			`wx_user_phone`, 
-			`dimension_code`, 
-			`status`, 
-			`create_dt`, 
-			`update_dt`, 
-			`product_dt`, 
-			`product_creator`, 
-			`shop_name`, 
-			`connect_type`, 
-			`create_by`, 
-			`update_by`, 
-			`shop_start_dt`, 
-			`shop_end_dt`, 
-			`active_bank_no`, 
-			`shop_phone`, 
-			`shop_station_point`, 
-			`feescale`, 
-			`pictures`, 
-			`lastEditor`
+			<if test="agent != null">`agent`, </if>
+			<if test="address != null">`address`, </if>
+			<if test="region != null">`region`, </if>
+			<if test="latitude != null">`latitude`, </if>
+			<if test="longitude != null">`longitude`, </if>
+			<if test="wxUser != null">`wx_user`, </if>
+			<if test="wxUserPhone != null">`wx_user_phone`, </if>
+			<if test="dimensionCode != null">`dimension_code`, </if>
+			<if test="status != null">`status`, </if>
+			<if test="createDt != null">`create_dt`, </if>
+			<if test="updateDt != null">`update_dt`, </if>
+			<if test="productDt != null">`product_dt`, </if>
+			<if test="productCreator != null">`product_creator`, </if>
+			<if test="shopName != null">`shop_name`, </if>
+			<if test="connectType != null">`connect_type`, </if>
+			<if test="createBy != null">`create_by`, </if>
+			<if test="updateBy != null">`update_by`, </if>
+			<if test="shopStartDt != null">`shop_start_dt`, </if>
+			<if test="shopEndDt != null">`shop_end_dt`, </if>
+			<if test="activeBankNo != null">`active_bank_no`, </if>
+			<if test="shopPhone != null">`shop_phone`, </if>
+			<if test="shopStationPoint != null">`shop_station_point`, </if>
+			<if test="feescale != null">`feescale`, </if>
+			<if test="pictures != null">`pictures`, </if>
+			<if test="lasteditor != null">`lastEditor`,</if>
+			<if test="code != null">`code` </if>
 		)
 		values
 		(
-			#{agent}, 
-			#{code}, 
-			#{address}, 
-			#{region}, 
-			#{latitude}, 
-			#{longitude}, 
-			#{wxUser}, 
-			#{wxUserPhone}, 
-			#{dimensionCode}, 
-			#{status}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{productDt}, 
-			#{productCreator}, 
-			#{shopName}, 
-			#{connectType}, 
-			#{createBy}, 
-			#{updateBy}, 
-			#{shopStartDt}, 
-			#{shopEndDt}, 
-			#{activeBankNo}, 
-			#{shopPhone}, 
-			#{shopStationPoint}, 
-			#{feescale}, 
-			#{pictures}, 
-			#{lasteditor}
+			<if test="agent != null">#{agent}, </if>
+			<if test="address != null">#{address}, </if>
+			<if test="region != null">#{region}, </if>
+			<if test="latitude != null">#{latitude}, </if>
+			<if test="longitude != null">#{longitude}, </if>
+			<if test="wxUser != null">#{wxUser}, </if>
+			<if test="wxUserPhone != null">#{wxUserPhone}, </if>
+			<if test="dimensionCode != null">#{dimensionCode}, </if>
+			<if test="status != null">#{status}, </if>
+			<if test="createDt != null">#{createDt}, </if>
+			<if test="updateDt != null">#{updateDt}, </if>
+			<if test="productDt != null">#{productDt}, </if>
+			<if test="productCreator != null">#{productCreator}, </if>
+			<if test="shopName != null">#{shopName}, </if>
+			<if test="connectType != null">#{connectType}, </if>
+			<if test="createBy != null"> #{createBy}, </if>
+			<if test="updateBy != null">#{updateBy}, </if>
+			<if test="shopStartDt != null"> #{shopStartDt}, </if>
+			<if test="shopEndDt != null"> #{shopEndDt}, </if>
+			<if test="activeBankNo != null">#{activeBankNo}, </if>
+			<if test="shopPhone != null">#{shopPhone}, </if>
+			<if test="shopStationPoint != null">#{shopStationPoint}, </if>
+			<if test="feescale != null">#{feescale}, </if>
+			<if test="pictures != null">#{pictures}, </if>
+			<if test="lasteditor != null">#{lasteditor},</if>
+			<if test="code != null">#{code}</if>
 		)
 	</insert>
 	 

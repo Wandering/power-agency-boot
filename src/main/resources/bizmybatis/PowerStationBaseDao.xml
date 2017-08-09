@@ -270,57 +270,57 @@
 	<insert id="save" parameterType="com.power.entity.PowerStationBaseEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_station_base
 		(
-			`code`, 
-			`channel`, 
-			`type`, 
-			`facilitator_id`, 
-			`slot_no`, 
-			`error_code`, 
-			`is_sync`, 
-			`status`, 
-			`error_slot`, 
-			`free`, 
-			`can_borrow`, 
-			`online_status`, 
-			`state_code`, 
-			`borrow_count`, 
-			`edit_name`, 
-			`edit_id`, 
-			`batch`, 
-			`note`, 
-			`production`, 
-			`agencyId`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`
+			<if test="channel != null">`channel`, </if>
+			<if test="type != null">`type`, </if>
+			<if test="facilitatorId != null">`facilitator_id`, </if>
+			<if test="slotNo != null">`slot_no`, </if>
+			<if test="errorCode != null">`error_code`, </if>
+			<if test="isSync != null">`is_sync`, </if>
+			<if test="status != null">`status`, </if>
+			<if test="errorSlot != null">`error_slot`, </if>
+			<if test="free != null">`free`, </if>
+			<if test="canBorrow != null">`can_borrow`, </if>
+			<if test="onlineStatus != null">`online_status`, </if>
+			<if test="stateCode != null">`state_code`}, </if>
+			<if test="borrowCount != null">`borrow_count`, </if>
+			<if test="editName != null">`edit_name`, </if>
+			<if test="editId != null">`edit_id`, </if>
+			<if test="batch != null">`batch`, </if>
+			<if test="note != null">`note`, </if>
+			<if test="production != null">`production`, </if>
+			<if test="agencyid != null">`agencyId`, </if>
+			<if test="createDt != null">`create_dt`, </if>
+			<if test="updateDt != null">`update_dt`, </if>
+			<if test="createBy != null">`create_by`, </if>
+			<if test="updateBy != null">`update_by`,</if>
+			<if test="code != null">`code`</if>
 		)
 		values
 		(
-			#{code}, 
-			#{channel}, 
-			#{type}, 
-			#{facilitatorId}, 
-			#{slotNo}, 
-			#{errorCode}, 
-			#{isSync}, 
-			#{status}, 
-			#{errorSlot}, 
-			#{free}, 
-			#{canBorrow}, 
-			#{onlineStatus}, 
-			#{stateCode}, 
-			#{borrowCount}, 
-			#{editName}, 
-			#{editId}, 
-			#{batch}, 
-			#{note}, 
-			#{production}, 
-			#{agencyid}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}
+			<if test="channel != null">#{channel}, </if>
+			<if test="type != null">#{type}, </if>
+			<if test="facilitatorId != null">#{facilitatorId}, </if>
+			<if test="slotNo != null">#{slotNo}, </if>
+			<if test="errorCode != null">#{errorCode}, </if>
+			<if test="isSync != null">#{isSync}, </if>
+			<if test="status != null">#{status}, </if>
+			<if test="errorSlot != null">#{errorSlot}, </if>
+			<if test="free != null">#{free}, </if>
+			<if test="canBorrow != null"> #{canBorrow}, </if>
+			<if test="onlineStatus != null">#{onlineStatus}, </if>
+			<if test="stateCode != null"> #{stateCode}, </if>
+			<if test="borrowCount != null">#{borrowCount}, </if>
+			<if test="editName != null">#{editName}, </if>
+			<if test="editId != null">#{editId}, </if>
+			<if test="batch != null"> #{batch}, </if>
+			<if test="note != null">#{note}, </if>
+			<if test="production != null">#{production}, </if>
+			<if test="agencyid != null">#{agencyid}, </if>
+			<if test="createDt != null">#{createDt}, </if>
+			<if test="updateDt != null">#{updateDt}, </if>
+			<if test="createBy != null">#{createBy}, </if>
+			<if test="updateBy != null">#{updateBy}, </if>
+			<if test="code != null">#{code}</if>
 		)
 	</insert>
 	 

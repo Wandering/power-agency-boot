@@ -163,33 +163,33 @@
 	<insert id="save" parameterType="com.power.entity.PowerBankEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into power_bank
 		(
-			`customer`, 
-			`station`, 
-			`position`, 
-			`code`, 
-			`type`, 
-			`agency`, 
-			`status`, 
-			`create_dt`, 
-			`update_dt`, 
-			`create_by`, 
-			`update_by`, 
-			`borrow_count`
+			<if test="customer != null">`customer`, </if>
+			<if test="station != null">`station`, </if>
+			<if test="position != null">`position`, </if>
+			<if test="type != null">`type`, </if>
+			<if test="agency != null">`agency`, </if>
+			<if test="status != null">`status`, </if>
+			<if test="createDt != null">`create_dt`, </if>
+			<if test="updateDt != null">`update_dt`, </if>
+			<if test="createBy != null">`create_by`, </if>
+			<if test="updateBy != null">`update_by`, </if>
+			<if test="borrowCount != null">`borrow_count`,</if>
+			<if test="code != null">`code`</if>
 		)
 		values
 		(
-			#{customer}, 
-			#{station}, 
-			#{position}, 
-			#{code}, 
-			#{type}, 
-			#{agency}, 
-			#{status}, 
-			#{createDt}, 
-			#{updateDt}, 
-			#{createBy}, 
-			#{updateBy}, 
-			#{borrowCount}
+			<if test="customer != null">#{customer}, </if>
+			<if test="station != null">#{station}, </if>
+			<if test="position != null">#{position}, </if>
+			<if test="type != null">#{type}, </if>
+			<if test="agency != null">#{agency}, </if>
+			<if test="status != null">#{status}, </if>
+			<if test="createDt != null">#{createDt}, </if>
+			<if test="updateDt != null">#{updateDt}, </if>
+			<if test="createBy != null">#{createBy}, </if>
+			<if test="updateBy != null">#{updateBy}, </if>
+			<if test="borrowCount != null">#{borrowCount},</if>
+			<if test="code != null">#{code} </if>
 		)
 	</insert>
 	 
