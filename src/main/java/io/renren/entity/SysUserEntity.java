@@ -94,6 +94,8 @@ public class SysUserEntity implements Serializable {
 	 * 权限可视范围
 	 */
 	private String authAgencyId;
+	
+
 
 	public String getAuthAgencyId() {
 		return authAgencyId;

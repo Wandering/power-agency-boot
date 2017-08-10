@@ -66,8 +66,8 @@ public class PowerStationController {
 	@RequestMapping("/save")
 	@RequiresPermissions("powerstation:save")
 	public R save(@RequestBody PowerStationEntity powerStation){
-		powerStationService.save(powerStation);
 		
+		powerStationService.save(powerStation);
 		return R.ok();
 	}
 	

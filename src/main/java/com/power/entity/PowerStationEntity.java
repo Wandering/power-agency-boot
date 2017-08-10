@@ -18,7 +18,7 @@ public class PowerStationEntity implements Serializable {
 	//######充电桩表######
 	private Long id;
 	//服务商
-	private Long agent;
+	private  Long agent;
 	//充电桩ID
 	private String code;
 	//充电桩网点地址

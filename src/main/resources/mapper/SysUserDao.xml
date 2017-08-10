@@ -17,8 +17,8 @@
 			<if test="username != null and username.trim() != ''">
 				and sysUser.`username` like concat('%',#{username},'%')
 			</if>
-			<if test = "authAgencyId !=null and authAgencyId.trim() != ''" >
-				and sysUser.agency_id in ${authAgencyId}
+			<if test ="authAgencyId !=null and authAgencyId.trim() != ''" >
+				and sysUser.`agency_id` in ${authAgencyId}
 			</if>
 		</where>
 		<choose>

@@ -1,9 +1,14 @@
 package com.power.aop.agency;
 
 import com.google.common.collect.Lists;
+import com.power.entity.PowerBankEntity;
+import com.power.entity.PowerStationBaseEntity;
+import com.power.entity.PowerStationEntity;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Field;
@@ -21,6 +26,7 @@ public class AgencyConfig {
 
     private  static List<MapConfig> mapAopConfigs = Lists.newArrayList();
     private static List<EntityConfig> entityConfigs = Lists.newArrayList();
+    private final static Logger logger = LoggerFactory.getLogger(AutoConfigAgency.class);
 
     static {
         //init
@@ -28,8 +34,12 @@ public class AgencyConfig {
     	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryTotal(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryList(..)","authAgencyId",0));
-    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.save(..)","authAgencyId",0));
-    	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.update(..)","authAgencyId",0));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.update(..)","agent",0,PowerStationEntity.class));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.save(..)","agent",0,PowerStationEntity.class));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.save(..)","agencyid",0,PowerStationBaseEntity.class));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.update(..)","agencyid",0,PowerStationBaseEntity.class));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.save(..)","agency",0,PowerBankEntity.class));
+    	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerBankServiceImpl.update(..)","agency",0,PowerBankEntity.class));
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.OrderLineServiceImpl.queryList(..) ","agency",0));
 //
 //           mapAopConfigs.add(new MapConfig("^* com.power.service.impl.OrdersServiceImpl.queryList(..) ","agency",0));
@@ -59,6 +69,7 @@ public class AgencyConfig {
      * @param args
      */
     public static void write(String pointcut,String value,Object[] args){
+    	 logger.debug("当前切入方法的值为:{}",value);
         for (MapConfig mapConfig :mapAopConfigs){
             if (Pattern.compile(mapConfig.getRegex()).matcher(pointcut).find()){
                 Object object = args[mapConfig.getIndex()];
@@ -76,7 +87,8 @@ public class AgencyConfig {
                     Field field = ReflectionUtils.findField(entityConfig.getClazz(),entityConfig.getField());
                     if (field != null){
                         try {
-                            field.set(object,value);
+                        	field.setAccessible(true);
+                            field.set(object,Long.valueOf(value));
                         } catch (IllegalAccessException e) {
                             e.printStackTrace();
                         }

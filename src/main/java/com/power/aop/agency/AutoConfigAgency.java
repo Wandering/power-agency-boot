@@ -1,10 +1,12 @@
 package com.power.aop.agency;
 
 import com.alibaba.fastjson.JSON;
+
 import io.renren.entity.SysUserEntity;
 import io.renren.service.SysUserService;
 import io.renren.service.impl.SysUserServiceImpl;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.aspectj.lang.JoinPoint;
@@ -17,7 +19,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ReflectionUtils;
 
-import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -48,11 +49,18 @@ public class AutoConfigAgency {
 
         SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
         Long agencyId = userEntity.getAgencyId();
-       
-               
+        String arr[] = pointcut.split("\\.");
+        String action= null;
+        if(arr.length>1){
+        	 action = StringUtils.substringBefore(arr[arr.length-1],"(");
+        	 logger.debug("当前切入方法为:{}",action);
+        }
+        if(action.equals("save")||action.equals("update")){
+        	 AgencyConfig.write(pointcut,String.valueOf(userEntity.getAgencyId()),args);
+        }else{
+        	AgencyConfig.write(pointcut,userEntity.getAuthAgencyId(),args);
+        }
         
-        //0为超级管理员
-        AgencyConfig.write(pointcut,userEntity.getAuthAgencyId(),args);
     }
 
 }
