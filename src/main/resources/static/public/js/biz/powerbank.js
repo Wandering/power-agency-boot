@@ -9,7 +9,9 @@ $(function () {
 				return value!=null?getModel(vm.models)[value]:"";
 			}},
 			{ label: '充电桩IMEI号', name: 'station', index: 'station'}, 			
-			{ label: '卡槽号', name: 'position', index: 'position', width: 85 },
+			{ label: '卡槽号', name: 'position', index: 'position', width: 85 ,formatter: function(value, options, row){
+				if(value==""||value == null){return ""}{console.log(value);return parseInt(value)+1}
+			}},
 			{ label: '电量', name: 'capacity', index: 'position', width: 85 },
 			{ label: '当前使用用户', name: 'customer', index: 'customer', width: 120 },
 			{ label: '充电宝被借出次数', name: 'borrowCount', index: 'borrow_count', width: 140 },		

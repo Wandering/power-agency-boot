@@ -7,7 +7,9 @@ $(function () {
 			{ label: 'id', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '充电宝id', name: 'batteryId', index: 'battery_id', width: 80 }, 			
 			{ label: '幢ID', name: 'deviceId', index: 'device_id', width: 80 }, 			
-			{ label: '槽位', name: 'slotNo', index: 'slot_no', width: 80 }, 			
+			{ label: '槽位', name: 'slotNo', index: 'slot_no', width: 80 ,formatter: function(value, options, row){
+				if(value==""||value == null){return ""}{console.log(value);return parseInt(value)+1}
+			}}, 			
 			{ label: '处理方式', name: 'type', index: 'type', width: 80 ,formatter: function(value, options, row){
 				return value!=null?getDict(vm.dealTypes)[value]:"";
 			}}, 			
@@ -185,7 +187,7 @@ var vm = new Vue({
 				$.ajax({
 					type: "POST",
 				    url: "../operate/lockSwich",
-				    data: {deviceId:rowData.deviceId,slotNo:rowData.slotNo,slotSwitch:type},
+				    data: {deviceId:rowData.deviceId,slotNo:rowData.slotNo-1,slotSwitch:type},
 				    success: function(r){
 						if(r.code == 0){
 							alert('操作成功');
