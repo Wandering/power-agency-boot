@@ -17,7 +17,7 @@ $(function () {
 			{ label: '卡槽数（个）', name: 'slotNo', index: 'slot_no', width: 100 },
 			{ label: '可还（个）', name: 'free', index: 'free', width: 80 }, 			
 			{ label: '可借（个）', name: 'canBorrow', index: 'can_borrow', width: 80 }, 			
-			{ label: '已借（个）', name: 'borrowCount', index: 'borrow_count', width: 80 }, 
+			{ label: '已借（次）', name: 'borrowCount', index: 'borrow_count', width: 80 }, 
 			{ label: '服务商', name: 'facilitatorId', index: 'facilitator_id', width: 80 }, 	
 			{ label: '是否同步', name: 'isSync', index: 'is_sync', width: 80 ,formatter: function(value, options, row){
 				return value==1?"是":"否"
