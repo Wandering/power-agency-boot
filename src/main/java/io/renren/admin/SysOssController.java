@@ -131,7 +131,7 @@ public class SysOssController {
 	 * 上传文件
 	 */
 	@RequestMapping("/Station/Imgupload")
-	@RequiresPermissions("sys:oss:all")
+	@RequiresPermissions("powerstation:list")
 	public R IMGupload(@RequestParam("file") MultipartFile file) throws Exception {
 		if (file.isEmpty()) {
 			throw new RRException("上传文件不能为空");
