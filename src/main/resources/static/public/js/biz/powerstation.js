@@ -255,6 +255,11 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../powerstation/info/"+id, function(r){
                 vm.powerStation = r.powerStation;
+                $('#demo').citys({
+            		code:r.powerStation.region,onChange:function(data){
+            			vm.powerStation.region = data.code;
+            		}
+            	});
                 if(r.powerStation.pictures==null){vm.pictures=[]}else{
                 	vm.pictures = eval(r.powerStation.pictures);
                 }
