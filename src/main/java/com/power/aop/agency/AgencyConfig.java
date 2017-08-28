@@ -75,7 +75,7 @@ public class AgencyConfig {
         for (MapConfig mapConfig :mapAopConfigs){
             if (Pattern.compile(mapConfig.getRegex()).matcher(pointcut).find()){
                 Object object = args[mapConfig.getIndex()];
-                if (ArrayUtils.toString(object.getClass().getSuperclass().getInterfaces()).contains("Map")){
+                if (ArrayUtils.toString(object.getClass().getSuperclass().getInterfaces()).contains("Map")||ArrayUtils.toString(object.getClass().getSuperclass().getInterfaces()).contains("Model")){
                     Map map = (Map)object;
                     map.put(mapConfig.getField(),value);
                     logger.debug("当前切入方法的值为:{}",value);
