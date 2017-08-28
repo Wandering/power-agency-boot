@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.power.entity.ex.PowerStationBaseDTO;
 import com.power.service.ex.DictService;
 import io.renren.utils.R;
 
@@ -73,8 +75,8 @@ public class DictController {
 	 * 字典-选择充电桩
 	 */
 	@RequestMapping("/queryStations")
-	public R queryStations(){
-		List<?> stations = dictService.queryStations();
+	public R queryStations(Map<String, Object> map){
+		List<PowerStationBaseDTO> stations = dictService.queryStations(map);
 		return R.ok().put("data", stations);
 	}
 }

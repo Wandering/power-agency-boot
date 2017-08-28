@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.power.dao.ex.DictDao;
+import com.power.entity.ex.PowerStationBaseDTO;
 import com.power.service.ex.DictService;
 
 
@@ -43,8 +44,8 @@ public class DictCommonServiceImpl implements DictService {
 	}
 	
 	@Override
-	public List<?> queryStations() {
-		return dictDao.queryStations();
+	public List<PowerStationBaseDTO> queryStations(Map<String, Object> map) {
+		return dictDao.queryStations(map);
 	}
 	
 }

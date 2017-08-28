@@ -4,6 +4,8 @@ package com.power.service.ex;
 import java.util.List;
 import java.util.Map;
 
+import com.power.entity.ex.PowerStationBaseDTO;
+
 /**
  * 字典查询
  * 
@@ -22,5 +24,5 @@ public interface DictService {
 	
 	List<?> queryErrorType(Map<String, Object> map);
 	
-	List<?> queryStations();
+	List<PowerStationBaseDTO> queryStations(Map<String, Object> map);
 }

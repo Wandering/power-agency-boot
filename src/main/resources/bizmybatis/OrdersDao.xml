@@ -37,7 +37,7 @@
 	<select id="queryList" resultType="com.power.entity.OrdersEntity">
 		select * from orders
 		<where>
-		            and total_fee!=0 and status in ('PAYED','PENDING_PAYED','REFUND')
+		            status in ('PAYED','PENDING_PAYED','REFUND','IN_COUNT')
 			                <!-- ######订单记录###### -->
                 <if test="orderOwner!=null and orderOwner.trim()!=''">
                 	AND `order_owner` like concat('%',#{orderOwner},'%')

@@ -34,6 +34,7 @@ public class AgencyConfig {
     	   mapAopConfigs.add(new MapConfig("^* com.power.service.*.*.queryList(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryTotal(..)","authAgencyId",0));
     	   mapAopConfigs.add(new MapConfig("^* io.renren.service.*.*.queryList(..)","authAgencyId",0));
+    	   mapAopConfigs.add(new MapConfig("^* com.power.service.ex.impl.DictCommonServiceImpl.queryStations(..)","agencyId",0));
     	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.update(..)","agent",0,PowerStationEntity.class));
     	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationServiceImpl.save(..)","agent",0,PowerStationEntity.class));
     	   entityConfigs.add(new EntityConfig("^* com.power.service.impl.PowerStationBaseServiceImpl.save(..)","agencyid",0,PowerStationBaseEntity.class));
@@ -68,7 +69,8 @@ public class AgencyConfig {
      * @param value
      * @param args
      */
-    public static void write(String pointcut,String value,Object[] args){
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+	public static void write(String pointcut,String value,Object[] args){
     	 logger.debug("当前切入方法的值为:{}",value);
         for (MapConfig mapConfig :mapAopConfigs){
             if (Pattern.compile(mapConfig.getRegex()).matcher(pointcut).find()){
@@ -76,6 +78,7 @@ public class AgencyConfig {
                 if (ArrayUtils.toString(object.getClass().getSuperclass().getInterfaces()).contains("Map")){
                     Map map = (Map)object;
                     map.put(mapConfig.getField(),value);
+                    logger.debug("当前切入方法的值为:{}",value);
                     return;
                 }
             }

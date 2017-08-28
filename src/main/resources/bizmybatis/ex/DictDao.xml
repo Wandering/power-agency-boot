@@ -36,7 +36,11 @@
 		select id,code,channel from power_station_base psb where not exists (
 			select code from power_station ps
 			where ps.code = psb.code
-		) order by id
+		) 
+			<if test ="agencyId !=null and agencyId.trim() != ''" >
+				and agencyId in ${agencyId}
+			</if>
+		order by id
 	</select>
 
 </mapper>

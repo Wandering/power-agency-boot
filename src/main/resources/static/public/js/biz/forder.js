@@ -184,14 +184,7 @@ var vm = new Vue({
 			if(value==null){
 				return "";
 			}else{
-				value = new Date(value*1000);
-				var year=value.getFullYear(); 
-				var month=value.getMonth()+1; 
-				var date=value.getDate(); 
-				var hour=value.getHours(); 
-				var minute=value.getMinutes(); 
-				var second=value.getSeconds(); 
-				return year+"-"+month+"-"+date+" "+hour+":"+minute+":"+second; 
+				return new Date(parseInt(value)*1000).format("yyyy-MM-dd hh:mm:ss");
 			}
 		}
 	}
