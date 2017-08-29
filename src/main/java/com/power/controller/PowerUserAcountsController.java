@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSON;
+import com.power.aop.agency.AutoConfigAgency;
 import com.power.entity.ChargeModelEntity;
 import com.power.entity.OrderLineEntity;
 import com.power.entity.OrdersEntity;
@@ -58,6 +61,7 @@ public class PowerUserAcountsController {
 	@Autowired
 	private OrdersService ordersService;
 	
+	 private final static Logger logger = LoggerFactory.getLogger(PowerUserAcountsController.class);
 	
 	/**
 	 * 列表
@@ -81,13 +85,18 @@ public class PowerUserAcountsController {
 			PowerUserAcountsEntity powerUserAcountsEntity = powerUserAcountsService.queryByUserId(entity.getUserId());
 			ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(powerUserAcountsEntity.getRoles());
 			OrdersEntity  ordersEntity = ordersService.queryByUserId(entity.getUserId());
+			 logger.debug("当前准备进入--------------------------------------------------------------------:{}",1);
 			if(ordersEntity!=null){
+				 logger.debug("当前存在借电中订单，开始计算--------------------------------------------------------------------:{}",2);
 				OrderLineEntity orderLineEntity = orderLineService.queryByOrderId(ordersEntity.getId());
 				@SuppressWarnings("unchecked")
 				Map<Long,Integer> temp1 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeTime(), HashMap.class);
 				@SuppressWarnings("unchecked")
 				Map<Long,Integer> temp2 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeFee(), HashMap.class);
 				
+				 logger.debug("当前temp1为--------------------------------------------------------------------:{}",temp1);
+				 logger.debug("当前orderLineEntity.getOrderId()为--------------------------------------------------------------------:{}",orderLineEntity.getOrderId());
+				 logger.debug("当前temp1.get(orderLineEntity.getOrderId())为--------------------------------------------------------------------:{}",temp1.get(orderLineEntity.getOrderId()));
 				if (chargeModelEntity.getChargeDay() == 1) {
 					rtnFee = FeeUtil.feeSettlement(
 							chargeModelEntity.getOrderFreeTime(),
@@ -102,7 +111,6 @@ public class PowerUserAcountsController {
 							chargeModelEntity.getOrderFreeTime(),
 							chargeModelEntity.getFreeTime(),
 							temp1.get(orderLineEntity.getOrderId()),
-							
 							chargeModelEntity.getOverdueFee(),
 							chargeModelEntity.getMaxOverdueFee(),
 							chargeModelEntity.getMaxOverdueFee(),
