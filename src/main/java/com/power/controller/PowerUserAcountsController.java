@@ -97,6 +97,7 @@ public class PowerUserAcountsController {
 				 logger.debug("当前temp1为--------------------------------------------------------------------:{}",temp1);
 				 logger.debug("当前orderLineEntity.getOrderId()为--------------------------------------------------------------------:{}",orderLineEntity.getOrderId());
 				 logger.debug("当前temp1.get(orderLineEntity.getOrderId())为--------------------------------------------------------------------:{}",temp1.get(orderLineEntity.getOrderId()));
+				 
 				if (chargeModelEntity.getChargeDay() == 1) {
 					rtnFee = FeeUtil.feeSettlement(
 							chargeModelEntity.getOrderFreeTime(),
