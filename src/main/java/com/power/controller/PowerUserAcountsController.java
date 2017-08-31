@@ -153,7 +153,6 @@ public class PowerUserAcountsController {
 	@RequiresPermissions("poweruseracounts:save")
 	public R save(@RequestBody PowerUserAcountsEntity powerUserAcounts){
 		powerUserAcountsService.save(powerUserAcounts);
-		
 		return R.ok();
 	}
 	
