@@ -30,7 +30,7 @@
 	     <choose>
              <when test="sidx != null and sidx.trim() != ''">
                 order by ${sidx} ${order}
-            </when>
+            </when> 
 			<otherwise>
                 order by ord.id desc
 			</otherwise>
