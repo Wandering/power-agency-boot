@@ -60,7 +60,7 @@
 					AND ol.start_dt &gt;=UNIX_TIMESTAMP(#{startDt}) 
 				</if> 
 				<if test="endDt!=null and endDt!=''">
-					AND  ol.end_dt  &lt;=UNIX_TIMESTAMP(#{endDt})  
+					AND  ol.end_dt &lt;=UNIX_TIMESTAMP(#{endDt})  
 				</if>
 				<choose>
             <when test="sidx != null and sidx.trim() != ''">
