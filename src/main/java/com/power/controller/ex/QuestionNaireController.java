@@ -1,9 +1,10 @@
 package com.power.controller.ex;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
-
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,14 @@ public class QuestionNaireController {
 	 * 查询字典
 	 */
 	@RequestMapping("/{id}")
+	@RequiresPermissions("questionNaire:info")
 	public R listbytype(@PathVariable("id") Long id){
 		List<QuestionAnswerEntity> list = questionNaireService.queryQuestionAnswerList(id);
-		List<QuestionNaireEntity> answerList = QuestNaireUtil.formatQusetionNaire(list);
+		List<QuestionNaireEntity> answerList = new ArrayList<>();
+		if(id==1){
+			answerList = QuestNaireUtil.formatQusetionNaire(list);
+		}
+		
 		return R.ok().put("data", answerList);
 	}
 

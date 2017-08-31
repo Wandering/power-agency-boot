@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>问卷调查</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta
+	content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+	name="viewport">
+<link rel="stylesheet" href="../public/css/bootstrap.min.css">
+<link rel="stylesheet" href="../public/css/font-awesome.min.css">
+<link rel="stylesheet" href="../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
+<link rel="stylesheet" href="../public/plugins/ztree/css/metroStyle/metroStyle.css">
+<link rel="stylesheet" href="../public/css/main.css">
+<script src="../public/libs/jquery.min.js"></script>
+<script src="../public/plugins/layer/layer.js"></script>
+<script src="../public/libs/bootstrap.min.js"></script>
+<script src="../public/libs/vue.min.js"></script>
+<script src="../public/plugins/jqgrid/grid.locale-cn.js"></script>
+<script src="../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
+<script src="../public/plugins/ztree/jquery.ztree.all.min.js"></script>
+<script src="../public/js/common.js"></script>
+</head>
+<body>
+<div id="rrapp" v-cloak>
+<div v-for="data in qndata" style="margin-bottom: 10px;">
+	<div>{{data.content}}
+		<span v-if="data.type=='radio'" style="color:#0066FF;">[单选题]</span>
+		<span v-if="data.type=='checkbox'" style="color:#0066FF;">[多选题]</span>
+		<span v-if="data.type=='text'" style="color:#0066FF;">[填空题]</span>
+	</div>
+	<table style="width: 100%;" class="qa-table" border="1">
+		<tr v-if="data.type!='text'">
+			<th width="33.4%">选项</th><th width="33.3%">小计</th><th width="33.3%">比例</th>
+		</tr>
+		<tr v-for="(an,i) in data.answers">
+			<td v-if="data.type!='text'" v-html="data.remark.split(',')[i]" style="padding-left: 5px;"></td>
+			<td v-else colspan="2" style="padding-left: 5px;">用户建议：{{an.content}}</td>
+			<td v-if="data.type!='text'" align="center">{{an.annum}}</td>
+			<td v-else style="padding-left: 5px;">建议人数：{{an.annum}}</td>
+			<td v-if="data.type!='text'" v-html="an.annum!=0?(an.annum/data.effectNum*100).toFixed(2)+'%':'0%'" align="center"></td>
+		</tr>
+		<tr style="background: #E0E0E0;">
+			<td><b>本题有效填写人次</b></td><td align="center">{{data.effectNum}}</td><td></td>
+		</tr>
+	</table>
+</div>
+		
+		
+<script src="../public/js/biz/questionnaire.js"></script>
+</body>
+</html>

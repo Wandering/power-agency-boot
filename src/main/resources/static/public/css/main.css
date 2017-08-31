@@ -121,3 +121,25 @@ tbody>tr>th {
 	width: 550px;
 	padding-top: 20px;
 }
+.qa-table{
+	background-color: #e0e0e0;
+    width: 100%;
+    max-width:800px;
+    border-collapse: collapse;
+    border: solid thin #d7d7d7;
+    border-color:#d7d7d7;
+}
+.qa-table tr{
+	height: 28px;
+}
+.qa-table tr:nth-child(2n){
+	background-color: #ffffff;
+}
+.qa-table tr:nth-child(2n+1){
+	background-color: #f3f3f3;
+}
+.qa-table th{
+	text-align: center;
+	background-color: #e0e0e0;
+	padding: 0 3px;
+}
