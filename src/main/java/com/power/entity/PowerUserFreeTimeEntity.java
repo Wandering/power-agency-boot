@@ -5,9 +5,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Transient;
 
 import com.alibaba.fastjson.JSON;
 
@@ -23,44 +20,38 @@ import com.alibaba.fastjson.JSON;
 public class PowerUserFreeTimeEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	@Id
     private Long id;
 
     /**
      * 订单生成时候的免费时长余量
      */
-    @Column(name = "temp_day_free_time")
     private String tempDayFreeTime;
-    @Transient
+    
     private Map<Long,Integer> tempDayFreeTimeMap;
 
     /**
      * 订单生成时候的会员等级{1,1}
      */
-    @Column(name = "temp_model_lv")
     private String tempModelLv;
-    @Transient
+    
     private Map<Long,Long> tempModelLvMap;
 
     /**
      * 当前日期的免费时长余量
      */
-    @Column(name = "curr_day_free_time")
     private Integer currDayFreeTime;
 
     /**
      * 当前日期的封顶费用余量
      */
-    @Column(name = "curr_day_free_fee")
     private Long currDayFreeFee;
 
 
     /**
      * 订单生成时候的免费时长余量
      */
-    @Column(name = "temp_day_free_fee")
     private String tempDayFreeFee;
-    @Transient
+    
     private Map<Long,Long> tempDayFreeFeeMap;
 
 
