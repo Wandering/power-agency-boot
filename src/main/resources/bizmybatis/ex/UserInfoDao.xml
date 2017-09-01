@@ -9,7 +9,7 @@
 		INNER JOIN power_user_platform  userplatform ON platforminfo.id = userplatform.platformId
 		INNER JOIN power_user puser ON userplatform.userId = puser.id
 		INNER JOIN power_user_account account ON account.agencyId = platforminfo.agencyId AND account.userId = puser.id
-		INNER JOIN power_user_expand expand ON expand.userId = account.id
+		INNER JOIN power_user_expand expand ON expand.userId = puser.id
         <where>
 			<!-- ######服务商Id###### -->
 	        <if test="agencyId != null and agencyId.trim() != ''">
