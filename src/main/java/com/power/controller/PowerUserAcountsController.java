@@ -82,36 +82,29 @@ public class PowerUserAcountsController {
 		for(PowerUserAcountsEntity entity:powerUserAcountsList){
 			
 			PowerUserFreeTimeEntity  powerUserFreeTimeEntity = powerUserFreeTimeService.queryObject(entity.getUserId());
-			PowerUserAcountsEntity powerUserAcountsEntity = powerUserAcountsService.queryByUserId(entity.getUserId());
-			ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(powerUserAcountsEntity.getRoles());
+			ChargeModelEntity chargeModelEntity = chargeModelService.queryObject(entity.getRoles());
 			OrdersEntity  ordersEntity = ordersService.queryByUserId(entity.getUserId());
 			 logger.debug("当前准备进入--------------------------------------------------------------------:{}",1);
 			if(ordersEntity!=null){
 				 logger.debug("当前存在借电中订单，开始计算--------------------------------------------------------------------:{}",2);
 				OrderLineEntity orderLineEntity = orderLineService.queryByOrderId(ordersEntity.getId());
-				@SuppressWarnings("unchecked")
-				Map<Long,Integer> temp1 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeTime(), HashMap.class);
-				@SuppressWarnings("unchecked")
-				Map<Long,Integer> temp2 = (Map<Long,Integer>)JSON.parseObject(powerUserFreeTimeEntity.getTempDayFreeFee(), HashMap.class);
 				
-				 logger.debug("当前temp1为--------------------------------------------------------------------:{}",temp1);
 				 logger.debug("当前orderLineEntity.getOrderId()为--------------------------------------------------------------------:{}",orderLineEntity.getOrderId());
-				 logger.debug("当前temp1.get(orderLineEntity.getOrderId())为--------------------------------------------------------------------:{}",temp1.get(orderLineEntity.getOrderId()));
 				 
 				if (chargeModelEntity.getChargeDay() == 1) {
 					rtnFee = FeeUtil.feeSettlement(
 							chargeModelEntity.getOrderFreeTime(),
 							chargeModelEntity.getFreeTime(),
-							temp1.get(orderLineEntity.getOrderId()),
+							powerUserFreeTimeEntity.getTempDayFreeTimeMap().get(orderLineEntity.getOrderId()),
 							chargeModelEntity.getOverdueFee(),
 							chargeModelEntity.getMaxOverdueFee(),
-							temp2.get(orderLineEntity.getOrderId()),
+							powerUserFreeTimeEntity.getTempDayFreeFeeMap().get(orderLineEntity.getOrderId()),
 							orderLineEntity.getStartDt(), messageDt,chargeModelEntity.getBufferTime());
 				}else {
 					rtnFee = FeeUtil.feeSettlement24(
 							chargeModelEntity.getOrderFreeTime(),
 							chargeModelEntity.getFreeTime(),
-							temp1.get(orderLineEntity.getOrderId()),
+							powerUserFreeTimeEntity.getTempDayFreeTimeMap().get(orderLineEntity.getOrderId()),
 							chargeModelEntity.getOverdueFee(),
 							chargeModelEntity.getMaxOverdueFee(),
 							chargeModelEntity.getMaxOverdueFee(),
