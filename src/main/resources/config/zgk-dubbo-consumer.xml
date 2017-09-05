@@ -12,8 +12,9 @@
 
     <dubbo:protocol name="dubbo" port="-1" />
 
-    <!--测试dubbo服务-->
+    <!--dubbo服务-->
     <dubbo:reference id="powerConsumer" interface="com.power.yuneng.nonparty.api.IPowerConsumer" check="false"
                      timeout="60000"/>
-
+    <dubbo:reference id="smsService" interface="com.power.yuneng.sms.api.ISMSService" check="false"
+                     timeout="60000"/>
 </beans>
