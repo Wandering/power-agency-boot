@@ -126,6 +126,16 @@
 		`password` = #{newPassword}
 		where user_id = #{userId} and password = #{password}
 	</update>
+	
+	<update id="resetPassword" parameterType="map">
+		update sys_user set
+		`password` = #{password}
+		where username = #{userName} 
+	</update>
+	
+	<select id="checkUsername" parameterType="map">
+	select count(*) from sys_user where username=#{userName} 
+	</select>
 
 	<delete id="deleteBatch">
 		delete from sys_user where user_id in

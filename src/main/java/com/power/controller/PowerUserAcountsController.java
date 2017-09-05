@@ -90,6 +90,7 @@ public class PowerUserAcountsController {
 				OrderLineEntity orderLineEntity = orderLineService.queryByOrderId(ordersEntity.getId());
 				
 				 logger.debug("当前orderLineEntity.getOrderId()为--------------------------------------------------------------------:{}",orderLineEntity.getOrderId());
+				 logger.debug("当前powerUserFreeTimeEntity.getTempDayFreeTimeMap().get(orderLineEntity.getOrderId())为--------------------------------------------------------------------:{}",powerUserFreeTimeEntity.getTempDayFreeTimeMap().get(orderLineEntity.getOrderId()));
 				 
 				if (chargeModelEntity.getChargeDay() == 1) {
 					rtnFee = FeeUtil.feeSettlement(

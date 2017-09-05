@@ -35,5 +35,15 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 	 */
 	int updatePassword(Map<String, Object> map);
 	
+	/**
+	 * 重置密码
+	 */
+	int resetPassword(Map<String, Object> map);
+	
+	/**
+	 * 校验用户名
+	 */
+	int checkUsername(Map<String, Object> map);
+	
 	List <SysUserEntity> queryByParentId(Long agencyId);
 }

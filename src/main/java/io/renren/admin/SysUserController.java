@@ -11,10 +11,8 @@ import io.renren.utils.validator.Assert;
 import io.renren.utils.validator.ValidatorUtils;
 
 import org.apache.commons.lang.ArrayUtils;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
-import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -91,6 +89,26 @@ public class SysUserController extends AbstractController {
 		
 		//退出
 		ShiroUtils.logout();
+		
+		return R.ok();
+	}
+	
+	/**
+	 * 修改登录用户密码
+	 */
+	@RequestMapping("/resetPassword")
+	public R resetPassword(String userName,String password){
+		
+		//sha256加密
+		password = new Sha256Hash(password).toHex();
+				
+		//更新密码
+		int count = sysUserService.resetPassword(userName, password);
+		if(count == 0){
+			return R.error("用户名不正确");
+		}
+		
+		//退出
 		
 		return R.ok();
 	}
@@ -178,4 +196,19 @@ public class SysUserController extends AbstractController {
 		
 		return R.ok();
 	}
+	
+	
+	/**
+	 * 验证用户名
+	 */
+	@RequestMapping("/checkUsername")
+	public R checkUsername(@RequestBody String userName){
+		int count = sysUserService.checkUsername(userName);
+		if(count>0){
+			return R.error("当前用户已存在");
+		}
+		logger.info("chengong{}",count);
+		return R.ok();
+	}
 }
+
