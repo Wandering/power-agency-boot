@@ -3,6 +3,7 @@ package io.renren.admin;
 import com.google.code.kaptcha.Constants;
 import com.google.code.kaptcha.Producer;
 import io.renren.utils.R;
+import io.renren.utils.RRException;
 import io.renren.utils.ShiroUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.crypto.hash.Sha256Hash;
@@ -48,17 +49,26 @@ public class SysLoginController {
         ImageIO.write(image, "jpg", out);
 		out.flush();
 	}
-	
+
+	@RequestMapping("/captcha/checkCaptcha")
+	public R checkCaptcha(HttpServletResponse response, String captcha)throws ServletException, IOException {
+		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+		if(!captcha.equalsIgnoreCase(kaptcha)){
+			return R.error("验证码不正确");
+		}
+		ShiroUtils.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+		return R.ok();
+	}
 	/**
 	 * 登录
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
 	public R login(String username, String password, String captcha)throws IOException {
-//		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
-//		if(!captcha.equalsIgnoreCase(kaptcha)){
-//			return R.error("验证码不正确");
-//		}
+		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
+		if(!captcha.equalsIgnoreCase(kaptcha)){
+			return R.error("验证码不正确");
+		}
 		
 		try{
 			Subject subject = ShiroUtils.getSubject();

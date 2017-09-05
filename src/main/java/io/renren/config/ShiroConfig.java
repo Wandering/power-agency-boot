@@ -56,6 +56,8 @@ public class ShiroConfig {
         filterMap.put("/public/**", "anon");
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/api/**", "anon");
+        filterMap.put("/sms/**", "anon");
+        filterMap.put("/captcha/**", "anon");
 
         //swagger配置
         filterMap.put("/swagger**", "anon");

@@ -8,6 +8,7 @@ server:
 # mysql
 spring:
     # 环境 dev|test|pro
+
     profiles:
         active: dev
     datasource:
