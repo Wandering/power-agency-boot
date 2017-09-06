@@ -106,11 +106,12 @@ public class SysUserController extends AbstractController {
 		int count = sysUserService.resetPassword(userName, password);
 		if(count == 0){
 			return R.error("用户名不正确");
-		}
+		}else{
 		
 		//退出
 		
 		return R.ok();
+		}
 	}
 	
 	/**
@@ -202,13 +203,14 @@ public class SysUserController extends AbstractController {
 	 * 验证用户名
 	 */
 	@RequestMapping("/checkUsername")
-	public R checkUsername(@RequestBody String userName){
+	public R checkUsername(String userName){
 		int count = sysUserService.checkUsername(userName);
+		logger.debug("用户是否存在",count);
 		if(count>0){
 			return R.error("当前用户已存在");
-		}
-		logger.info("chengong{}",count);
+		}else{
 		return R.ok();
+		}
 	}
 }
 

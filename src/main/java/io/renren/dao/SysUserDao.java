@@ -43,7 +43,7 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 	/**
 	 * 校验用户名
 	 */
-	int checkUsername(Map<String, Object> map);
+	int checkUsername(String userName);
 	
 	List <SysUserEntity> queryByParentId(Long agencyId);
 }

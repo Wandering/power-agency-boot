@@ -184,9 +184,7 @@ public class SysUserServiceImpl implements SysUserService {
 	}
 	@Override
 	public int checkUsername(String userName) {
-		Map<String, Object> map = new HashMap<>();
-		map.put("userName", userName);
-		return sysUserDao.resetPassword(map);
+		return sysUserDao.checkUsername(userName);
 	}
 		
 
