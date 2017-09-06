@@ -119,6 +119,8 @@ public class SysUserServiceImpl implements SysUserService {
 		return sysUserDao.updatePassword(map);
 	}
 	
+	
+	
 	/**
 	 * 检查角色是否越权
 	 */
@@ -171,6 +173,18 @@ public class SysUserServiceImpl implements SysUserService {
 		SysUserEntity user = sysUserDao.queryByUserName(username);
 		List<SysUserEntity> userList = sysUserDao.queryByParentId(user.getAgencyId());
 		return userList;
+	}
+
+	@Override
+	public int resetPassword(String userName, String password) {
+		Map<String, Object> map = new HashMap<>();
+		map.put("userName", userName);
+		map.put("password", password);
+		return sysUserDao.resetPassword(map);
+	}
+	@Override
+	public int checkUsername(String userName) {
+		return sysUserDao.checkUsername(userName);
 	}
 		
 
