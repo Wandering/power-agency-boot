@@ -72,28 +72,13 @@ public class UserRealm extends AuthorizingRealm {
         if(user.getStatus() == 0){
         	throw new LockedAccountException("账号已被锁定,请联系管理员");
         }
-        //注入用户权限可视范围
-        List <SysUserEntity> list = sysUserService.queryByAgencyId(user.getUsername());
-    	StringBuffer sb=new StringBuffer();
-    	boolean flag=false;
-    	sb.append("(");
-    	for(SysUserEntity u:list){
-			if (flag) {
-				sb.append("',");
-			}else {
-				flag=true;
-			}
-			sb.append("'");
-			sb.append(u.getAgencyId());
 
-			
-		}
-		sb.append("')");
-		user.setAuthAgencyId(sb.toString());
-		
         SimpleAuthenticationInfo info = new SimpleAuthenticationInfo(user, password, getName());
 //        UserContext.setUser(user);
         return info;
 	}
+
+
+
 
 }

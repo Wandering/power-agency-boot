@@ -94,6 +94,11 @@ public class SysUserEntity implements Serializable {
 	 * 权限可视范围
 	 */
 	private String authAgencyId;
+
+	/**
+	 * 用户数据权限池
+	 */
+	private String agencyPool;
 	
 
 
@@ -263,5 +268,14 @@ public class SysUserEntity implements Serializable {
 
 	public void setAgency(AgenciesEntity agency) {
 		this.agency = agency;
+	}
+
+
+	public String getAgencyPool() {
+		return agencyPool;
+	}
+
+	public void setAgencyPool(String agencyPool) {
+		this.agencyPool = agencyPool;
 	}
 }

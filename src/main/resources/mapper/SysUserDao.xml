@@ -67,8 +67,8 @@
 	</select>
 
 	<select id="queryByUserName" resultType="io.renren.entity.SysUserEntity">
-		select * from sys_user
-		where username = #{username}
+		select sysuser.*,agency.agency_pool from sys_user sysuser left JOIN  agencies agency ON  agency.id = sysuser.agency_id
+		where sysuser.username = #{username}
 	</select>
 
 	<insert id="save" parameterType="io.renren.entity.SysUserEntity"
