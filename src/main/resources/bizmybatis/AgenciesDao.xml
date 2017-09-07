@@ -4,82 +4,329 @@
 <mapper namespace="com.power.dao.AgenciesDao">
 
 	<!-- 可根据自己的需求，是否要使用 -->
-	<resultMap type="com.power.entity.AgenciesEntity" id="agenciesMap">
-		<result property="id" column="id" />
-		<result property="name" column="name" />
-		<result property="abbrCode" column="abbr_code" />
-		<result property="region" column="region" />
-		<result property="address" column="address" />
-		<result property="status" column="status" />
-		<result property="type" column="type" />
-		<result property="parent" column="parent" />
-		<result property="createDt" column="create_dt" />
-		<result property="updateDt" column="update_dt" />
-		<result property="createBy" column="create_by" />
-		<result property="updateBy" column="update_by" />
-	</resultMap>
+    <resultMap type="HashMap" id="agenciesMap">
+        <result property="id" column="id"/>
+        <result property="name" column="name"/>
+        <result property="abbrCode" column="abbr_code"/>
+        <result property="region" column="region"/>
+        <result property="address" column="address"/>
+        <result property="status" column="status"/>
+        <result property="type" column="type"/>
+        <result property="parent" column="parent"/>
+        <result property="createDt" column="create_dt"/>
+        <result property="updateDt" column="update_dt"/>
+        <result property="createBy" column="create_by"/>
+        <result property="updateBy" column="update_by"/>
+        <result property="agencytype" column="agencytype"/>
+        <result property="businessNo" column="business_no"/>
+        <result property="businessImg" column="business_img"/>
+        <result property="openBank" column="open_bank"/>
+        <result property="bankname" column="bankname"/>
+        <result property="bankCardno" column="bank_cardno"/>
+        <result property="legaluserName" column="legaluser_name"/>
+        <result property="legaluserNo" column="legaluser_no"/>
+        <result property="legaluserImg" column="legaluser_img"/>
+        <result property="qrcode" column="qrcode"/>
+        <result property="agencyrole" column="agencyrole"/>
+        <result property="contractStartdt" column="contract_startDt"/>
+        <result property="contractEnddt" column="contract_endDt"/>
+        <result property="username" column="username"/>
+        <result property="email" column="email"/>
+        <association property="sysLogList" column="username" select="selectSysLog"  javaType="List" />  
+    </resultMap>
 
 	<select id="queryObject" resultType="com.power.entity.AgenciesEntity">
-		select * from agencies where
-		id = #{value}
+		select * from agencies where id = #{value}
 	</select>
 
-	<select id="queryList" resultType="com.power.entity.AgenciesEntity">
-		select * from agencies
-		<choose>
-			<when test="sidx != null and sidx.trim() != ''">
-				order by ${sidx} ${order}
-			</when>
+	<select id="queryList" resultType="HashMap" resultMap="agenciesMap">
+		SELECT agency.*,sysuser.username,sysuser.email FROM agencies agency 
+		LEFT JOIN sys_user sysuser ON agency.id = sysuser.agency_id
+        <where>
+			                <!-- ######服务商表###### -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 服务商名称 -->
+                <if test="name != null and name.trim() != ''">
+                    AND name = #{name}
+                </if>
+			                <!-- 英文缩写????-del -->
+                <if test="abbrCode != null and abbrCode.trim() != ''">
+                    AND abbr_code = #{abbrCode}
+                </if>
+			                <!-- 地域 -->
+                <if test="region != null and region.trim() != ''">
+                    AND region = #{region}
+                </if>
+			                <!-- 地址 -->
+                <if test="address != null and address.trim() != ''">
+                    AND address = #{address}
+                </if>
+			                <!-- 状态 -->
+                <if test="status != null and status.trim() != ''">
+                    AND status = #{status}
+                </if>
+			                <!-- 类型：平台还是服务商-del -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- -del -->
+                <if test="parent != null and parent.trim() != ''">
+                    AND parent = #{parent}
+                </if>
+			                <!-- 创建时间 -->
+                <if test="createDt != null and createDt.trim() != ''">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!-- 修改时间 -->
+                <if test="updateDt != null and updateDt.trim() != ''">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!-- 创建人 -->
+                <if test="createBy != null and createBy.trim() != ''">
+                    AND create_by = #{createBy}
+                </if>
+			                <!-- 修改人 -->
+                <if test="updateBy != null and updateBy.trim() != ''">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 代理商类型 -->
+                <if test="agencytype != null and agencytype.trim() != ''">
+                    AND agencytype = #{agencytype}
+                </if>
+			                <!-- 营业执照注册号 -->
+                <if test="businessNo != null and businessNo.trim() != ''">
+                    AND business_no = #{businessNo}
+                </if>
+			                <!-- 营业执照副本 -->
+                <if test="businessImg != null and businessImg.trim() != ''">
+                    AND business_img = #{businessImg}
+                </if>
+			                <!-- 开户银行 -->
+                <if test="openBank != null and openBank.trim() != ''">
+                    AND open_bank = #{openBank}
+                </if>
+			                <!-- 开户名称 -->
+                <if test="bankname != null and bankname.trim() != ''">
+                    AND bankname = #{bankname}
+                </if>
+			                <!-- 银行卡号 -->
+                <if test="bankCardno != null and bankCardno.trim() != ''">
+                    AND bank_cardno = #{bankCardno}
+                </if>
+			                <!-- 法人姓名 -->
+                <if test="legaluserName != null and legaluserName.trim() != ''">
+                    AND legaluser_name = #{legaluserName}
+                </if>
+			                <!-- 法人身份证号 -->
+                <if test="legaluserNo != null and legaluserNo.trim() != ''">
+                    AND legaluser_no = #{legaluserNo}
+                </if>
+			                <!-- 法人身份证扫描件 -->
+                <if test="legaluserImg != null and legaluserImg.trim() != ''">
+                    AND legaluser_img = #{legaluserImg}
+                </if>
+			                <!-- 推广二维码 -->
+                <if test="qrcode != null and qrcode.trim() != ''">
+                    AND qrcode = #{qrcode}
+                </if>
+			                <!-- 代理商角色 -->
+                <if test="agencyrole != null and agencyrole.trim() != ''">
+                    AND agencyrole = #{agencyrole}
+                </if>
+			                <!-- 合同开始时间 -->
+                <if test="contractStartdt != null and contractStartdt.trim() != ''">
+                    AND contract_startDt = #{contractStartdt}
+                </if>
+			                <!-- 合同结束时间 -->
+                <if test="contractEnddt != null and contractEnddt.trim() != ''">
+                    AND contract_endDt = #{contractEnddt}
+                </if>
+			        </where>
+        <choose>
+            <when test="sidx != null and sidx.trim() != ''">
+                order by ${sidx} ${order}
+            </when>
 			<otherwise>
-				order by id desc
+                order by id desc
 			</otherwise>
-		</choose>
+        </choose>
 		<if test="offset != null and limit != null">
 			limit #{offset}, #{limit}
 		</if>
 	</select>
-
-	<select id="queryTotal" resultType="int">
-		select count(*) from agencies
+	
+	<select id="selectSysLog" parameterType="String" resultType="HashMap"  >    
+        select * from sys_log where operation='用户登录' and username=#{username}  order by create_date desc  
+    </select> 
+	
+ 	<select id="queryTotal" resultType="int">
+		select count(*) FROM agencies agency 
+		LEFT JOIN sys_user sysuser ON agency.id = sysuser.agency_id
+		<where>
+			                <!-- ######服务商表###### -->
+                <if test="id != null and id.trim() != ''">
+                    AND id = #{id}
+                </if>
+			                <!-- 服务商名称 -->
+                <if test="name != null and name.trim() != ''">
+                    AND name = #{name}
+                </if>
+			                <!-- 英文缩写????-del -->
+                <if test="abbrCode != null and abbrCode.trim() != ''">
+                    AND abbr_code = #{abbrCode}
+                </if>
+			                <!-- 地域 -->
+                <if test="region != null and region.trim() != ''">
+                    AND region = #{region}
+                </if>
+			                <!-- 地址 -->
+                <if test="address != null and address.trim() != ''">
+                    AND address = #{address}
+                </if>
+			                <!-- 状态 -->
+                <if test="status != null and status.trim() != ''">
+                    AND status = #{status}
+                </if>
+			                <!-- 类型：平台还是服务商-del -->
+                <if test="type != null and type.trim() != ''">
+                    AND type = #{type}
+                </if>
+			                <!-- -del -->
+                <if test="parent != null and parent.trim() != ''">
+                    AND parent = #{parent}
+                </if>
+			                <!-- 创建时间 -->
+                <if test="createDt != null and createDt.trim() != ''">
+                    AND create_dt = #{createDt}
+                </if>
+			                <!-- 修改时间 -->
+                <if test="updateDt != null and updateDt.trim() != ''">
+                    AND update_dt = #{updateDt}
+                </if>
+			                <!-- 创建人 -->
+                <if test="createBy != null and createBy.trim() != ''">
+                    AND create_by = #{createBy}
+                </if>
+			                <!-- 修改人 -->
+                <if test="updateBy != null and updateBy.trim() != ''">
+                    AND update_by = #{updateBy}
+                </if>
+			                <!-- 代理商类型 -->
+                <if test="agencytype != null and agencytype.trim() != ''">
+                    AND agencytype = #{agencytype}
+                </if>
+			                <!-- 营业执照注册号 -->
+                <if test="businessNo != null and businessNo.trim() != ''">
+                    AND business_no = #{businessNo}
+                </if>
+			                <!-- 营业执照副本 -->
+                <if test="businessImg != null and businessImg.trim() != ''">
+                    AND business_img = #{businessImg}
+                </if>
+			                <!-- 开户银行 -->
+                <if test="openBank != null and openBank.trim() != ''">
+                    AND open_bank = #{openBank}
+                </if>
+			                <!-- 开户名称 -->
+                <if test="bankname != null and bankname.trim() != ''">
+                    AND bankname = #{bankname}
+                </if>
+			                <!-- 银行卡号 -->
+                <if test="bankCardno != null and bankCardno.trim() != ''">
+                    AND bank_cardno = #{bankCardno}
+                </if>
+			                <!-- 法人姓名 -->
+                <if test="legaluserName != null and legaluserName.trim() != ''">
+                    AND legaluser_name = #{legaluserName}
+                </if>
+			                <!-- 法人身份证号 -->
+                <if test="legaluserNo != null and legaluserNo.trim() != ''">
+                    AND legaluser_no = #{legaluserNo}
+                </if>
+			                <!-- 法人身份证扫描件 -->
+                <if test="legaluserImg != null and legaluserImg.trim() != ''">
+                    AND legaluser_img = #{legaluserImg}
+                </if>
+			                <!-- 推广二维码 -->
+                <if test="qrcode != null and qrcode.trim() != ''">
+                    AND qrcode = #{qrcode}
+                </if>
+			                <!-- 代理商角色 -->
+                <if test="agencyrole != null and agencyrole.trim() != ''">
+                    AND agencyrole = #{agencyrole}
+                </if>
+			                <!-- 合同开始时间 -->
+                <if test="contractStartdt != null and contractStartdt.trim() != ''">
+                    AND contract_startDt = #{contractStartdt}
+                </if>
+			                <!-- 合同结束时间 -->
+                <if test="contractEnddt != null and contractEnddt.trim() != ''">
+                    AND contract_endDt = #{contractEnddt}
+                </if>
+			        </where> 
 	</select>
-
-	<insert id="save" parameterType="com.power.entity.AgenciesEntity"
-		useGeneratedKeys="true" keyProperty="id">
+	 
+	<insert id="save" parameterType="com.power.entity.AgenciesEntity" useGeneratedKeys="true" keyProperty="id">
 		insert into agencies
 		(
-		`name`,
-		`abbr_code`,
-		`region`,
-		`address`,
-		`status`,
-		`type`,
-		`parent`,
-		`create_dt`,
-		`update_dt`,
-		`create_by`,
-		`update_by`
+			`name`, 
+			`abbr_code`, 
+			`region`, 
+			`address`, 
+			`status`, 
+			`type`, 
+			`parent`, 
+			`create_dt`, 
+			`update_dt`, 
+			`create_by`, 
+			`update_by`, 
+			`agencytype`, 
+			`business_no`, 
+			`business_img`, 
+			`open_bank`, 
+			`bankname`, 
+			`bank_cardno`, 
+			`legaluser_name`, 
+			`legaluser_no`, 
+			`legaluser_img`, 
+			`qrcode`, 
+			`agencyrole`, 
+			`contract_startDt`, 
+			`contract_endDt`
 		)
 		values
 		(
-		#{name},
-		#{abbrCode},
-		#{region},
-		#{address},
-		#{status},
-		#{type},
-		#{parent},
-		#{createDt},
-		#{updateDt},
-		#{createBy},
-		#{updateBy}
+			#{name}, 
+			#{abbrCode}, 
+			#{region}, 
+			#{address}, 
+			#{status}, 
+			#{type}, 
+			#{parent}, 
+			#{createDt}, 
+			#{updateDt}, 
+			#{createBy}, 
+			#{updateBy}, 
+			#{agencytype}, 
+			#{businessNo}, 
+			#{businessImg}, 
+			#{openBank}, 
+			#{bankname}, 
+			#{bankCardno}, 
+			#{legaluserName}, 
+			#{legaluserNo}, 
+			#{legaluserImg}, 
+			#{qrcode}, 
+			#{agencyrole}, 
+			#{contractStartdt}, 
+			#{contractEnddt}
 		)
-		<selectKey resultType="java.lang.Long" keyProperty="id">
-		    SELECT LAST_INSERT_ID() AS ID
-		</selectKey>
 	</insert>
-
+	 
 	<update id="update" parameterType="com.power.entity.AgenciesEntity">
-		update agencies
+		update agencies 
 		<set>
 			<if test="name != null">`name` = #{name}, </if>
 			<if test="abbrCode != null">`abbr_code` = #{abbrCode}, </if>
@@ -91,19 +338,31 @@
 			<if test="createDt != null">`create_dt` = #{createDt}, </if>
 			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
 			<if test="createBy != null">`create_by` = #{createBy}, </if>
-			<if test="updateBy != null">`update_by` = #{updateBy}</if>
+			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
+			<if test="agencytype != null">`agencytype` = #{agencytype}, </if>
+			<if test="businessNo != null">`business_no` = #{businessNo}, </if>
+			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
+			<if test="openBank != null">`open_bank` = #{openBank}, </if>
+			<if test="bankname != null">`bankname` = #{bankname}, </if>
+			<if test="bankCardno != null">`bank_cardno` = #{bankCardno}, </if>
+			<if test="legaluserName != null">`legaluser_name` = #{legaluserName}, </if>
+			<if test="legaluserNo != null">`legaluser_no` = #{legaluserNo}, </if>
+			<if test="legaluserImg != null">`legaluser_img` = #{legaluserImg}, </if>
+			<if test="qrcode != null">`qrcode` = #{qrcode}, </if>
+			<if test="agencyrole != null">`agencyrole` = #{agencyrole}, </if>
+			<if test="contractStartdt != null">`contract_startDt` = #{contractStartdt}, </if>
+			<if test="contractEnddt != null">`contract_endDt` = #{contractEnddt}</if>
 		</set>
 		where id = #{id}
 	</update>
-
+	
 	<delete id="delete">
 		delete from agencies where id = #{value}
 	</delete>
-
+	
 	<delete id="deleteBatch">
-		delete from agencies where id in
-		<foreach item="id" collection="array" open="(" separator=","
-			close=")">
+		delete from agencies where id in 
+		<foreach item="id" collection="array" open="(" separator="," close=")">
 			#{id}
 		</foreach>
 	</delete>

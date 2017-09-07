@@ -20,8 +20,6 @@ public class SysMenuServiceImpl implements SysMenuService {
 	private SysMenuDao sysMenuDao;
 	@Autowired
 	private SysUserService sysUserService;
-	@Autowired
-	private SysRoleMenuService sysRoleMenuService;
 	
 	@Override
 	public List<SysMenuEntity> queryListParentId(Long parentId, List<Long> menuIdList) {
@@ -37,6 +35,11 @@ public class SysMenuServiceImpl implements SysMenuService {
 			}
 		}
 		return userMenuList;
+	}
+	
+	@Override
+	public List<SysMenuEntity> queryListParentId(Long parentId) {
+		return sysMenuDao.queryListParentId(parentId);
 	}
 
 	@Override
