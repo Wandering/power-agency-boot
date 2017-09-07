@@ -59,6 +59,8 @@ public class AgenciesEntity implements Serializable {
 	private String legaluserImg;
 	//推广二维码
 	private String qrcode;
+	//代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
+	private String agencyPool;
 	//代理商角色
 	private String agencyrole;
 	//合同开始时间
@@ -327,10 +329,22 @@ public class AgenciesEntity implements Serializable {
 		this.qrcode = qrcode;
 	}
 	/**
-	 * 获取：推广二维码
+	 * 获取：代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
 	 */
 	public String getQrcode() {
 		return qrcode;
+	}
+	/**
+	 * 设置：代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
+	 */
+	public void setAgencyPool(String agencyPool) {
+		this.agencyPool = agencyPool;
+	}
+	/**
+	 * 获取：代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
+	 */
+	public String getAgencyPool() {
+		return agencyPool;
 	}
 	/**
 	 * 设置：代理商角色
