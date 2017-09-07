@@ -5,16 +5,20 @@ $(function () {
         colModel: [			
 			{ label: '用户ID', name: 'userId', index: "user_id", width: 45, key: true },
 			{ label: '用户名', name: 'username', width: 75 },
+			{ label: '真实姓名', name: 'agencyName',index: "agency_name", width: 75 },
+			{ label: '角色', name: 'type', width: 75 },
 			{ label: '邮箱', name: 'email', width: 90 },
 			{ label: '手机号', name: 'mobile', width: 100 },
-			{ label: '服务商名字', name: 'name', width: 100 },
 			{ label: '地址', name: 'address', width: 100 },
+			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80},
+			{ label: '最后登录IP', name: 'loginIp', width: 100 },
+			{ label: '最后登录时间', name: 'loginTime', width: 100 },
+			{ label: '访问次数', name: 'visitTime', width: 100 },
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
 				return value === 0 ? 
 					'<span class="label label-danger">禁用</span>' : 
 					'<span class="label label-success">正常</span>';
 			}},
-			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80}
         ],
 		viewrecords: true,
         height: 385,

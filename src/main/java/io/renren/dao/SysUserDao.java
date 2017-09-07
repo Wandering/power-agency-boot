@@ -46,4 +46,5 @@ public interface SysUserDao extends BaseDao<SysUserEntity> {
 	int checkUsername(String userName);
 	
 	List <SysUserEntity> queryByParentId(Long agencyId);
+
 }

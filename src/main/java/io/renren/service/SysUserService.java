@@ -74,4 +74,6 @@ public interface SysUserService {
 	int resetPassword(String userName,String password);
 	int checkUsername(String userName);
 	List <SysUserEntity> queryByAgencyId(String username);
+
+	void register(SysUserEntity user);
 }

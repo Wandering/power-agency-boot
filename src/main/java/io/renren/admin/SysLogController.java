@@ -46,4 +46,17 @@ public class SysLogController {
 		return R.ok().put("page", pageUtil);
 	}
 	
+//	/**
+//	 * 查询用户最后登录信息
+//	 */
+//	@ResponseBody
+//	@RequestMapping("/lastLogin")
+//	public R lastLogin(String username,String operation){
+//		//查询列表数据
+//		SysLogEntity sysLog = sysLogService.queryListLogin(username,operation);
+//		int count = sysLogService.queryVisitTime(username,operation);
+//		
+//		return R.ok().put("sysLog", sysLog).put("count", count);
+//	}
+	
 }

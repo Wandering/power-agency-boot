@@ -27,4 +27,8 @@ public interface SysLogService {
 	void delete(Long id);
 	
 	void deleteBatch(Long[] ids);
+
+	SysLogEntity queryListLogin(Map<String, Object> map);
+
+	int queryVisitTime(Map<String, Object> map);
 }
