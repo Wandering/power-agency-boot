@@ -1,7 +1,8 @@
-package com.power.entity;
+package com.power.entity.ex;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
 
 
@@ -12,7 +13,7 @@ import java.util.Date;
  * @email sunlightcs@gmail.com
  * @date 2017-09-05 16:39:29
  */
-public class AgenciesEntity implements Serializable {
+public class AgenciesEntityDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	//######服务商表######
@@ -59,7 +60,7 @@ public class AgenciesEntity implements Serializable {
 	private String legaluserImg;
 	//推广二维码
 	private String qrcode;
-	//代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
+	//代理商权限池
 	private String agencyPool;
 	//代理商角色
 	private String agencyrole;
@@ -69,6 +70,12 @@ public class AgenciesEntity implements Serializable {
 	private Date contractEnddt;
 	//通过审核时间
 	private Date examineDt;
+	//登录用户名
+	private String username;
+	//邮箱
+	private String email;
+	//最后登录IP
+	private List<?> sysLogList;
 
 	/**
 	 * 设置：######服务商表######
@@ -329,7 +336,7 @@ public class AgenciesEntity implements Serializable {
 		this.qrcode = qrcode;
 	}
 	/**
-	 * 获取：代理商权限池（1代表最大权限，空代表无权限，1，2，3代表拥有部分权限）
+	 * 获取：推广二维码
 	 */
 	public String getQrcode() {
 		return qrcode;
@@ -393,5 +400,23 @@ public class AgenciesEntity implements Serializable {
 	 */
 	public Date getExamineDt() {
 		return examineDt;
+	}
+	public String getUsername() {
+		return username;
+	}
+	public void setUsername(String username) {
+		this.username = username;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public List<?> getSysLogList() {
+		return sysLogList;
+	}
+	public void setSysLogList(List<?> sysLogList) {
+		this.sysLogList = sysLogList;
 	}
 }

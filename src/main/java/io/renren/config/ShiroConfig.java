@@ -53,12 +53,14 @@ public class ShiroConfig {
         shiroFilter.setUnauthorizedUrl("/");
 
         Map<String, String> filterMap = new LinkedHashMap<>();
+        filterMap.put("/sys/user/checkUsername", "anon");
         filterMap.put("/public/**", "anon");
         filterMap.put("/webjars/**", "anon");
         filterMap.put("/api/**", "anon");
         filterMap.put("/sms/**", "anon");
         filterMap.put("/captcha/**", "anon");
-
+        
+        filterMap.put("/sys/user/resetPassword", "anon");
         //swagger配置
         filterMap.put("/swagger**", "anon");
         filterMap.put("/v2/api-docs", "anon");
@@ -68,6 +70,7 @@ public class ShiroConfig {
         filterMap.put("/sys/login", "anon");
         filterMap.put("/captcha.jpg", "anon");
         filterMap.put("/**", "authc");
+        
         shiroFilter.setFilterChainDefinitionMap(filterMap);
 
         return shiroFilter;

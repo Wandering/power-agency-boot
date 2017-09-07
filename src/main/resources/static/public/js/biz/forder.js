@@ -177,7 +177,7 @@ var vm = new Vue({
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
 				postData:vm.q,
-                page:page
+                page:page 
             }).trigger("reloadGrid");
 		},
 		parseDate: function(value){

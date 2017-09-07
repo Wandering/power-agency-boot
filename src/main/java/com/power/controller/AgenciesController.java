@@ -64,7 +64,6 @@ public class AgenciesController {
 	 * 保存
 	 */
 	@RequestMapping("/save")
-	@RequiresPermissions("agencies:save")
 	public R save(@RequestBody AgenciesEntity agencies){
 		agenciesService.save(agencies);
 		

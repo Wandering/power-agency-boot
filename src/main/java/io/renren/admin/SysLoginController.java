@@ -5,6 +5,8 @@ import com.google.code.kaptcha.Producer;
 import io.renren.utils.R;
 import io.renren.utils.RRException;
 import io.renren.utils.ShiroUtils;
+import io.renren.utils.annotation.SysLog;
+
 import org.apache.shiro.authc.*;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.apache.shiro.subject.Subject;
@@ -62,6 +64,7 @@ public class SysLoginController {
 	/**
 	 * 登录
 	 */
+	@SysLog("用户登录")
 	@ResponseBody
 	@RequestMapping(value = "/sys/login", method = RequestMethod.POST)
 	public R login(String username, String password, String captcha)throws IOException {

@@ -2,6 +2,7 @@ package io.renren.utils.aop;
 
 import com.alibaba.fastjson.JSON;
 import io.renren.utils.annotation.SysLog;
+import net.sf.json.JSONObject;
 import io.renren.entity.SysLogEntity;
 import io.renren.service.SysLogService;
 import io.renren.utils.HttpContextUtils;
@@ -66,7 +67,13 @@ public class SysLogAspect {
 		sysLog.setIp(IPUtils.getIpAddr(request));
 		
 		//用户名
-		String username = ShiroUtils.getUserEntity().getUsername();
+		
+		String username = "";
+		if(null==ShiroUtils.getUserEntity()){
+			username = params.replaceAll("\"","");
+		}else{
+			username = ShiroUtils.getUserEntity().getUsername();
+		};
 		sysLog.setUsername(username);
 		
 		sysLog.setCreateDate(new Date());
