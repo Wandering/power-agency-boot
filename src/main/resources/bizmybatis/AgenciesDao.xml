@@ -27,6 +27,7 @@
         <result property="legaluserNo" column="legaluser_no"/>
         <result property="legaluserImg" column="legaluser_img"/>
         <result property="qrcode" column="qrcode"/>
+        <result property="agencyPool" column="agency_pool"/>
         <result property="agencyrole" column="agencyrole"/>
         <result property="contractStartdt" column="contract_startDt"/>
         <result property="contractEnddt" column="contract_endDt"/>
@@ -292,6 +293,7 @@
 			`legaluser_no`, 
 			`legaluser_img`, 
 			`qrcode`, 
+			`agency_pool`, 
 			`agencyrole`, 
 			`contract_startDt`, 
 			`contract_endDt`
@@ -319,9 +321,13 @@
 			#{legaluserNo}, 
 			#{legaluserImg}, 
 			#{qrcode}, 
+			#{agencyPool}, 
 			#{agencyrole}, 
 			#{contractStartdt}, 
 			#{contractEnddt}
+			<selectKey resultType="java.lang.Long" keyProperty="id">
+		    	SELECT LAST_INSERT_ID() AS ID
+			</selectKey>
 		)
 	</insert>
 	 
@@ -335,10 +341,6 @@
 			<if test="status != null">`status` = #{status}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="parent != null">`parent` = #{parent}, </if>
-			<if test="createDt != null">`create_dt` = #{createDt}, </if>
-			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
-			<if test="createBy != null">`create_by` = #{createBy}, </if>
-			<if test="updateBy != null">`update_by` = #{updateBy}, </if>
 			<if test="agencytype != null">`agencytype` = #{agencytype}, </if>
 			<if test="businessNo != null">`business_no` = #{businessNo}, </if>
 			<if test="businessImg != null">`business_img` = #{businessImg}, </if>
@@ -349,9 +351,14 @@
 			<if test="legaluserNo != null">`legaluser_no` = #{legaluserNo}, </if>
 			<if test="legaluserImg != null">`legaluser_img` = #{legaluserImg}, </if>
 			<if test="qrcode != null">`qrcode` = #{qrcode}, </if>
+			<if test="agencyPool != null">`agency_pool` = #{agencyPool}, </if>
 			<if test="agencyrole != null">`agencyrole` = #{agencyrole}, </if>
 			<if test="contractStartdt != null">`contract_startDt` = #{contractStartdt}, </if>
-			<if test="contractEnddt != null">`contract_endDt` = #{contractEnddt}</if>
+			<if test="contractEnddt != null">`contract_endDt` = #{contractEnddt},</if>
+			<if test="createDt != null">`create_dt` = #{createDt}, </if>
+			<if test="updateDt != null">`update_dt` = #{updateDt}, </if>
+			<if test="createBy != null">`create_by` = #{createBy}, </if>
+			<if test="updateBy != null">`update_by` = #{updateBy} </if>
 		</set>
 		where id = #{id}
 	</update>
