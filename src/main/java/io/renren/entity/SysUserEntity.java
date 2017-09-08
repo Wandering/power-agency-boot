@@ -98,46 +98,9 @@ public class SysUserEntity implements Serializable {
 	 * 权限可视范围
 	 */
 	private String authAgencyId;
-	
-	/**
-	 * 最后登录ip
-	 */
-	private String loginIp;
-	/**
-	 * 最后登录时间
-	 */
-	private Date loginTime;
-	/**
-	 * 访问次数
-	 */
-	private int visitTime;
 
 	
     
-	public Date getLoginTime() {
-		return loginTime;
-	}
-
-	public void setLoginTime(Date loginTime) {
-		this.loginTime = loginTime;
-	}
-
-	public String getLoginIp() {
-		return loginIp;
-	}
-
-	public void setLoginIp(String loginIp) {
-		this.loginIp = loginIp;
-	}
-
-
-	public int getVisitTime() {
-		return visitTime;
-	}
-
-	public void setVisitTime(int visitTime) {
-		this.visitTime = visitTime;
-	}
 
 	public String getAuthAgencyId() {
 		return authAgencyId;
