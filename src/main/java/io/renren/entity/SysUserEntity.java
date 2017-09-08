@@ -116,6 +116,12 @@ public class SysUserEntity implements Serializable {
 	 * 访问次数
 	 */
 	private int visitTime;
+	/**
+	 * 代理商类型：
+	 * 0：独家代理(宇能默认为签约代理)
+	 * 1：签约代理
+	 */
+	private Integer agencytype;
 
 
 
@@ -330,5 +336,14 @@ public class SysUserEntity implements Serializable {
 
 	public void setAgencyPool(String agencyPool) {
 		this.agencyPool = agencyPool;
+	}
+
+
+	public Integer getAgencytype() {
+		return agencytype;
+	}
+
+	public void setAgencytype(Integer agencytype) {
+		this.agencytype = agencytype;
 	}
 }
