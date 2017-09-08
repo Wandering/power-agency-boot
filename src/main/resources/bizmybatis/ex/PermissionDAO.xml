@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.power.dao.ex.QuestionNaireDao">
+	
+	<select id="queryQuestionAnswerList" resultType="com.power.entity.ex.QuestionAnswerEntity">
+		SELECT questionNo,content,COUNT(*) AS annum FROM activity.power_user_question_answer 
+		WHERE questionnaireId=#{id} GROUP BY questionNo,content
+	</select>
+
+</mapper>

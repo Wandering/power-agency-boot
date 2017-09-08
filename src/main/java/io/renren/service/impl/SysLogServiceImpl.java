@@ -50,5 +50,15 @@ public class SysLogServiceImpl implements SysLogService {
 	public void deleteBatch(Long[] ids){
 		sysLogDao.deleteBatch(ids);
 	}
+
+	@Override
+	public SysLogEntity queryListLogin(Map<String, Object> map) {
+		return sysLogDao.queryListLogin(map);
+	}
+
+	@Override
+	public int queryVisitTime(Map<String, Object> map) {
+		return sysLogDao.queryVisitTime(map);
+	}
 	
 }

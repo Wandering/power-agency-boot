@@ -186,6 +186,13 @@ public class SysUserServiceImpl implements SysUserService {
 	public int checkUsername(String userName) {
 		return sysUserDao.checkUsername(userName);
 	}
+
+	@Override
+	public void register(SysUserEntity user) {
+		 user.setMobile(user.getUsername());
+		 sysUserDao.save(user);
+		
+	}
 		
 
 }

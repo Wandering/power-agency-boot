@@ -1,7 +1,9 @@
 package io.renren.admin;
 
 import io.renren.utils.annotation.SysLog;
+import io.renren.entity.SysLogEntity;
 import io.renren.entity.SysUserEntity;
+import io.renren.service.SysLogService;
 import io.renren.service.SysUserRoleService;
 import io.renren.service.SysUserService;
 import io.renren.utils.*;
@@ -11,6 +13,7 @@ import io.renren.utils.validator.Assert;
 import io.renren.utils.validator.ValidatorUtils;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.crypto.hash.Sha256Hash;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +22,8 @@ import org.springframework.web.bind.annotation.*;
 import com.power.entity.AgenciesEntity;
 import com.power.service.AgenciesService;
 
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -38,6 +43,8 @@ public class SysUserController extends AbstractController {
 	private SysUserRoleService sysUserRoleService;
 	@Autowired
 	private AgenciesService agenciesService;
+	@Autowired
+	private SysLogService sysLogService;
 	
 	/**
 	 * 所有用户列表
@@ -53,6 +60,21 @@ public class SysUserController extends AbstractController {
 		//查询列表数据
 		Query query = new Query(params);
 		List<SysUserEntity> userList = sysUserService.queryList(query);
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		for(SysUserEntity user:userList){
+			map.put("username", user.getUsername());
+			map.put("operation", "用户登录");
+			try{
+			SysLogEntity sysLog = sysLogService.queryListLogin(map);
+			int count = sysLogService.queryVisitTime(map);
+			user.setLoginIp(sysLog.getIp());
+			user.setLoginTime(sysLog.getCreateDate());
+			user.setVisitTime(count);
+			}catch(NullPointerException e){
+				
+			}
+		}
 		int total = sysUserService.queryTotal(query);
 		
 		PageUtils pageUtil = new PageUtils(userList, total, query.getLimit(), query.getPage());
@@ -143,17 +165,36 @@ public class SysUserController extends AbstractController {
 		//获取登录用户的信息
 		SysUserEntity userEntity = getUser();
 		//判断是否代理商
-		AgenciesEntity agency = user.getAgency();
-		if(user.getType().equals(1)){
-			agenciesService.save(agency);
-			user.setAgencyId(agency.getId());
-		}else{
-			user.setAgencyId(userEntity.getAgencyId());
-		}
+//		AgenciesEntity agency = user.getAgency();
+//		if(user.getType().equals(1)){
+//			agenciesService.save(agency);
+//			user.setAgencyId(agency.getId());
+//		}else{
+//			user.setAgencyId(userEntity.getAgencyId());
+//		}
 		user.setCreateUserId(userEntity.getUserId());
 		user.setParentId(userEntity.getAgencyId());
 		sysUserService.save(user);
 		
+		return R.ok();
+	}
+	
+	/**
+	 * 注册用户
+	 */
+	@SysLog("注册用户")
+	@RequestMapping("/register")
+	public R register(@RequestBody SysUserEntity user){
+		AgenciesEntity agencies =new AgenciesEntity();
+		agencies.setStatus("1");
+		agenciesService.save(agencies);
+		user.setPassword(new Sha256Hash(user.getPassword()).toHex());
+		user.setCreateTime(new Date());
+		user.setAgencyId(agencies.getId());
+		sysUserService.register(user);
+		//注册成功后 直接登录
+		UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+		ShiroUtils.getSubject().login(token);
 		return R.ok();
 	}
 	
