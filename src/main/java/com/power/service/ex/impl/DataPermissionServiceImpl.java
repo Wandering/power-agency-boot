@@ -112,7 +112,7 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
          *  2.获取系统预定义sql模板
          *  3.生成实际sql并反馈
          */
-
+        StringBuilder builder =null;
         String agencyPool = selectAgencyTree();
         switch (permissionEnum){
             case ORDER:
@@ -124,8 +124,8 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
                 return String.format(PermissionSqlConstant.SPILE_SQL,agencyPool);
             case BANK:
                 return String.format(PermissionSqlConstant.BANK_SQL,agencyPool);
-            case AGENCY:
-                StringBuilder builder = new StringBuilder(PermissionSqlConstant.AGENCY_SQL).append(" ").append("where");
+            case AGENCY_INDEPENDENT:
+                builder = new StringBuilder(PermissionSqlConstant.AGENCY_SQL).append(" ").append("where");
                 int count = 0;
                 for (String agency:agencyPool.split(",")){
                     builder.append(String.format(" FIND_IN_SET(%s,ag.agency_pool) ",agency)).append("and");
@@ -134,6 +134,10 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
                 if (count>0) {
                     builder.delete(builder.length() - "and".length(), builder.length());
                 }
+                return builder.toString();
+            case AGENCY_SIGN:
+                builder = new StringBuilder(PermissionSqlConstant.AGENCY_SQL).append(" ").append("where");
+                builder.append(String.format(" FIND_IN_SET(%s,ag.agency_pool) ",getSysUserEntity().getAgencyId()));
                 return builder.toString();
             case BRANCH:
                 return String.format(PermissionSqlConstant.BRANCH_SQL,agencyPool);
@@ -167,11 +171,11 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
      */
     @Override
     public String genPermissionBySign(Long agencyId, Long superAgencyId) {
-        return new StringBuilder().append(superAgencyId).append(",").append(agencyId).toString();
+        return new StringBuilder(1).append(",").append(superAgencyId).append(",").append(agencyId).toString();
     }
 
     /**
-     * 签约代理商权限生成
+     * 独家代理商权限生成
      *
      * @param agencyId            代理商ID
      * @param superPermissionPool 父类权限池

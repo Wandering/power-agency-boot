@@ -6,7 +6,10 @@ import java.util.Map;
 import com.power.entity.PermissionEnum;
 import com.power.service.ex.IAgenciesExService;
 import com.power.service.ex.IDataPermissionService;
+import io.renren.entity.SysUserEntity;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -46,7 +49,9 @@ public class AgenciesController {
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-		query.put("whereSql",dataPermissionService.genWhereSql(PermissionEnum.AGENCY));
+		Subject subject = SecurityUtils.getSubject();
+		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
+		query.put("whereSql",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
 		List<AgenciesEntity> agenciesList = agenciesService.queryList(query);
 		int total = agenciesService.queryTotal(query);
 		
@@ -104,7 +109,9 @@ public class AgenciesController {
 	 */
 	@RequestMapping("/search")
 	public R search(String key){
-		return R.ok().put("data",agenciesExService.search(key,dataPermissionService.genWhereSql(PermissionEnum.AGENCY)));
+		Subject subject = SecurityUtils.getSubject();
+		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
+		return R.ok().put("data",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
 	}
 
 	/**
@@ -114,7 +121,9 @@ public class AgenciesController {
 	 */
 	@RequestMapping("/searchAccount")
 	public R searchAccount(String key){
-		return R.ok().put("data",agenciesExService.searchAccount(key,dataPermissionService.genWhereSql(PermissionEnum.AGENCY)));
+		Subject subject = SecurityUtils.getSubject();
+		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
+		return R.ok().put("data",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
 	}
 
     /**
