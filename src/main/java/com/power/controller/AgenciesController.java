@@ -16,6 +16,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.power.entity.AgenciesEntity;
 import com.power.service.AgenciesService;
+
+import io.renren.admin.AbstractController;
+import io.renren.entity.SysUserEntity;
+import io.renren.service.SysUserService;
 import io.renren.utils.PageUtils;
 import io.renren.utils.Query;
 import io.renren.utils.R;
@@ -30,9 +34,11 @@ import io.renren.utils.R;
  */
 @RestController
 @RequestMapping("agencies")
-public class AgenciesController {
+public class AgenciesController extends AbstractController{
 	@Autowired
 	private AgenciesService agenciesService;
+	@Autowired
+	private SysUserService sysUserService;
 	@Autowired
 	private IAgenciesExService agenciesExService;
 	@Autowired
@@ -72,7 +78,13 @@ public class AgenciesController {
 	 */
 	@RequestMapping("/save")
 	public R save(@RequestBody AgenciesEntity agencies){
+		SysUserEntity user = getUser();
+		agencies.setAbbrCode(user.getUserId().toString());
+		agencies.setStatus("1");
 		agenciesService.save(agencies);
+		user.setAgencyId(agencies.getId());
+		user.setParentId(agencies.getParent());
+		sysUserService.update(user);
 		
 		return R.ok();
 	}
