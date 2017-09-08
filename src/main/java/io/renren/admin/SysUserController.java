@@ -210,9 +210,9 @@ public class SysUserController extends AbstractController {
 		SysUserEntity userEntity = getUser();
 		//判断是否代理商
 		AgenciesEntity agency = user.getAgency();
-		if(user.getType().equals(1)){
-			agenciesService.update(agency);
-		}else{}
+//		if(user.getType().equals(1)){
+//			agenciesService.update(agency);
+//		}else{}
 		user.setCreateUserId(userEntity.getUserId());
 		sysUserService.update(user);
 		
