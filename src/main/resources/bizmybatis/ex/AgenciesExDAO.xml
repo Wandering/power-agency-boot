@@ -1,10 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.power.dao.ex.IPermissionDAO">
-	
-	<select id="query" resultType="string">
-		  ${sql}
-	</select>
+<mapper namespace="com.power.dao.ex.IAgenciesExDAO">
 
+	<select id="search" resultType="com.power.entity.ex.BaseSearch">
+		  SELECT id,name FROM agencies agency
+		  <where>
+			  <if test="whereSql!=null">
+				  id in (${whereSql})
+			  </if>
+			  <if test="key!=null and key.trim()!=''">
+				  name like CONCAT('%',#{key},'%')
+			  </if>
+		  </where>
+	</select>
+	<select id="searchAccount" resultType="com.power.entity.ex.BaseSearch">
+		SELECT suser.username as name,suser.user_id as id FROM agencies agency
+		LEFT JOIN sys_user suser ON suser.agency_id = agency.id
+		<where>
+			<if test="whereSql!=null">
+				agency.id in (${whereSql})
+			</if>
+			<if test="key!=null and key.trim()!=''">
+				suser.username like CONCAT('%',#{key},'%')
+			</if>
+		</where>
+	</select>
 </mapper>

@@ -1,7 +1,10 @@
 package com.power.dao.ex;
 
+import org.apache.ibatis.annotations.Param;
+
 /**
- * Created by Administrator on 2017/9/8.
+ * Created by 杨永平 on 2017/9/8.
  */
-public class IPermissionDAO {
+public interface IPermissionDAO {
+    String query(@Param("sql") String sql);
 }

@@ -315,6 +315,7 @@ public class SysUserEntity implements Serializable {
 		this.agency = agency;
 	}
 
+
 	public String getAgencyName() {
 		return agencyName;
 	}
@@ -322,5 +323,12 @@ public class SysUserEntity implements Serializable {
 	public void setAgencyName(String agencyName) {
 		this.agencyName = agencyName;
 	}
-	
+
+	public String getAgencyPool() {
+		return agencyPool;
+	}
+
+	public void setAgencyPool(String agencyPool) {
+		this.agencyPool = agencyPool;
+	}
 }

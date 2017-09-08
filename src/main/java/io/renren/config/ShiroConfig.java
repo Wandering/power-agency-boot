@@ -62,6 +62,7 @@ public class ShiroConfig {
         filterMap.put("/captcha/**", "anon");
         
         filterMap.put("/sys/user/resetPassword", "anon");
+        filterMap.put("/agencies/all/searchAccount", "anon");
         //swagger配置
         filterMap.put("/swagger**", "anon");
         filterMap.put("/v2/api-docs", "anon");

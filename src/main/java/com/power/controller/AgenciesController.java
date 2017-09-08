@@ -3,6 +3,9 @@ package com.power.controller;
 import java.util.List;
 import java.util.Map;
 
+import com.power.entity.PermissionEnum;
+import com.power.service.ex.IAgenciesExService;
+import com.power.service.ex.IDataPermissionService;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +33,10 @@ import io.renren.utils.R;
 public class AgenciesController {
 	@Autowired
 	private AgenciesService agenciesService;
+	@Autowired
+	private IAgenciesExService agenciesExService;
+	@Autowired
+	private IDataPermissionService dataPermissionService;
 
 	/**
 	 * 列表
@@ -39,7 +46,7 @@ public class AgenciesController {
 	public R list(@RequestParam Map<String, Object> params){
 		//查询列表数据
         Query query = new Query(params);
-
+		query.put("whereSql",dataPermissionService.genWhereSql(PermissionEnum.AGENCY));
 		List<AgenciesEntity> agenciesList = agenciesService.queryList(query);
 		int total = agenciesService.queryTotal(query);
 		
@@ -91,5 +98,32 @@ public class AgenciesController {
 		
 		return R.ok();
 	}
-	
+
+	/**
+     * 查询代理商
+	 */
+	@RequestMapping("/search")
+	public R search(String key){
+		return R.ok().put("data",agenciesExService.search(key,dataPermissionService.genWhereSql(PermissionEnum.AGENCY)));
+	}
+
+	/**
+     * 查询所有账号
+	 * @param key
+	 * @return
+	 */
+	@RequestMapping("/searchAccount")
+	public R searchAccount(String key){
+		return R.ok().put("data",agenciesExService.searchAccount(key,dataPermissionService.genWhereSql(PermissionEnum.AGENCY)));
+	}
+
+    /**
+     * 查询所有的代理商账号
+     * @param key
+     * @return
+     */
+    @RequestMapping("/all/searchAccount")
+    public R searchAllAccount(String key){
+        return R.ok().put("data",agenciesExService.searchAccount(key,null));
+    }
 }

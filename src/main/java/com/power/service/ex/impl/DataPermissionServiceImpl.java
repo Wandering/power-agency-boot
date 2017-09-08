@@ -1,12 +1,14 @@
 package com.power.service.ex.impl;
 
 import com.power.conf.PermissionSqlConstant;
+import com.power.dao.ex.IPermissionDAO;
 import com.power.entity.PermissionEnum;
 import com.power.service.ex.IDataPermissionService;
 import io.renren.entity.SysUserEntity;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 
@@ -16,6 +18,9 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DataPermissionServiceImpl implements IDataPermissionService {
+
+    @Autowired
+    IPermissionDAO permissionDAO;
     /**
      * ◆查询代理商的可视范围构建代理商树
      * ◆其中代理商分为：
@@ -120,7 +125,16 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
             case BANK:
                 return String.format(PermissionSqlConstant.BANK_SQL,agencyPool);
             case AGENCY:
-                return String.format(PermissionSqlConstant.AGENCY_SQL,agencyPool);
+                StringBuilder builder = new StringBuilder(PermissionSqlConstant.AGENCY_SQL).append(" ").append("where");
+                int count = 0;
+                for (String agency:agencyPool.split(",")){
+                    builder.append(String.format(" FIND_IN_SET(%s,ag.agency_pool) ",agency)).append("and");
+                    count++;
+                }
+                if (count>0) {
+                    builder.delete(builder.length() - "and".length(), builder.length());
+                }
+                return builder.toString();
             case BRANCH:
                 return String.format(PermissionSqlConstant.BRANCH_SQL,agencyPool);
         }
@@ -142,6 +156,9 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
      * ◆     其中1为宇能平台的代理商ID
      * ◆ 3.父类是平台用户(子运营账号)
      * ◆     对于平台用户 直接继承父类权限池即可
+     * ◆ 4.对于审核代理商转义到独家代理商来说
+     * ◆        第一次生成的权限属于宇能1，当转移到独家代理(id-2)的时候，数据权限被变更为1,2,则 在独家代理平台可以看到
+     * ◆        当审核通过时通过重新赋予该用户数据权限
      * </pre>
      *
      * @param agencyId      代理商ID

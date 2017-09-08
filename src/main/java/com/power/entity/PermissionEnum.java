@@ -5,9 +5,9 @@ package com.power.entity;
  */
 public enum  PermissionEnum {
     ORDER,//订单表
-    SPILE,
-    BANK,
-    AGENCY,
-    BRANCH,
+    SPILE,//充电桩
+    BANK,//充电宝
+    AGENCY,//代理商
+    BRANCH,//
     ;
 }
