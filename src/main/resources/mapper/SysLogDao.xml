@@ -32,13 +32,7 @@
 		</where>
 	</select>
 	
-	<select id="queryListLogin"  resultType="io.renren.entity.SysLogEntity">
-	   select * from sys_log where username= #{username} and operation= #{operation} order by create_date  desc LIMIT 1
-	</select>
 	
-	<select id="queryVisitTime"  resultType="int">
-	  select count(*) from sys_log where username= #{username} and operation= #{operation}
-	</select>
 
 	<insert id="save" parameterType="io.renren.entity.SysLogEntity"
 		useGeneratedKeys="true" keyProperty="id">

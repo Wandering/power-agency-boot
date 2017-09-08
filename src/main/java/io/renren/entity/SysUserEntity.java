@@ -144,6 +144,9 @@ public class SysUserEntity implements Serializable {
 		this.visitTime = visitTime;
 	}
 
+
+
+
 	public String getAuthAgencyId() {
 		return authAgencyId;
 	}
@@ -311,4 +314,13 @@ public class SysUserEntity implements Serializable {
 	public void setAgency(AgenciesEntity agency) {
 		this.agency = agency;
 	}
+
+	public String getAgencyName() {
+		return agencyName;
+	}
+
+	public void setAgencyName(String agencyName) {
+		this.agencyName = agencyName;
+	}
+	
 }

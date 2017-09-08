@@ -11,9 +11,14 @@ $(function () {
 			{ label: '手机号', name: 'mobile', width: 100 },
 			{ label: '地址', name: 'address', width: 100 },
 			{ label: '创建时间', name: 'createTime', index: "create_time", width: 80},
-			{ label: '最后登录IP', name: 'loginIp', width: 100 },
-			{ label: '最后登录时间', name: 'loginTime', width: 100 },
-			{ label: '访问次数', name: 'visitTime', width: 100 },
+			{ label: '最后登录IP',name: 'sysLogUserList', index: 'sysLogUserList' ,formatter: function(value, options, row){
+				return value.length>0?value[0].ip:"";
+			}},
+			{ label: '最后登录时间', name: 'sysLogUserList', index: 'sysLogUserList' ,formatter: function(value, options, row){
+				return value.length>0?value[0].create_date:"";}},
+			{ label: '访问次数', name: 'sysLogUserList', index: 'sysLogUserList' ,formatter: function(value, options, row){
+				return value.length>0?value.length:0;
+			}},
 			{ label: '状态', name: 'status', width: 80, formatter: function(value, options, row){
 				return value === 0 ? 
 					'<span class="label label-danger">禁用</span>' : 
