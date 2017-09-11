@@ -53,6 +53,7 @@ public class SysLoginController {
 	}
 
 	@RequestMapping("/captcha/checkCaptcha")
+	@ResponseBody
 	public R checkCaptcha(HttpServletResponse response, String captcha)throws ServletException, IOException {
 		String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
 		if(!captcha.equalsIgnoreCase(kaptcha)){
