@@ -242,6 +242,17 @@
 			<groupId>com.power.yuneng.sms</groupId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<!--导出excel格式-->
+		<dependency>
+		    <artifactId>poi</artifactId>
+			<groupId>org.apache.poi</groupId>
+			<version>3.14</version>
+		</dependency>
+		<dependency>
+		    <artifactId>poi-ooxml</artifactId>
+			<groupId>org.apache.poi</groupId>
+			<version>3.14</version>
+		</dependency>
 
 		<!--<dependency>-->
 			<!--<groupId>org.springframework.data</groupId>-->
