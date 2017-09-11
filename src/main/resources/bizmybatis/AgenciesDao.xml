@@ -167,13 +167,13 @@
     </select>
     
      
-	<select id="queryAgencybyUserId" resultType="int" parameterType="int" >    
+	<select id="queryAgencybyUserId" resultType="int" parameterType="Long" >    
         select count(*) from agencies where abbr_code = #{value}
     </select> 
 	
  	<select id="queryTotal" resultType="int">
 		select count(*) FROM agencies agency 
-		LEFT JOIN sys_user sysuser ON agency.id = sysuser.agency_id
+		LEFT JOIN sys_user sysuser ON agency.abbr_code = sysuser.user_id
 		<where>
             <if test="whereSql != null and whereSql != ''">
                 AND agency.id in (${whereSql})

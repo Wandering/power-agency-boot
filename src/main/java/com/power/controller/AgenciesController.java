@@ -131,7 +131,10 @@ public class AgenciesController extends AbstractController{
 	public R queryAgencyStatus(){
 		Long userId = getUserId();
 		int num = agenciesService.queryAgencybyUserId(userId);
-		if(num>0 && userId != Constant.SUPER_ADMIN){
+		if(num>0){
+			if(userId == Constant.SUPER_ADMIN){
+				return R.error("当前为超级管理员！");
+			}
 			List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
 			if(null == roleIdList || roleIdList.size() ==0 ){
 				return R.error("正在审核，请等待！").put("data", roleIdList);
