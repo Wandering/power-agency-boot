@@ -16,7 +16,7 @@
 	</select>
 	<select id="searchAccount" resultType="com.power.entity.ex.BaseSearch">
 		SELECT suser.username as name,agency.abbr_code as id FROM agencies agency
-		LEFT JOIN sys_user suser ON suser.id = agency.abbr_code
+		LEFT JOIN sys_user suser ON suser.user_id = agency.abbr_code
 		<where>
 			<if test="whereSql!=null">
 				agency.id in (${whereSql})
