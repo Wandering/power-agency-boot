@@ -51,5 +51,10 @@ public class AgenciesServiceImpl implements AgenciesService {
 	public void deleteBatch(Long[] ids){
 		agenciesDao.deleteBatch(ids);
 	}
+
+	@Override
+	public int queryAgencybyUserId(Long userId) {
+		return agenciesDao.queryAgencybyUserId(userId);
+	}
 	
 }

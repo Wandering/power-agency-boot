@@ -20,7 +20,7 @@ public class AgenciesEntity implements Serializable {
 	//服务商名称
 	private String name;
 	//英文缩写
-	private String abbrCode;
+	private Long abbrCode;
 	//地域
 	private Long region;
 	//地址
@@ -97,13 +97,13 @@ public class AgenciesEntity implements Serializable {
 	/**
 	 * 设置：英文缩写
 	 */
-	public void setAbbrCode(String abbrCode) {
+	public void setAbbrCode(Long abbrCode) {
 		this.abbrCode = abbrCode;
 	}
 	/**
 	 * 获取：英文缩写
 	 */
-	public String getAbbrCode() {
+	public Long getAbbrCode() {
 		return abbrCode;
 	}
 	/**

@@ -11,4 +11,6 @@ import io.renren.dao.BaseDao;
  */
 public interface AgenciesDao extends BaseDao<AgenciesEntity> {
 	
+	int queryAgencybyUserId(Long userId);
+	
 }
