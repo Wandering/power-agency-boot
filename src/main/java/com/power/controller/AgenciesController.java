@@ -1,5 +1,6 @@
 package com.power.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,6 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.power.entity.AgenciesEntity;
 import com.power.service.AgenciesService;
+
+import io.renren.admin.AbstractController;
+import io.renren.service.SysUserRoleService;
+import io.renren.service.SysUserService;
+import io.renren.utils.Constant;
 import io.renren.utils.PageUtils;
 import io.renren.utils.Query;
 import io.renren.utils.R;
@@ -33,9 +39,13 @@ import io.renren.utils.R;
  */
 @RestController
 @RequestMapping("agencies")
-public class AgenciesController {
+public class AgenciesController extends AbstractController{
 	@Autowired
 	private AgenciesService agenciesService;
+	@Autowired
+	private SysUserService sysUserService;
+	@Autowired
+	private SysUserRoleService sysUserRoleService;
 	@Autowired
 	private IAgenciesExService agenciesExService;
 	@Autowired
@@ -77,7 +87,17 @@ public class AgenciesController {
 	 */
 	@RequestMapping("/save")
 	public R save(@RequestBody AgenciesEntity agencies){
+		SysUserEntity user = getUser();
+		agencies.setAbbrCode(user.getUserId());
+		agencies.setStatus("1");
+		agencies.setAgencyPool("1");
 		agenciesService.save(agencies);
+		user.setAgencyId(agencies.getId());
+		user.setParentId(agencies.getParent());
+		//获取用户所属的角色列表
+		List<Long> roleIdList = new ArrayList<Long>();
+		user.setRoleIdList(roleIdList);
+		sysUserService.update(user);
 		
 		return R.ok();
 	}
@@ -102,6 +122,24 @@ public class AgenciesController {
 		agenciesService.deleteBatch(ids);
 		
 		return R.ok();
+	}
+	
+	/**
+     * 查询代理商
+	 */
+	@RequestMapping("/checkAgency")
+	public R queryAgencyStatus(){
+		Long userId = getUserId();
+		int num = agenciesService.queryAgencybyUserId(userId);
+		if(num>0 && userId != Constant.SUPER_ADMIN){
+			List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
+			if(null == roleIdList || roleIdList.size() ==0 ){
+				return R.error("正在审核，请等待！").put("data", roleIdList);
+			}
+			return R.error("该用户已经注册成为代理商或店主");
+		}else{
+			return R.ok();
+		}
 	}
 
 	/**

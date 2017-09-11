@@ -48,6 +48,7 @@ public class SysOssController {
 
     private final static String KEY = ConfigConstant.CLOUD_STORAGE_CONFIG_KEY;
     private final static String IMGKEY = ConfigConstant.STATION_IMG_CONFIG_KEY;
+    private final static String AGENCYKEY = ConfigConstant.AGENCY_IMG_CONFIG_KEY;
 	
 	/**
 	 * 列表
@@ -139,6 +140,27 @@ public class SysOssController {
 		
 		//上传文件
 		String url = OSSFactory.build(IMGKEY).upload(file.getBytes());
+		
+		//保存文件信息
+		SysOssEntity ossEntity = new SysOssEntity();
+		ossEntity.setUrl(url);
+		ossEntity.setCreateDate(new Date());
+		sysOssService.save(ossEntity);
+		
+		return R.ok().put("url", url);
+	}
+	
+	/**
+	 * 上传代理商文件
+	 */
+	@RequestMapping("/Agency/Imgupload")
+	public R AgencyImgupload(@RequestParam("file") MultipartFile file) throws Exception {
+		if (file.isEmpty()) {
+			throw new RRException("上传文件不能为空");
+		}
+		
+		//上传文件
+		String url = OSSFactory.build(AGENCYKEY).upload(file.getBytes());
 		
 		//保存文件信息
 		SysOssEntity ossEntity = new SysOssEntity();

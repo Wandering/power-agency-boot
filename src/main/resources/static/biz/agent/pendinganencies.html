@@ -23,7 +23,7 @@
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
-			<a class="btn btn-primary" @click="add"><i class="fa fa-plus"></i>&nbsp;新增</a>
+			<a v-if="hasPermission('pendinganencies:examine')" class="btn btn-primary" @click="add"><i class="fa fa-check"></i>&nbsp;审核</a>
 		</div>
 	    <table id="jqGrid"></table>
 	    <div id="jqGridPager"></div>
@@ -191,6 +191,6 @@
 	</div>
 </div>
 
-<script src="../../public/js/biz/agent/agencies.js"></script>
+<script src="../../public/js/biz/agent/pendinganencies.js"></script>
 </body>
 </html>

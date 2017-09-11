@@ -42,7 +42,7 @@
 
 	<select id="queryList" resultType="HashMap" resultMap="agenciesMap">
 		SELECT agency.*,sysuser.username,sysuser.email FROM agencies agency 
-		LEFT JOIN sys_user sysuser ON agency.id = sysuser.agency_id
+		LEFT JOIN sys_user sysuser ON agency.abbr_code = sysuser.user_id
         <where>
             <!-- ######服务商表###### -->
             <if test="whereSql != null and whereSql != ''">
@@ -164,6 +164,11 @@
 	
 	<select id="selectSysLog" parameterType="String" resultType="HashMap"  >    
         select * from sys_log where operation='用户登录' and username=#{username}  order by create_date desc  
+    </select>
+    
+     
+	<select id="queryAgencybyUserId" resultType="int" parameterType="int" >    
+        select count(*) from agencies where abbr_code = #{value}
     </select> 
 	
  	<select id="queryTotal" resultType="int">
