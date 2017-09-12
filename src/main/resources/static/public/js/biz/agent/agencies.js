@@ -65,6 +65,9 @@ $(function () {
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	//$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
+        	$('#endTime').datetimepicker({autoclose:true,todayBtn:true,language:'zh-CN'}).on('hide', function(ev){
+        	    vm.q.startDt=$('#startDt').val();
+        	});
         }
     });
 });
@@ -75,6 +78,7 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		username:"",
 		agencies: {}
 	},
 	mounted: function(){
@@ -86,24 +90,29 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{page:1});
 			vm.reload();
 		},
-		add: function(){
+		team: function(){
+			var id = getSelectedRow();
+			if(id == null){
+				return ;
+			}
 			vm.showList = false;
-			vm.title = "新增";
-			vm.status = "add";
-			vm.agencies = {};
+			vm.title = "我的团队";
+			vm.status = "team";
 		},
 		update: function (event) {
 			var id = getSelectedRow();
 			if(id == null){
 				return ;
 			}
+			var rowData = $("#jqGrid").jqGrid('getRowData',id);
+			vm.username = rowData.username;
 			vm.showList = false;
-            vm.title = "修改";
+            vm.title = "编辑";
             vm.status = "edit";
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			var url = vm.agencies.id == null ? "../../agencies/save" : "../../agencies/update";
+			var url =  "../../agencies/update";
 			$.ajax({
 				type: "POST",
 			    url: url,
@@ -147,6 +156,7 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../../agencies/info/"+id, function(r){
                 vm.agencies = r.agencies;
+                vm.agencies.contractStartdt = vm.parseDate(r.agencies.contractStartdt);
             });
 		},
 		reload: function (event) {
@@ -155,6 +165,10 @@ var vm = new Vue({
 			$("#jqGrid").jqGrid('setGridParam',{ 
                 page:page
             }).trigger("reloadGrid");
+		},
+		parseDate: function(value){
+			if(value==null||value==""){return "";}
+			return new Date(value).format("yyyy-MM-dd");
 		}
 	}
 });
