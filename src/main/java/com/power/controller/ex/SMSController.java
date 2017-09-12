@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -36,12 +37,14 @@ public class SMSController {
      **/
     private final static String USER_SMS = "USER_SMS_";
     private final static String USER_SMS_IN_USE_TAG = "USER_SMS_IN_USE_TAG_";
+    private final static String USER_SMS_IN_IP = "USER_SMS_IN_IP_";
 
     /**
      * 每次发送间隔
      **/
     private final static int TIME_OUT = 5 * 60;
     private final static int TIME_OUT_LOCK = 60;
+    private final static int TIME_OUT_LOCK_IP = 60;
 
     /**
      * 发送次数上限
@@ -49,6 +52,8 @@ public class SMSController {
     private final static String SMS_BY_PHONE = "SMS_BY_PHONE_";
     private final static long SMS_COUNT_BY_PHONE_TIME = 24;
     private final static int SMS_BY_PHONE_COUNT = 5;
+    private final static int SMS_BY_IP_COUNT = 5;
+    private final static long SMS_COUNT_BY_IP_TIME = 24;
 
     private final static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
     private final static Pattern PHONE_CHECK = Pattern.compile("^[1][3,4,5,7,8][0-9]{9}$"); // 验证手机号
@@ -57,25 +62,30 @@ public class SMSController {
      * 列表
      */
     @RequestMapping("/captcha/sendSMS")
-    public R list(@RequestParam("phone") String phone,@RequestParam("captcha") String captcha) {
+    public R list(@RequestParam("phone") String phone, @RequestParam("captcha") String captcha, HttpServletRequest request) {
         String kaptcha = ShiroUtils.getKaptcha(Constants.KAPTCHA_SESSION_KEY);
         if(!captcha.equalsIgnoreCase(kaptcha)){
             return R.error("验证码不正确");
         }
         ShiroUtils.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+        String ip = getLocalIp(request);
+        int count2 = IntegerUtils.parseInt(repository.get(USER_SMS_IN_IP + ip), 0);
+        if (count2>=SMS_BY_IP_COUNT){
+            return R.error("您当日短信验证码在该IP超过次数限制(10次)，请24小时后再发！");
+        }
         if (!PHONE_CHECK.matcher(phone).matches()) {
             return R.error("不是标准的手机号码，请输入正确的手机号码！");
         }
         int count = IntegerUtils.parseInt(repository.get(SMS_BY_PHONE + phone), 0);
-        if (count < SMS_BY_PHONE_COUNT) {
-            repository.set(SMS_BY_PHONE + phone, "" + (count++), SMS_COUNT_BY_PHONE_TIME, TimeUnit.HOURS);
-        } else {
+        if (count >= SMS_BY_PHONE_COUNT) {
             return R.error("您当日短信验证码超过次数限制(5次)，请24小时后再发！");
         }
         String redisKey = USER_SMS + phone;
         String redisLockKey = USER_SMS_IN_USE_TAG + phone;
         //redis存储验证码
         if (!repository.exists(redisLockKey)) {
+            repository.set(USER_SMS_IN_IP + ip, "" + (++count), SMS_COUNT_BY_IP_TIME, TimeUnit.HOURS);
+            repository.set(SMS_BY_PHONE + phone, "" + (++count), SMS_COUNT_BY_PHONE_TIME, TimeUnit.HOURS);
 
             SMSCheckCode smsCheckCode = new SMSCheckCode();
             smsCheckCode.setBizTarget("宇能共享");
@@ -85,11 +95,9 @@ public class SMSController {
             boolean flag = smsService.sendSMS(smsCheckCode);
             if (flag) {
                 //存储值
-                repository.set(redisKey, code);
-                repository.expire(redisKey, TIME_OUT, TIME_UNIT);
+                repository.set(redisKey, code,TIME_OUT, TIME_UNIT);
                 //存储锁
-                repository.set(redisLockKey, code);
-                repository.expire(redisLockKey, TIME_OUT_LOCK, TIME_UNIT);
+                repository.set(redisLockKey, code,TIME_OUT_LOCK, TIME_UNIT);
                 return R.ok();
             } else {
                 return R.error("验证码发送失败，请稍后再试！");
@@ -125,5 +133,36 @@ public class SMSController {
             return R.error("验证码校验失败，请重新输入！");
         }
         return R.error("验证码校验失败，请重新输入！");
+    }
+
+
+    /**
+     * 从Request对象中获得客户端IP，处理了HTTP代理服务器和Nginx的反向代理截取了ip
+     * @param request
+     * @return ip
+     */
+    private static String getLocalIp(HttpServletRequest request) {
+        String remoteAddr = request.getRemoteAddr();
+        String forwarded = request.getHeader("X-Forwarded-For");
+        String realIp = request.getHeader("X-Real-IP");
+
+        String ip = null;
+        if (realIp == null) {
+            if (forwarded == null) {
+                ip = remoteAddr;
+            } else {
+                ip = remoteAddr + "/" + forwarded.split(",")[0];
+            }
+        } else {
+            if (realIp.equals(forwarded)) {
+                ip = realIp;
+            } else {
+                if(forwarded != null){
+                    forwarded = forwarded.split(",")[0];
+                }
+                ip = realIp + "/" + forwarded;
+            }
+        }
+        return ip;
     }
 }
