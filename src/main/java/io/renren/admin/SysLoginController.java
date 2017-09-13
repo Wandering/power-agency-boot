@@ -59,7 +59,7 @@ public class SysLoginController {
 		if(!captcha.equalsIgnoreCase(kaptcha)){
 			return R.error("验证码不正确");
 		}
-		ShiroUtils.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
+//		ShiroUtils.getSession().removeAttribute(Constants.KAPTCHA_SESSION_KEY);
 		return R.ok();
 	}
 	/**
