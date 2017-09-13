@@ -235,5 +235,24 @@ public class SysUserController extends AbstractController {
 		return R.ok();
 		}
 	}
+	
+	/**
+	 * 校验用户密码
+	 */
+	@RequestMapping("/checkPwd")
+	public R checkPassword(String password){
+		
+		//sha256加密
+		password = new Sha256Hash(password).toHex();
+		//sha256加密
+				
+		//更新密码
+		int count = sysUserService.updatePassword(getUserId(), password, password);
+		if(count == 0){
+			return R.error("密码不正确,请重新输入！");
+		}
+		
+		return R.ok();
+	}
 }
 

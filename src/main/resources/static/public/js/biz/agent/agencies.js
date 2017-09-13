@@ -1,13 +1,18 @@
 $(function () {
     $("#jqGrid").jqGrid({
         url: '../../agencies/list',
+        postData:vm.q,
         datatype: "json",
         colModel: [			
 			{ label: 'ID', name: 'id', index: 'id', width: 50, key: true },
 			{ label: '用户名', name: 'username', index: 'username', width: 120 }, 			
 			{ label: '邮箱', name: 'email', index: 'email', width: 120 },
-			{ label: '合同开始时间', name: 'contractStartdt', index: 'contract_startDt', width: 100 }, 			
-			{ label: '合同结束时间', name: 'contractEnddt', index: 'contract_endDt', width: 100 },
+			{ label: '合同开始时间', name: 'contractStartdt', index: 'contract_startDt', width: 100 ,formatter: function(value, options, row){
+				return  value!=null?vm.parseDate(value):"";
+			}}, 			
+			{ label: '合同结束时间', name: 'contractEnddt', index: 'contract_endDt', width: 100 ,formatter: function(value, options, row){
+				return  value!=null?vm.parseDate(value):"";
+			}},
 			//{ label: '地域', name: 'region', index: 'region', width: 80 }, 			
 			{ label: '区域', name: 'address', index: 'address', width: 150 }, 			
 			{ label: '类型', name: 'type', index: 'type', width: 80 },
@@ -65,9 +70,7 @@ $(function () {
         gridComplete:function(){
         	//隐藏grid底部滚动条
         	//$("#jqGrid").closest(".ui-jqgrid-bdiv").css({ "overflow-x" : "hidden" }); 
-        	$('#endTime').datetimepicker({autoclose:true,todayBtn:true,language:'zh-CN'}).on('hide', function(ev){
-        	    vm.q.startDt=$('#startDt').val();
-        	});
+        	
         }
     });
 });
@@ -75,10 +78,15 @@ $(function () {
 var vm = new Vue({
 	el:'#rrapp',
 	data:{
+		q:{
+			type:"AGENCY",status:"2,5",name:""
+		},
 		showList: true,
 		title: null,
 		status:null,
 		username:"",
+		Startdt:"",
+		password:"",
 		agencies: {}
 	},
 	mounted: function(){
@@ -106,27 +114,38 @@ var vm = new Vue({
 			}
 			var rowData = $("#jqGrid").jqGrid('getRowData',id);
 			vm.username = rowData.username;
+			vm.password = "";
 			vm.showList = false;
             vm.title = "编辑";
             vm.status = "edit";
+            $('#endTime').datetimepicker({autoclose:true,language:'zh-CN',minView:2,format:'yyyy-mm-dd',startDate:rowData.contractStartdt});
             vm.getInfo(id)
+           
 		},
 		saveOrUpdate: function (event) {
-			var url =  "../../agencies/update";
-			$.ajax({
-				type: "POST",
-			    url: url,
-			    contentType: "application/json",
-			    data: JSON.stringify(vm.agencies),
-			    success: function(r){
-			    	if(r.code === 0){
-						alert('操作成功', function(index){
-							vm.reload();
-						});
-					}else{
-						alert(r.msg);
-					}
-				}
+			if($('#endTime').val()==""){alert('请输入合同结束时间！');return;}else{
+				vm.agencies.contractEnddt = $('#endTime').val()+" 23:59:59";
+			}
+			if(vm.password==""){alert('请输入登录密码！');return;}
+			$.getJSON("../../sys/user/checkPwd?password="+vm.password, function(r){
+				if(r.code==0){
+					var url =  "../../agencies/update";
+					$.ajax({
+						type: "POST",
+					    url: url,
+					    contentType: "application/json",
+					    data: JSON.stringify(vm.agencies),
+					    success: function(r){
+					    	if(r.code === 0){
+								alert('操作成功', function(index){
+									vm.reload();
+								});
+							}else{
+								alert(r.msg);
+							}
+						}
+					});
+				}else{alert(r.msg);}
 			});
 		},
 		del: function (event) {
@@ -156,13 +175,14 @@ var vm = new Vue({
 		getInfo: function(id){
 			$.get("../../agencies/info/"+id, function(r){
                 vm.agencies = r.agencies;
-                vm.agencies.contractStartdt = vm.parseDate(r.agencies.contractStartdt);
+                vm.Startdt = vm.parseDate(r.agencies.contractStartdt);
             });
 		},
 		reload: function (event) {
 			vm.showList = true;
 			var page = $("#jqGrid").jqGrid('getGridParam','page');
 			$("#jqGrid").jqGrid('setGridParam',{ 
+				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
 		},

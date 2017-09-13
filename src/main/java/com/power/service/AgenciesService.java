@@ -28,5 +28,5 @@ public interface AgenciesService {
 	
 	void deleteBatch(Long[] ids);
 	
-	int queryAgencybyUserId(Long userId);
+	AgenciesEntity queryAgencybyUserId(Long userId);
 }

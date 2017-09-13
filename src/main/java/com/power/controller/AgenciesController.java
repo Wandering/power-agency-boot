@@ -94,7 +94,7 @@ public class AgenciesController extends AbstractController{
 		agenciesService.save(agencies);
 		user.setAgencyId(agencies.getId());
 		user.setParentId(agencies.getParent());
-		//获取用户所属的角色列表
+		//设置空角色列表
 		List<Long> roleIdList = new ArrayList<Long>();
 		user.setRoleIdList(roleIdList);
 		sysUserService.update(user);
@@ -109,7 +109,47 @@ public class AgenciesController extends AbstractController{
 	@RequiresPermissions("agencies:update")
 	public R update(@RequestBody AgenciesEntity agencies){
 		agenciesService.update(agencies);
-		
+		return R.ok();
+	}
+	
+	/**
+     * 审核
+	 */
+	@RequestMapping("/examine")
+	@RequiresPermissions("agencies:examine")
+	public R examine(@RequestBody AgenciesEntity agencies){
+		String status = agencies.getStatus();
+		//通过审核或店主
+		if(status.equals("2")){
+			System.out.println("通过审核");
+		//未通过审核或店主
+		}else if(status.equals("3")){
+			System.out.println("未通过审核");
+		//转移给代理商
+		}else if(status.equals("4")){
+			System.out.println("转移");
+		}
+		agenciesService.update(agencies);
+		return R.ok();
+	}
+	
+	/**
+	 * 激活
+	 */
+	@RequestMapping("/activate")
+	@RequiresPermissions("agencies:activate")
+	public R activate(@RequestBody AgenciesEntity agencies){
+		String status = agencies.getStatus();
+		//禁用的代理商或店主
+		if(status.equals("0")){
+			agencies.setStatus("2");
+		//未通过审核的代理商或店主
+		}else if(status.equals("3")){
+			agencies.setStatus("1");
+		}else{
+			return R.error("请求错误！");
+		}
+		agenciesService.update(agencies);
 		return R.ok();
 	}
 	
@@ -125,25 +165,35 @@ public class AgenciesController extends AbstractController{
 	}
 	
 	/**
-     * 查询代理商
+     * 检索代理商状态
 	 */
-	@RequestMapping("/checkAgency")
+	@RequestMapping("/checkStatus")
 	public R queryAgencyStatus(){
 		Long userId = getUserId();
-		int num = agenciesService.queryAgencybyUserId(userId);
-		if(num>0){
-			if(userId == Constant.SUPER_ADMIN){
-				return R.error("当前为超级管理员！");
+		if(userId == Constant.SUPER_ADMIN){
+			return R.error("当前为超级管理员！");
+		}
+		AgenciesEntity agency = agenciesService.queryAgencybyUserId(userId);
+		if(agency!=null){
+			String status = agency.getStatus();
+			if(status.equals("1")){
+				//待审核
+				return R.ok().put("status", status);
+			}else if(status.equals("3")){
+				//未通过
+				return R.ok().put("status", status);
+			}else{
+				return R.error("该用户已经注册成为代理商或店主");
 			}
-			List<Long> roleIdList = sysUserRoleService.queryRoleIdList(userId);
-			if(null == roleIdList || roleIdList.size() ==0 ){
-				return R.error("正在审核，请等待！").put("data", roleIdList);
-			}
-			return R.error("该用户已经注册成为代理商或店主");
 		}else{
-			return R.ok();
+			AgenciesEntity parent = agenciesService.queryAgencybyUserId(getUser().getParentId());
+			if(parent!=null){
+				return R.error("该用户为运营商创建的帐号！");
+			}
+			return R.ok().put("status", "0");
 		}
 	}
+	
 
 	/**
      * 查询代理商

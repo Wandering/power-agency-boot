@@ -53,7 +53,7 @@ public class AgenciesServiceImpl implements AgenciesService {
 	}
 
 	@Override
-	public int queryAgencybyUserId(Long userId) {
+	public AgenciesEntity queryAgencybyUserId(Long userId) {
 		return agenciesDao.queryAgencybyUserId(userId);
 	}
 	

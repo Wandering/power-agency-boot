@@ -50,103 +50,103 @@
             </if>
 			                <!-- ######服务商表###### -->
                 <if test="id != null and id.trim() != ''">
-                    AND id = #{id}
+                    AND agency.id = #{id}
                 </if>
 			                <!-- 服务商名称 -->
                 <if test="name != null and name.trim() != ''">
-                    AND name = #{name}
+                    AND agency.name = #{name}
                 </if>
 			                <!-- 英文缩写????-del -->
                 <if test="abbrCode != null and abbrCode.trim() != ''">
-                    AND abbr_code = #{abbrCode}
+                    AND agency.abbr_code = #{abbrCode}
                 </if>
 			                <!-- 地域 -->
                 <if test="region != null and region.trim() != ''">
-                    AND region = #{region}
+                    AND agency.region = #{region}
                 </if>
 			                <!-- 地址 -->
                 <if test="address != null and address.trim() != ''">
-                    AND address = #{address}
+                    AND agency.address = #{address}
                 </if>
 			                <!-- 状态 -->
                 <if test="status != null and status.trim() != ''">
-                    AND status = #{status}
+                    AND agency.status in (${status})
                 </if>
 			                <!-- 类型：平台还是服务商-del -->
                 <if test="type != null and type.trim() != ''">
-                    AND type = #{type}
+                    AND agency.type = #{type}
                 </if>
 			                <!-- -del -->
                 <if test="parent != null and parent.trim() != ''">
-                    AND parent = #{parent}
+                    AND agency.parent = #{parent}
                 </if>
 			                <!-- 创建时间 -->
                 <if test="createDt != null and createDt.trim() != ''">
-                    AND create_dt = #{createDt}
+                    AND agency.create_dt = #{createDt}
                 </if>
 			                <!-- 修改时间 -->
                 <if test="updateDt != null and updateDt.trim() != ''">
-                    AND update_dt = #{updateDt}
+                    AND agency.update_dt = #{updateDt}
                 </if>
 			                <!-- 创建人 -->
                 <if test="createBy != null and createBy.trim() != ''">
-                    AND create_by = #{createBy}
+                    AND agency.create_by = #{createBy}
                 </if>
 			                <!-- 修改人 -->
                 <if test="updateBy != null and updateBy.trim() != ''">
-                    AND update_by = #{updateBy}
+                    AND agency.update_by = #{updateBy}
                 </if>
 			                <!-- 代理商类型 -->
                 <if test="agencytype != null and agencytype.trim() != ''">
-                    AND agencytype = #{agencytype}
+                    AND agency.agencytype = #{agencytype}
                 </if>
 			                <!-- 营业执照注册号 -->
                 <if test="businessNo != null and businessNo.trim() != ''">
-                    AND business_no = #{businessNo}
+                    AND agency.business_no = #{businessNo}
                 </if>
 			                <!-- 营业执照副本 -->
                 <if test="businessImg != null and businessImg.trim() != ''">
-                    AND business_img = #{businessImg}
+                    AND agency.business_img = #{businessImg}
                 </if>
 			                <!-- 开户银行 -->
                 <if test="openBank != null and openBank.trim() != ''">
-                    AND open_bank = #{openBank}
+                    AND agency.open_bank = #{openBank}
                 </if>
 			                <!-- 开户名称 -->
                 <if test="bankname != null and bankname.trim() != ''">
-                    AND bankname = #{bankname}
+                    AND agency.bankname = #{bankname}
                 </if>
 			                <!-- 银行卡号 -->
                 <if test="bankCardno != null and bankCardno.trim() != ''">
-                    AND bank_cardno = #{bankCardno}
+                    AND agency.bank_cardno = #{bankCardno}
                 </if>
 			                <!-- 法人姓名 -->
                 <if test="legaluserName != null and legaluserName.trim() != ''">
-                    AND legaluser_name = #{legaluserName}
+                    AND agency.legaluser_name = #{legaluserName}
                 </if>
 			                <!-- 法人身份证号 -->
                 <if test="legaluserNo != null and legaluserNo.trim() != ''">
-                    AND legaluser_no = #{legaluserNo}
+                    AND agency.legaluser_no = #{legaluserNo}
                 </if>
 			                <!-- 法人身份证扫描件 -->
                 <if test="legaluserImg != null and legaluserImg.trim() != ''">
-                    AND legaluser_img = #{legaluserImg}
+                    AND agency.legaluser_img = #{legaluserImg}
                 </if>
 			                <!-- 推广二维码 -->
                 <if test="qrcode != null and qrcode.trim() != ''">
-                    AND qrcode = #{qrcode}
+                    AND agency.qrcode = #{qrcode}
                 </if>
 			                <!-- 代理商角色 -->
                 <if test="agencyrole != null and agencyrole.trim() != ''">
-                    AND agencyrole = #{agencyrole}
+                    AND agency.agencyrole = #{agencyrole}
                 </if>
 			                <!-- 合同开始时间 -->
                 <if test="contractStartdt != null and contractStartdt.trim() != ''">
-                    AND contract_startDt = #{contractStartdt}
+                    AND agency.contract_startDt = #{contractStartdt}
                 </if>
 			                <!-- 合同结束时间 -->
                 <if test="contractEnddt != null and contractEnddt.trim() != ''">
-                    AND contract_endDt = #{contractEnddt}
+                    AND agency.contract_endDt = #{contractEnddt}
                 </if>
 			        </where>
         <choose>
@@ -167,8 +167,8 @@
     </select>
     
      
-	<select id="queryAgencybyUserId" resultType="int" parameterType="Long" >    
-        select count(*) from agencies where abbr_code = #{value}
+	<select id="queryAgencybyUserId" resultType="com.power.entity.AgenciesEntity" parameterType="Long" >    
+        select * from agencies where abbr_code = #{value}
     </select> 
 	
  	<select id="queryTotal" resultType="int">
@@ -180,103 +180,103 @@
             </if>
 			                <!-- ######服务商表###### -->
                 <if test="id != null and id.trim() != ''">
-                    AND id = #{id}
+                    AND agency.id = #{id}
                 </if>
 			                <!-- 服务商名称 -->
                 <if test="name != null and name.trim() != ''">
-                    AND name = #{name}
+                    AND agency.name = #{name}
                 </if>
 			                <!-- 英文缩写????-del -->
                 <if test="abbrCode != null and abbrCode.trim() != ''">
-                    AND abbr_code = #{abbrCode}
+                    AND agency.abbr_code = #{abbrCode}
                 </if>
 			                <!-- 地域 -->
                 <if test="region != null and region.trim() != ''">
-                    AND region = #{region}
+                    AND agency.region = #{region}
                 </if>
 			                <!-- 地址 -->
                 <if test="address != null and address.trim() != ''">
-                    AND address = #{address}
+                    AND agency.address = #{address}
                 </if>
 			                <!-- 状态 -->
                 <if test="status != null and status.trim() != ''">
-                    AND status = #{status}
+                    AND agency.status in (${status})
                 </if>
 			                <!-- 类型：平台还是服务商-del -->
                 <if test="type != null and type.trim() != ''">
-                    AND type = #{type}
+                    AND agency.type = #{type}
                 </if>
 			                <!-- -del -->
                 <if test="parent != null and parent.trim() != ''">
-                    AND parent = #{parent}
+                    AND agency.parent = #{parent}
                 </if>
 			                <!-- 创建时间 -->
                 <if test="createDt != null and createDt.trim() != ''">
-                    AND create_dt = #{createDt}
+                    AND agency.create_dt = #{createDt}
                 </if>
 			                <!-- 修改时间 -->
                 <if test="updateDt != null and updateDt.trim() != ''">
-                    AND update_dt = #{updateDt}
+                    AND agency.update_dt = #{updateDt}
                 </if>
 			                <!-- 创建人 -->
                 <if test="createBy != null and createBy.trim() != ''">
-                    AND create_by = #{createBy}
+                    AND agency.create_by = #{createBy}
                 </if>
 			                <!-- 修改人 -->
                 <if test="updateBy != null and updateBy.trim() != ''">
-                    AND update_by = #{updateBy}
+                    AND agency.update_by = #{updateBy}
                 </if>
 			                <!-- 代理商类型 -->
                 <if test="agencytype != null and agencytype.trim() != ''">
-                    AND agencytype = #{agencytype}
+                    AND agency.agencytype = #{agencytype}
                 </if>
 			                <!-- 营业执照注册号 -->
                 <if test="businessNo != null and businessNo.trim() != ''">
-                    AND business_no = #{businessNo}
+                    AND agency.business_no = #{businessNo}
                 </if>
 			                <!-- 营业执照副本 -->
                 <if test="businessImg != null and businessImg.trim() != ''">
-                    AND business_img = #{businessImg}
+                    AND agency.business_img = #{businessImg}
                 </if>
 			                <!-- 开户银行 -->
                 <if test="openBank != null and openBank.trim() != ''">
-                    AND open_bank = #{openBank}
+                    AND agency.open_bank = #{openBank}
                 </if>
 			                <!-- 开户名称 -->
                 <if test="bankname != null and bankname.trim() != ''">
-                    AND bankname = #{bankname}
+                    AND agency.bankname = #{bankname}
                 </if>
 			                <!-- 银行卡号 -->
                 <if test="bankCardno != null and bankCardno.trim() != ''">
-                    AND bank_cardno = #{bankCardno}
+                    AND agency.bank_cardno = #{bankCardno}
                 </if>
 			                <!-- 法人姓名 -->
                 <if test="legaluserName != null and legaluserName.trim() != ''">
-                    AND legaluser_name = #{legaluserName}
+                    AND agency.legaluser_name = #{legaluserName}
                 </if>
 			                <!-- 法人身份证号 -->
                 <if test="legaluserNo != null and legaluserNo.trim() != ''">
-                    AND legaluser_no = #{legaluserNo}
+                    AND agency.legaluser_no = #{legaluserNo}
                 </if>
 			                <!-- 法人身份证扫描件 -->
                 <if test="legaluserImg != null and legaluserImg.trim() != ''">
-                    AND legaluser_img = #{legaluserImg}
+                    AND agency.legaluser_img = #{legaluserImg}
                 </if>
 			                <!-- 推广二维码 -->
                 <if test="qrcode != null and qrcode.trim() != ''">
-                    AND qrcode = #{qrcode}
+                    AND agency.qrcode = #{qrcode}
                 </if>
 			                <!-- 代理商角色 -->
                 <if test="agencyrole != null and agencyrole.trim() != ''">
-                    AND agencyrole = #{agencyrole}
+                    AND agency.agencyrole = #{agencyrole}
                 </if>
 			                <!-- 合同开始时间 -->
                 <if test="contractStartdt != null and contractStartdt.trim() != ''">
-                    AND contract_startDt = #{contractStartdt}
+                    AND agency.contract_startDt = #{contractStartdt}
                 </if>
 			                <!-- 合同结束时间 -->
                 <if test="contractEnddt != null and contractEnddt.trim() != ''">
-                    AND contract_endDt = #{contractEnddt}
+                    AND agency.contract_endDt = #{contractEnddt}
                 </if>
 			        </where> 
 	</select>

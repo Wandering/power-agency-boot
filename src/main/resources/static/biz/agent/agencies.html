@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="../../public/css/font-awesome.min.css">
 <link rel="stylesheet" href="../../public/plugins/jqgrid/ui.jqgrid-bootstrap.css">
 <link rel="stylesheet" href="../../public/plugins/ztree/css/metroStyle/metroStyle.css">
-<link rel="stylesheet" href="../public/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="../../public/plugins/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
 <link rel="stylesheet" href="../../public/css/main.css">
 <script src="../../public/libs/jquery.min.js"></script>
 <script src="../../public/plugins/layer/layer.js"></script>
@@ -18,19 +18,33 @@
 <script src="../../public/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="../../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="../../public/plugins/ztree/jquery.ztree.all.min.js"></script>
-<script src="../public/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
-<script src="../public/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
+<script src="../../public/plugins/bootstrap-datetimepicker/bootstrap-datetimepicker.min.js"></script>
+<script src="../../public/plugins/bootstrap-datetimepicker/locales/bootstrap-datetimepicker.zh-CN.js"></script>
 <script src="../../public/js/common.js"></script>
 <style type="text/css">
-input:-webkit-autofill { 
-	-webkit-box-shadow: 0 0 0px 1000px white inset; 
-} 
+input[type=radio] { 
+	margin: 4px 5px 0;
+}
+.checkbox-inline, .radio-inline{
+	padding-left: 0px;
+}
 </style>
 </head>
 <body>
 <div id="rrapp" v-cloak>
 	<div v-show="showList">
 		<div class="grid-btn">
+			<div class="form-group col-sm-2">
+				<input type="text" class="form-control" v-model="q.name"
+					@keyup.enter="query" placeholder="企业名称">
+			</div>
+			<!-- <div class="form-group col-sm-2">
+				<select class="form-control" v-model="q.feescale">
+					<option value="">全部</option>
+				  	<option v-for="model in models" v-bind:value="model.id">{{model.name}}</option>
+				</select>
+			</div> -->
+			<a class="btn btn-default" @click="query">查询</a>
 			<a v-if="hasPermission('agencies:team')" class="btn btn-primary" @click="team"><i class="fa fa-group"></i>&nbsp;团队</a>
 			<a v-if="hasPermission('agencies:update')" class="btn btn-primary" @click="update"><i class="fa fa-pencil-square-o"></i>&nbsp;编辑</a>
 		</div>
@@ -41,26 +55,26 @@ input:-webkit-autofill {
     <div v-show="!showList" class="panel panel-default">
 		<div class="panel-heading">{{title}}</div>
 		<form class="form-horizontal">
-											<div class="form-group">
-			   	<div class="col-sm-4 control-label">用户名：</div>
-			   	<div class="col-sm-8">
+			<div class="form-group">
+			   	<div class="col-sm-3 control-label">用户名：</div>
+			   	<div class="col-sm-9">
 			   		<p style="padding: 7px 0;margin-bottom:0px;">{{username}}</p>
 			    </div>
 			</div>
 			<div class="form-group">
-			   	<div class="col-sm-4 control-label"><span style="color: red;">*</span>合同期：</div>
-			   	<div class="col-sm-8">
-			      <p style="float: left;padding: 7px 0;margin-bottom:0px;text-align: right;">{{agencies.contractStartdt}}</p>
+			   	<div class="col-sm-3 control-label"><span style="color: red;">*</span>合同期：</div>
+			   	<div class="col-sm-9">
+			      <p style="float: left;padding: 7px 0;margin-bottom:0px;text-align: right;">{{Startdt}}</p>
 			      <p style="float: left;width:8%;padding: 7px 10px;margin-bottom:0px;">至</p>
-			      <input type="text" id="endTime" class="form-control" v-model="agencies.contractEnddt" placeholder="结束时间" style="float: left;width:46%;"/>
+			      <input type="text" id="endTime" class="form-control" placeholder="结束时间" style="float: left;width:46%;"/>
 			    </div>
 			</div>
 			
 			<div class="form-group">
-			   	<div class="col-sm-4 control-label"><span style="color: red;">*</span>状态：</div>
-			   	<div class="col-sm-8">
+			   	<div class="col-sm-3 control-label"><span style="color: red;">*</span>状态：</div>
+			   	<div class="col-sm-9">
 					<label class="checkbox-inline"> 
-						<input type="radio" value="1" v-model="agencies.status">正常
+						<input type="radio" value="2" v-model="agencies.status">正常
 					</label>
 					<label class="checkbox-inline"> 
 						<input type="radio" value="0" v-model="agencies.status">禁用
@@ -68,9 +82,9 @@ input:-webkit-autofill {
 			    </div>
 			</div>
 			<div class="form-group">
-			   	<div class="col-sm-4 control-label"><span style="color: red;">*</span>您的登录密码：</div>
-			   	<div class="col-sm-8">
-			      <input type="password" class="form-control" v-model="agencies.contractEnddt" placeholder="合同结束时间"/>
+			   	<div class="col-sm-3 control-label"><span style="color: red;">*</span>您的登录密码：</div>
+			   	<div class="col-sm-9">
+			      <input type="password" class="form-control" v-model="password" placeholder="请输入您的登录密码"/>
 			    </div>
 			</div>
 			<div class="form-group">
