@@ -130,7 +130,7 @@ public class AgenciesController extends AbstractController{
 			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
 			agencies.setAgencyPool(agencyType == 1 ? dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()): dataPermissionService.genPermissionBySign(agencies.getId(),agencies.getParent()));
 			if (agencies.getQrcode() == null) {
-				qrCodeService.qrCodeCreateByAgency(agencies.getId(), "ppower");
+				agencies.setQrcode(qrCodeService.qrCodeCreateByAgency(agencies.getId(), "ppower"));
 			}
 		//未通过审核或店主
 		}else if(status.equals("3")){
