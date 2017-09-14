@@ -1,4 +1,4 @@
-package com.power.cache;
+package com.power.redis.cache;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -1,17 +1,16 @@
 package com.power.controller.ex;
 
-import com.alibaba.fastjson.JSON;
 import com.google.code.kaptcha.Constants;
 import com.mchange.lang.IntegerUtils;
-import com.power.cache.RedisRepository;
+import com.power.redis.cache.RedisRepository;
 import com.power.yuneng.sms.api.ISMSService;
 import com.power.yuneng.sms.domain.SMSCheckCode;
 import io.renren.utils.R;
-import io.renren.utils.RRException;
 import io.renren.utils.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -106,6 +105,16 @@ public class SMSController {
             return R.error("验证码已经发出，请60秒后重试！");
         }
 
+    }
+
+    /**
+     * 定时任务  定期清空退款失败队列
+     * 目前暂定每日0点执行一次
+     */
+    @Scheduled(cron = "0 0 0 * * ? ")
+    public void removeRedisKey() {
+        repository.del("USER_SMS_IN_IP*");
+        repository.del("SMS_BY_PHONE*");
     }
 
     /**

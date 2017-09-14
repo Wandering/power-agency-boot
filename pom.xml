@@ -37,6 +37,7 @@
 		<velocity.version>1.7</velocity.version>
 		<!--宇能云版本-->
 		<yunengcloud.version>0.0.2-SNAPSHOT</yunengcloud.version>
+		<yuneng.user.version>0.0.2-SNAPSHOT</yuneng.user.version>
 		<dubbo.version>2.5.3</dubbo.version>
 		<zkclient.version>0.10</zkclient.version>
 		<zhiluapi.version>0.0.1-SNAPSHOT</zhiluapi.version>
@@ -196,6 +197,22 @@
 		</dependency>
 
 		<!--宇能云-->
+		<dependency>
+			<groupId>com.power</groupId>
+			<artifactId>user-api</artifactId>
+			<version>${yuneng.user.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.power</groupId>
+			<artifactId>user-domain</artifactId>
+			<version>${yuneng.user.version}</version>
+			<exclusions>
+				<exclusion>
+					<groupId>com.power</groupId>
+					<artifactId>base-common</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<artifactId>cloud-dynconfig-client</artifactId>
 			<groupId>com.power.yuneng.cloud</groupId>

@@ -17,4 +17,6 @@
                      timeout="60000"/>
     <dubbo:reference id="smsService" interface="com.power.yuneng.sms.api.ISMSService" check="false"
                      timeout="60000"/>
+    <dubbo:reference id="qrCodeService" interface="com.power.yuneng.user.IQrCodeService" check="false"
+                     timeout="60000"/>
 </beans>

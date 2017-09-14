@@ -1,4 +1,4 @@
-package com.power.cache;
+package com.power.redis.cache;
 
 import java.util.*;
 import java.util.concurrent.TimeUnit;

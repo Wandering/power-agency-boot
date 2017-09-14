@@ -118,7 +118,7 @@ public class SysUserEntity implements Serializable {
 	private int visitTime;
 	/**
 	 * 代理商类型：
-	 * 0：独家代理(宇能默认为签约代理)
+	 * 0：独家代理(宇能默认为独家代理)
 	 * 1：签约代理
 	 */
 	private Integer agencytype;

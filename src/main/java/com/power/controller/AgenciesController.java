@@ -7,7 +7,10 @@ import java.util.Map;
 import com.power.entity.PermissionEnum;
 import com.power.service.ex.IAgenciesExService;
 import com.power.service.ex.IDataPermissionService;
+import com.power.yuneng.user.IQrCodeService;
 import io.renren.entity.SysUserEntity;
+import io.renren.entity.UserEntity;
+import io.renren.utils.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
@@ -24,10 +27,6 @@ import com.power.service.AgenciesService;
 import io.renren.admin.AbstractController;
 import io.renren.service.SysUserRoleService;
 import io.renren.service.SysUserService;
-import io.renren.utils.Constant;
-import io.renren.utils.PageUtils;
-import io.renren.utils.Query;
-import io.renren.utils.R;
 
 
 /**
@@ -50,6 +49,8 @@ public class AgenciesController extends AbstractController{
 	private IAgenciesExService agenciesExService;
 	@Autowired
 	private IDataPermissionService dataPermissionService;
+	@Autowired
+	private IQrCodeService qrCodeService;
 
 	/**
 	 * 列表
@@ -119,15 +120,24 @@ public class AgenciesController extends AbstractController{
 	@RequiresPermissions("agencies:examine")
 	public R examine(@RequestBody AgenciesEntity agencies){
 		String status = agencies.getStatus();
+		int agencyType = agencies.getAgencytype();
+//				0：独家代理(宇能默认为独家代理)
+//				1：签约代理
+
 		//通过审核或店主
 		if(status.equals("2")){
 			System.out.println("通过审核");
+			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
+			agencies.setAgencyPool(agencyType == 1 ? dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()): dataPermissionService.genPermissionBySign(agencies.getId(),agencies.getParent()));
+			qrCodeService.qrCodeCreateByAgency(agencies.getId(),"ppower");
 		//未通过审核或店主
 		}else if(status.equals("3")){
 			System.out.println("未通过审核");
 		//转移给代理商
 		}else if(status.equals("4")){
 			System.out.println("转移");
+			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
+			agencies.setAgencyPool(dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()));
 		}
 		agenciesService.update(agencies);
 		return R.ok();
@@ -226,4 +236,5 @@ public class AgenciesController extends AbstractController{
     public R searchAllAccount(String key){
         return R.ok().put("data",agenciesExService.searchAccount(key,null));
     }
+
 }
