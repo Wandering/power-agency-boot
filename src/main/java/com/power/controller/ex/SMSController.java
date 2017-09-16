@@ -61,7 +61,7 @@ public class SMSController {
     private final static String SMS_BY_PHONE = "SMS_BY_PHONE_";
     private final static long SMS_COUNT_BY_PHONE_TIME = 24;
     private final static int SMS_BY_PHONE_COUNT = 5;
-    private final static int SMS_BY_IP_COUNT = 5;
+    private final static int SMS_BY_IP_COUNT = 10;
     private final static long SMS_COUNT_BY_IP_TIME = 24;
 
     private final static TimeUnit TIME_UNIT = TimeUnit.SECONDS;
@@ -130,13 +130,8 @@ public class SMSController {
             key = USER_SMS_IN_IP + key.split(USER_SMS_IN_IP)[1];
             ipKeys2.add(key);
         });
-//        Set<String> ipKeys =
-//        for (String ip:ipKeys){
-//            ip.split("USER_SMS_IN_IP_");
-//            repository.del(ipKeys);
-//        }
-//        logger.info(JSON.toJSONString(ipKeys));
 
+        repository.del(ipKeys2);
 
         Set<String> phoneKeys = stringRedisTemplate.keys("*"+SMS_BY_PHONE+"*");
         Set<String> phoneKeys2 = new HashSet<>();
