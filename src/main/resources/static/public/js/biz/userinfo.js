@@ -14,16 +14,22 @@ $(function () {
 			{ label: '是否关注', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
 				return value==1?"是":"否";
 			}},
-			{ label: '性别', name: 'sex', index: 'sex', width: 80 },
+			{ label: '性别', name: 'sex', index: 'sex', width: 80,formatter: function(value, options, row){
+				return value!=null?getDict(vm.sex)[value]:"";
+			}}, 			
 			{ label: '国家', name: 'country', index: 'country', width: 80 },
 			{ label: '省份', name: 'province', index: 'province', width: 80 },		
 			{ label: '城市', name: 'city', index: 'city', width: 80 },
-			{ label: '公众号', name: 'city', index: 'city', width: 80 },
-			{ label: '首次关注途径', name: 'city', index: 'city', width: 80 },
-			{ label: '首次直接推荐人', name: 'city', index: 'city', width: 80 },
-			{ label: '首次间接推荐人', name: 'city', index: 'city', width: 80 },
-			{ label: '首次关注时间', name: 'city', index: 'city', width: 80 },
-			{ label: '最近修改时间', name: 'city', index: 'city', width: 80 },
+			{ label: '公众号', name: 'unionId', index: 'unionId', width: 80 },
+			{ label: '首次关注途径', name: 'channel', index: 'channel', width: 80,formatter: function(value, options, row){
+				return value!=null?getDict(vm.channel)[value]:"";
+			}}, 			
+			{ label: '首次直接推荐人', name: 'direct_recommender', index: 'direct_recommender', width: 80}, 			
+			{ label: '首次间接推荐人', name: 'indirect_recommender', index: 'indirect_recommender', width: 80 }, 			
+			{ label: '首次关注时间', name: 'createTime', index: 'createTime', width: 80,formatter: function(value, options, row){
+				return  value!=undefined?vm.parseDate(value):"";
+			}},
+			{ label: '最近关注时间', name: 'city', index: 'city', width: 80 },
         ],
 		viewrecords: true,
         height: 385,
@@ -46,6 +52,30 @@ $(function () {
             order: "order"
         },
         beforeRequest:function(e){
+        	if(vm.channel.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/CHANNEL",
+        			async: false,
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.channel = r.data;
+        				}else{alert(r.msg);}
+        			}
+        		});
+        	}
+        	if(vm.sex.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/SEX",
+        			async: false,
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.sex = r.data;
+        				}else{alert(r.msg);}
+        			}
+        		});
+        	}
         	
         },
         gridComplete:function(){
@@ -64,6 +94,8 @@ var vm = new Vue({
 		showList: true,
 		title: null,
 		status:null,
+		channel:[],
+		sex:[]
 	},
 	methods: {
 		query: function () {
@@ -77,6 +109,13 @@ var vm = new Vue({
 				postData:vm.q,
                 page:page
             }).trigger("reloadGrid");
+		   },	
+		parseDate: function(value){
+			if(value==null){
+				return "";
+			}else{
+				return new Date(parseInt(value)*1000).format("yyyy-MM-dd hh:mm:ss");
+			}
 		}
 	}
 });

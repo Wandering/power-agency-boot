@@ -4,12 +4,13 @@
 <mapper namespace="com.power.dao.ex.UserInfoDao">
 
 	<select id="queryUserList" resultType="java.util.HashMap">
-		SELECT account.id, userplatform.openId, expand.nickname ,userplatform.status,expand.headimgurl ,expand.sex ,expand.city,expand.country,expand.province 
+		SELECT account.id, userplatform.openId, expand.nickname ,userplatform.status,expand.headimgurl ,expand.sex ,expand.city,expand.country,expand.province,userplatform.createTime,ur.direct_recommender,ur.indirect_recommender,ur.channel,userplatform.unionId
 		FROM power_platform_info platforminfo 
 		INNER JOIN power_user_platform  userplatform ON platforminfo.id = userplatform.platformId
 		INNER JOIN power_user puser ON userplatform.userId = puser.id
 		INNER JOIN power_user_account account ON account.agencyId = platforminfo.agencyId AND account.userId = puser.id
 		INNER JOIN power_user_expand expand ON expand.userId = puser.id
+		INNER JOIN power_user_recommend ur ON ur.id=account.id
         <where>
 			<!-- ######服务商Id###### -->
 	        <if test="agencyId != null and agencyId.trim() != ''">
@@ -38,7 +39,8 @@
 		INNER JOIN power_user_platform  userplatform ON platforminfo.id = userplatform.platformId
 		INNER JOIN power_user puser ON userplatform.userId = puser.id
 		INNER JOIN power_user_account account ON account.agencyId = platforminfo.agencyId AND account.userId = puser.id
-		INNER JOIN power_user_expand expand ON expand.userId = account.id
+		INNER JOIN power_user_expand expand ON expand.userId = puser.id
+		INNER JOIN power_user_recommend ur ON ur.id=account.id
 		<where>
 			<!-- ######服务商Id###### -->
 	        <if test="agencyId != null and agencyId.trim() != ''">
