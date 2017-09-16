@@ -1,6 +1,5 @@
 package com.power.dao.ex;
 
-import org.apache.ibatis.annotations.Mapper;
 
 import com.power.entity.ex.PowerStationBaseDTO;
 
@@ -25,5 +24,8 @@ public interface DictDao {
 	
 	List<?> queryErrorType(Map<String, Object> map);
 	
+	List<?> queryPlatform();
+	
 	List<PowerStationBaseDTO> queryStations(Map<String, Object> map);
+
 }

@@ -158,11 +158,16 @@ public class SysUserController extends AbstractController {
 //		}else{
 //			user.setAgencyId(userEntity.getAgencyId());
 //		}
+		String password = userEntity.getPassword();
+		if(password.equals(new Sha256Hash(user.getLoginPassword()).toHex())){
 		user.setCreateUserId(userEntity.getUserId());
 		user.setParentId(userEntity.getAgencyId());
 		sysUserService.save(user);
 		
 		return R.ok();
+		}else{
+		return R.error("你输入的登录密码不正确");	
+		}
 	}
 	
 	/**
@@ -173,6 +178,7 @@ public class SysUserController extends AbstractController {
 	public R register(@RequestBody SysUserEntity user){
 		user.setPassword(new Sha256Hash(user.getPassword()).toHex());
 		user.setCreateTime(new Date());
+		user.setStatus(1);
 		sysUserService.register(user);
 		//注册成功后 直接登录
 		UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
@@ -190,6 +196,10 @@ public class SysUserController extends AbstractController {
 		ValidatorUtils.validateEntity(user, UpdateGroup.class);
 		//获取登录用户的信息
 		SysUserEntity userEntity = getUser();
+		String password = userEntity.getPassword();
+		if(password.equals(new Sha256Hash(user.getLoginPassword()).toHex())){
+			
+		
 		//判断是否代理商
 		AgenciesEntity agency = user.getAgency();
 //		if(user.getType().equals(1)){
@@ -199,6 +209,9 @@ public class SysUserController extends AbstractController {
 		sysUserService.update(user);
 		
 		return R.ok();
+		}else{
+			return R.error("你输入的登录密码不正确");
+		}
 	}
 	
 	/**

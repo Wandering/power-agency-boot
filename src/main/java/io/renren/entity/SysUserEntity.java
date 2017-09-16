@@ -123,7 +123,21 @@ public class SysUserEntity implements Serializable {
 	 */
 	private Integer agencytype;
 
+	/**
+	 * 当前登录的用户密码
+	 */
+	private String loginPassword;
+	
+	
 
+
+	public String getLoginPassword() {
+		return loginPassword;
+	}
+
+	public void setLoginPassword(String loginPassword) {
+		this.loginPassword = loginPassword;
+	}
 
 	public Date getLoginTime() {
 		return loginTime;

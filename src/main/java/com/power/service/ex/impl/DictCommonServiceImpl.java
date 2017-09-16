@@ -47,5 +47,10 @@ public class DictCommonServiceImpl implements DictService {
 	public List<PowerStationBaseDTO> queryStations(Map<String, Object> map) {
 		return dictDao.queryStations(map);
 	}
+
+	@Override
+	public List<?> queryPlatform() {
+		return dictDao.queryPlatform();
+	}
 	
 }

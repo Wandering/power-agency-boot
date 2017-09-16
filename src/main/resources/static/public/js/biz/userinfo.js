@@ -4,32 +4,34 @@ $(function () {
         datatype: "json",
         postData:vm.q,
         colModel: [			
-			{ label: '用户Id', name: 'id', index: 'id', width: 50, key: true },
+			{ label: '用户Id', name: 'id', index: 'id', width: 40, key: true },
 			{ label: '昵称', name: 'nickname', index: 'nickname', width: 80 },
-			{ label: 'openId', name: 'openId', index: 'openId', width: 140 },
-			{ label: '头像', name: 'headimgurl', index: 'headimgurl', width: 80 ,formatter: function(value, options, row){
+			{ label: 'openId', name: 'openId', index: 'openId', width: 160 },
+			{ label: '头像', name: 'headimgurl', index: 'headimgurl', width: 50 ,formatter: function(value, options, row){
 				var imgStr = "<img src='"+value+"' height='20'/>";
 				return imgStr;
 			}},
-			{ label: '是否关注', name: 'status', index: 'status', width: 80 ,formatter: function(value, options, row){
+			{ label: '是否关注', name: 'status', index: 'status', width: 40 ,formatter: function(value, options, row){
 				return value==1?"是":"否";
 			}},
-			{ label: '性别', name: 'sex', index: 'sex', width: 80,formatter: function(value, options, row){
+			{ label: '性别', name: 'sex', index: 'sex', width: 40,formatter: function(value, options, row){
 				return value!=null?getDict(vm.sex)[value]:"";
 			}}, 			
-			{ label: '国家', name: 'country', index: 'country', width: 80 },
-			{ label: '省份', name: 'province', index: 'province', width: 80 },		
-			{ label: '城市', name: 'city', index: 'city', width: 80 },
-			{ label: '公众号', name: 'unionId', index: 'unionId', width: 80 },
+			{ label: '国家', name: 'country', index: 'country', width: 40 },
+			{ label: '省份', name: 'province', index: 'province', width: 40 },		
+			{ label: '城市', name: 'city', index: 'city', width: 60 },
+			{ label: '公众号', name: 'unionId', index: 'unionId', width: 80 ,formatter: function(value, options, row){
+				return value!=null?getDict(vm.platform)[value]:"";
+			}}, 			
 			{ label: '首次关注途径', name: 'channel', index: 'channel', width: 80,formatter: function(value, options, row){
 				return value!=null?getDict(vm.channel)[value]:"";
 			}}, 			
 			{ label: '首次直接推荐人', name: 'direct_recommender', index: 'direct_recommender', width: 80}, 			
 			{ label: '首次间接推荐人', name: 'indirect_recommender', index: 'indirect_recommender', width: 80 }, 			
-			{ label: '首次关注时间', name: 'createTime', index: 'createTime', width: 80,formatter: function(value, options, row){
+			{ label: '首次关注时间', name: 'createTime', index: 'createTime', width: 100,formatter: function(value, options, row){
 				return  value!=undefined?vm.parseDate(value):"";
 			}},
-			{ label: '最近关注时间', name: 'city', index: 'city', width: 80 },
+			{ label: '最近关注时间', name: 'city', index: 'city', width:100 },
         ],
 		viewrecords: true,
         height: 385,
@@ -76,6 +78,18 @@ $(function () {
         			}
         		});
         	}
+        	if(vm.platform.length==0){
+        		$.ajax({
+        			type: "POST",
+        			url: "../dict/queryPlatform",
+        			async: false,
+        			success: function(r){
+        				if(r.code === 0){
+        					vm.platform = r.data;
+        				}else{alert(r.msg);}
+        			}
+        		});
+        	}
         	
         },
         gridComplete:function(){
@@ -89,13 +103,14 @@ var vm = new Vue({
 	el:'#rrapp',
 	data:{
 		q:{
-			userId:"",agencyId:""
+			userId:"",agencyId:"",openId:""
 		},
 		showList: true,
 		title: null,
 		status:null,
 		channel:[],
-		sex:[]
+		sex:[],
+		platform:[]
 	},
 	methods: {
 		query: function () {

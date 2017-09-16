@@ -20,6 +20,9 @@
 	        <if test="userId != null and userId.trim() != ''">
 	            AND account.id = #{userId}
 	        </if>
+	        <if test="openId != null and openId.trim() != ''">
+	            AND userplatform.openId = #{openId}
+	        </if>
 		</where>
         <choose>
             <when test="sidx != null and sidx.trim() != ''">
@@ -49,6 +52,9 @@
 	        <!-- ######userId###### -->
 	        <if test="userId != null and userId.trim() != ''">
 	            AND account.id = #{userId}
+	        </if>
+	        <if test="openId != null and openId.trim() != ''">
+	            AND userplatform.openId = #{openId}
 	        </if>
 		</where> 
 	</select>

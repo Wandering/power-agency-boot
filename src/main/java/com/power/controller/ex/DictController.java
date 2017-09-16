@@ -36,6 +36,17 @@ public class DictController {
 	}
 	
 	/**
+	 * 
+	 * @param type
+	 * @return
+	 */
+	@RequestMapping("/queryPlatform")
+	public R queryPlatform(){
+		List<?> PlatformList = dictService.queryPlatform();
+		return R.ok().put("data",PlatformList);
+	}
+	
+	/**
 	 * 字典-充电桩型号
 	 */
 	@RequestMapping("/queryStationModel")

@@ -25,4 +25,6 @@ public interface DictService {
 	List<?> queryErrorType(Map<String, Object> map);
 	
 	List<PowerStationBaseDTO> queryStations(Map<String, Object> map);
+
+	List<?> queryPlatform();
 }

@@ -42,5 +42,9 @@
 			</if>
 		order by id
 	</select>
+	
+	<select id="queryPlatform" resultType="java.util.HashMap">
+	 select appId code,note name FROM power_platform_info order by appId
+	</select>
 
 </mapper>
