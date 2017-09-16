@@ -93,7 +93,7 @@ public class SMSController {
         String redisLockKey = USER_SMS_IN_USE_TAG + phone;
         //redis存储验证码
         if (!repository.exists(redisLockKey)) {
-            repository.set(USER_SMS_IN_IP + ip, "" + (++count), SMS_COUNT_BY_IP_TIME, TimeUnit.HOURS);
+            repository.set(USER_SMS_IN_IP + ip, "" + (++count2), SMS_COUNT_BY_IP_TIME, TimeUnit.HOURS);
             repository.set(SMS_BY_PHONE + phone, "" + (++count), SMS_COUNT_BY_PHONE_TIME, TimeUnit.HOURS);
 
             SMSCheckCode smsCheckCode = new SMSCheckCode();
