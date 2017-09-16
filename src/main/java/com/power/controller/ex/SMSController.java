@@ -121,7 +121,7 @@ public class SMSController {
      * 定时任务  定期清空退款失败队列
      * 目前暂定每日0点执行一次
      */
-    @Scheduled(cron = "0 0 0 * * ? *")
+    @Scheduled(cron = "0 0 0 * * ? ")
     public void removeRedisKey() {
         logger.info("执行删除rediskey...");
         Set<String> ipKeys = stringRedisTemplate.keys("*"+USER_SMS_IN_IP+"*");
