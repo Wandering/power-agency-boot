@@ -1,5 +1,6 @@
 package com.power.controller.ex;
 
+import com.alibaba.fastjson.JSON;
 import com.google.code.kaptcha.Constants;
 import com.mchange.lang.IntegerUtils;
 import com.power.redis.cache.RedisRepository;
@@ -10,10 +11,16 @@ import io.renren.utils.ShiroUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
+import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
@@ -31,6 +38,9 @@ public class SMSController {
     private ISMSService smsService;
     @Autowired
     private RedisRepository<String, String> repository;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+    private RedisSerializer keySerializer = new JdkSerializationRedisSerializer();
     /**
      * 用户发短信标识
      **/
@@ -111,10 +121,30 @@ public class SMSController {
      * 定时任务  定期清空退款失败队列
      * 目前暂定每日0点执行一次
      */
-    @Scheduled(cron = "0 0 0 * * ? ")
+    @Scheduled(cron = "0 0 0 * * ? *")
     public void removeRedisKey() {
-        repository.del("USER_SMS_IN_IP*");
-        repository.del("SMS_BY_PHONE*");
+        logger.info("执行删除rediskey...");
+        Set<String> ipKeys = stringRedisTemplate.keys("*"+USER_SMS_IN_IP+"*");
+        Set<String> ipKeys2 = new HashSet<>();
+        ipKeys.stream().forEach((key)->{
+            key = USER_SMS_IN_IP + key.split(USER_SMS_IN_IP)[1];
+            ipKeys2.add(key);
+        });
+//        Set<String> ipKeys =
+//        for (String ip:ipKeys){
+//            ip.split("USER_SMS_IN_IP_");
+//            repository.del(ipKeys);
+//        }
+//        logger.info(JSON.toJSONString(ipKeys));
+
+
+        Set<String> phoneKeys = stringRedisTemplate.keys("*"+SMS_BY_PHONE+"*");
+        Set<String> phoneKeys2 = new HashSet<>();
+        phoneKeys.stream().forEach((key)->{
+            key = SMS_BY_PHONE + key.split(SMS_BY_PHONE)[1];
+            phoneKeys2.add(key);
+        });
+        repository.del(phoneKeys2);
     }
 
     /**
