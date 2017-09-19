@@ -171,7 +171,7 @@ public class DataPermissionServiceImpl implements IDataPermissionService {
      */
     @Override
     public String genPermissionBySign(Long agencyId, Long superAgencyId) {
-        return new StringBuilder(1).append(",").append(superAgencyId).append(",").append(agencyId).toString();
+        return new StringBuilder("1").append(",").append(superAgencyId).append(",").append(agencyId).toString();
     }
 
     /**
