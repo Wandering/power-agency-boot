@@ -143,3 +143,59 @@ tbody>tr>th {
 	background-color: #e0e0e0;
 	padding: 0 3px;
 }
+.agent div{
+    width: 300px;
+    height: 150px;
+    background-color: #3C8DBC;
+    text-align: center;
+    line-height: 150px;
+    margin: 10px auto;
+    margin-bottom: 20px;
+    color: #FFFFFF;
+}
+
+.agent div h3{
+    position: relative;
+    top: 60px;
+}
+.agencyform{
+	margin: 10px auto;
+	width:80%;
+	max-width: 800px;
+	padding-left: 0px;
+}
+.agencyform .form-group{
+	clear: both;
+	min-height: 34px;
+	margin: 15px 0;
+}
+.agencyform .form-group .reg{
+	color:red;
+}
+.agencyform .form-group .control-label{
+	text-align: right;
+	padding-top: 7px;
+}
+@media ( max-width : 768px) {
+	.agencyform{
+		padding-left: 0px;
+	}
+	.agencyform .form-group{
+		margin: 10px 0;
+	}
+	.agencyform .form-group .control-label{
+		text-align: left;
+	}
+}
+.agencyform .col-sm-4{
+	padding: 0 5px;
+}
+.agencyform  .uploadbtn{
+	display: inline-block;
+	border: 1px solid #999;
+	height: 34px;
+	line-height: 34px;
+	width: 150px;
+	text-align: center;
+}
+

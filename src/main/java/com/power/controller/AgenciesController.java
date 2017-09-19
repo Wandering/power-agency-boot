@@ -107,7 +107,6 @@ public class AgenciesController extends AbstractController{
 	 * 修改
 	 */
 	@RequestMapping("/update")
-	@RequiresPermissions("agencies:update")
 	public R update(@RequestBody AgenciesEntity agencies){
 		agenciesService.update(agencies);
 		return R.ok();
@@ -120,13 +119,12 @@ public class AgenciesController extends AbstractController{
 	@RequiresPermissions("agencies:examine")
 	public R examine(@RequestBody AgenciesEntity agencies){
 		String status = agencies.getStatus();
-		int agencyType = agencies.getAgencytype();
 //				0：独家代理(宇能默认为独家代理)
 //				1：签约代理
 
 		//通过审核或店主
 		if(status.equals("2")){
-			System.out.println("通过审核");
+			int agencyType = agencies.getAgencytype();
 			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
 			agencies.setAgencyPool(agencyType == 1 ? dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()): dataPermissionService.genPermissionBySign(agencies.getId(),agencies.getParent()));
 			if (agencies.getQrcode() == null) {
@@ -134,10 +132,9 @@ public class AgenciesController extends AbstractController{
 			}
 		//未通过审核或店主
 		}else if(status.equals("3")){
-			System.out.println("未通过审核");
+			
 		//转移给代理商
 		}else if(status.equals("4")){
-			System.out.println("转移");
 			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
 			agencies.setAgencyPool(dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()));
 		}
@@ -193,7 +190,7 @@ public class AgenciesController extends AbstractController{
 				return R.ok().put("status", status);
 			}else if(status.equals("3")){
 				//未通过
-				return R.ok().put("status", status);
+				return R.ok().put("status", status).put("agencies", agency);
 			}else{
 				return R.error("该用户已经注册成为代理商或店主");
 			}
@@ -202,7 +199,7 @@ public class AgenciesController extends AbstractController{
 			if(parent!=null){
 				return R.error("该用户为运营商创建的帐号！");
 			}
-			return R.ok().put("status", "0");
+			return R.ok().put("status", 0);
 		}
 	}
 	

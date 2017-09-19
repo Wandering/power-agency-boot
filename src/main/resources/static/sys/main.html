@@ -1,9 +1,291 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>控制台</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <title>控制台</title>
+    <link rel="stylesheet" href="../public/css/bootstrap.min.css">
+	<link rel="stylesheet" href="../public/css/gloab.css">
+	<link rel="stylesheet" href="../public/css/main.css">
+	<script src="../public/libs/jquery.min.js"></script>
+	<script src="../public/plugins/layer/layer.js"></script>
+	<script src="../public/libs/bootstrap.min.js"></script>
+	<script src="../public/libs/vue.-1.0.24.js"></script>
+	<script src="../public/libs/ajaxupload.js"></script>
+	<script src="../public/libs/validator.js"></script>
+	<script src="../public/js/common.js"></script>
+    <style>
+        ::-webkit-input-placeholder { /* WebKit browsers */ 
+		font-size:12px;
+		} 
+		:-moz-placeholder { /* Mozilla Firefox 4 to 18 */ 
+		font-size:12px;
+		} 
+		::-moz-placeholder { /* Mozilla Firefox 19+ */ 
+		font-size:12px;
+		} 
+		:-ms-input-placeholder { /* Internet Explorer 10+ */ 
+		font-size:12px;
+		}
+    </style>
 </head>
-<body>欢迎登录PPower权限系统
+<body>
+<div id="app" v-cloak style="width: 100%;">
+	<h4 v-show="!showinfo&&status!=1" style="display: none;">欢迎登录PPower权限系统</h4>
+	<h4 v-show="status==1" style="display: none;text-align: center;">您的主体信息已提交，正在等待审核，宇能工作人员会在1-3个工作日内与您联系</h4>
+	<h4 v-show="status==3&&showinfo" style="display: none;text-align: center;">未通过审核，请重新提交！</h4>
+    <div v-show="showinfo" style="margin-top: 30px;display: none;">
+        <div class="step" style="width: 80%;min-width:350px;">
+            <ul>
+                <li class="col-xs-4 on">
+                    <span class="num"><em class="f-r5 active"></em><i>1</i></span>
+                    <span class="line_bg lbg-r active" ></span>
+                    <p class="lbg-txt activeColor">选择类型</p>
+                </li>
+                <li class="col-xs-4 on">
+                    <span class="num"><em class="f-r5 step-em" :class="{'active':basic>=2}"></em><i>2</i></span>
+                    <span v-ref="stepline" class="line_bg lbg-l" :class="{'active':basic>=2}"></span>
+                    <span class="line_bg lbg-r" :class="{'active':basic>=2}"></span>
+                    <p class="lbg-txt" :class="{'activeColor':basic>=2}">基本信息</p>
+                </li>
+                <li class="col-xs-4">
+                    <span class="num"><em class="f-r5 step-em" :class="{'active':basic==3}"></em><i>3</i></span>
+                    <span class="line_bg lbg-l" :class="{'active':basic==3}"></span>
+                    <p class="lbg-txt" :class="{'activeColor':basic==3}">选择来源</p>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="agent" v-show="basic==1&&showinfo" style="display: none;">
+        <div @click="deleNterprise">
+            <h3>代理商</h3>
+            <p>(公司)</p>
+        </div>
+        <div @click="deleIndividual">
+            <h3>代理商</h3>
+            <p>(个人)</p>
+        </div>
+        <div @click="shopkeeper">
+            <h3>店主</h3>
+        </div>
+    </div>
+    
+    <div v-show="basic==2&&showinfo" class="agencyform">
+    	<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>企业名称：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.name" name="agencyname" placeholder="跟营业执照一致"/>
+		    </div>
+		   	<div class="col-sm-4 st-error" id="err1"></div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>营业执照注册号：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.businessNo" name="registrationnum" placeholder="15位营业执照注册号或18位的统一社会信用代码"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err2"></div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>营业执照副本：</div>
+		   	<div class="col-sm-4">
+		      <!-- <input type="text" class="form-control" v-model="agencies.businessImg" placeholder="营业执照副本"/> -->
+		      <a class="btn btn-primary" id="uploadBiz" style="margin-top: -18px;">选择上传文件</a>
+              <div style="display: inline-block;height: 34px;font-size: 12px;color: #999">
+                  <p>1.盖红章</p>
+                  <p>2.不大于500kb</p>
+              </div>
+		    </div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>开户银行：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.openBank" name="userbank" placeholder="输入对公账户开户银行"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err3"></div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>开户名称：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.bankname" name="bankname" placeholder="输入对公账户开户名称"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err4"></div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>对公账号：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.bankCardno" name="accountnum" placeholder="输入对公账户"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err5"></div>
+		</div>
+		<div class="form-group" v-show="active!=2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>再次输入对公账户：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="bankCardno" name="repeataccountnum" placeholder="再次输入对公账户"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err6"></div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>法人姓名：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.legaluserName" name="corporate" placeholder="输入法人的身份证姓名"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err7"></div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>法人身份证号：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.legaluserNo" name="corporateidentity" placeholder="输入法人的身份证号码"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err8"></div>
+		</div>
+		<div class="form-group">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>法人身份证扫描件：</div>
+		   	<div class="col-sm-4">
+		      <!-- <input type="text" class="form-control" v-model="agencies.legaluserImg" placeholder="法人身份证扫描件"/> -->
+		      <a class="btn btn-primary" id="uploadID">选择上传文件</a>
+              <div style="display: inline-block;height: 34px;font-size: 12px;color: #999">
+                  <p>不大于500kb</p>
+              </div>
+		    </div>
+		</div>
+		<div class="form-group" v-show="active==2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>收款银行：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.openBank" name="companybankname" placeholder="输入收款银行"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err9"></div>
+		</div>
+		<div class="form-group" v-show="active==2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>银行帐号：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="agencies.bankCardno" name="companyacc" placeholder="输入银行账户（本人）"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err10"></div>
+		</div>
+		<div class="form-group" v-show="active==2">
+		   	<div class="col-sm-4 control-label"><span class="reg">* </span>再次输入银行账户：</div>
+		   	<div class="col-sm-4">
+		      <input type="text" class="form-control" v-model="bankCardno" name="againcompanyacc"  placeholder="再次输入银行账户（本人）"/>
+		    </div>
+		    <div class="col-sm-4 st-error" id="err11"></div>
+		</div>
+		<div class="form-group" style="text-align: center;">
+			<input type="button" class="btn btn-warning" @click="previousStep" value=" 上一步 "/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-primary" @click="nextStep" value=" 下一步 "/>
+		</div>
+    </div>
+
+    <div v-show="basic==3&&showinfo" style="display: none;width: 60%;margin:0 auto;">
+     	<div class="form-group" style="height:120px;padding-top: 30px;">
+			<div class="col-sm-12" style="padding-left: 42%;">
+				<input name="recommend" type="radio" value="0" v-model="recommend" />代理商推荐 <br>
+				<input type="text" v-if="recommend==0" class="form-control" v-model="recommendId" placeholder="代理商用户名" style="width: 170px;">
+				<input name="recommend" type="radio" value="1" v-model="recommend" />其他  
+			</div>
+     	</div>
+     	<div class="form-group" style="text-align: center;">
+			<input type="button" class="btn btn-warning" @click="previousStep" value=" 上一步 "/>
+			&nbsp;&nbsp;<input type="button" class="btn btn-primary" @click="subAngency" value=" 提交 "/>
+		</div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    var eles = {
+    	agencyname : $('[name="agencyname"]'),
+        registrationnum : $('[name="registrationnum"]'),
+        userbank : $('[name="userbank"]'),
+        bankname : $('[name="bankname"]'),
+        accountnum : $('[name="accountnum"]'),
+        repeataccountnum : $('[name="repeataccountnum"]'),
+        corporate : $('[name="corporate"]'),
+        corporateidentity : $('[name="corporateidentity"]'),
+        companybankname : $('[name="companybankname"]'),
+        companyacc : $('[name="companyacc"]'),
+        againcompanyacc : $('[name="againcompanyacc"]'),
+        err1 : $('#err1'),
+        err2 : $('#err2'),
+        err3 : $('#err3'),
+        err4 : $('#err4'),
+        err5 : $('#err5'),
+        err6 : $('#err6'),
+        err7 : $('#err7'),
+        err8 : $('#err8'),
+        err9 : $('#err9'),
+        err10: $('#err10'),
+        err11: $('#err11'),
+        errTxt1 : '请输入3-18个汉字！',
+        errTxt2 : '请输入正确的营业执照注册号！',
+        errTxt3 : '请输入开户银行(4-12)个汉字！',
+        errTxt4 : '请输入开户名称(2-4个汉字)！',
+        errTxt5 : '请输入对公账户(银行卡号)！',
+        errTxt6 : '请再次输入对公账户(银行卡号)！',
+        errTxt7 : '请输入2-4个汉字！',
+        errTxt8 : '请输入15位或者18位身份证号码！',
+        errTxt9 : '请输入收款银行(4-12)个汉字！',
+        errTxt10: '请输入正确的银行卡号！',
+        errTxt11: '请再次输入正确的银行卡号！',
+        norm_agencyname : /^[\u4E00-\u9FA5]{3,18}$/,
+        norm_registrationnum : /^(?:(?![IOZSV])[\dA-Z]){2}\d{6}(?:(?![IOZSV])[\dA-Z]){10}$/,
+        norm_userbank : /^([\u4e00-\u9fa5]){4,12}$/,
+        norm_bankname : /^[\u4E00-\u9FA5]{2,4}$/,
+        norm_accountnum : /^([1-9]{1})(\d{14}|\d{18})$/,
+        norm_repeataccountnum : /^([1-9]{1})(\d{14}|\d{18})$/,
+        norm_corporate : /^[\u4E00-\u9FA5]{2,4}$/,
+        norm_corporateidentity : /(^\d{15}$)|(^\d{17}([0-9]|X)$)/,
+        norm_companybankname : /^([\u4e00-\u9fa5]){4,12}$/,
+        norm_companyacc : /^([1-9]{1})(\d{14}|\d{18})$/,
+        norm_againcompanyacc : /^([1-9]{1})(\d{14}|\d{18})$/,
+    };
+
+    //企业名称
+    eles.agencyname.on('change',function(){
+        eles.agencyname.validator( eles.norm_agencyname, eles.err1, eles.errTxt1 );
+    });
+    //营业执照注册号
+    eles.registrationnum.on('change',function(){
+        eles.registrationnum.validator( eles.norm_registrationnum, eles.err2, eles.errTxt2 );
+    });
+    //开户银行
+    eles.userbank.on('change',function(){
+        eles.userbank.validator( eles.norm_userbank, eles.err3, eles.errTxt3 );
+    });
+    //开户名称
+    eles.bankname.on('change',function(){
+        eles.bankname.validator( eles.norm_bankname, eles.err4, eles.errTxt4 );
+    });
+    //对公账号
+    eles.accountnum.on('change',function(){
+        eles.accountnum.validator( eles.norm_accountnum, eles.err5, eles.errTxt5 );
+    });
+    //确认对公账
+    eles.repeataccountnum.on('change',function(){
+        eles.repeataccountnum.validator( eles.norm_repeataccountnum, eles.err6, eles.errTxt6 );
+    });
+    //法人姓名
+    eles.corporate.on('change',function(){
+        eles.corporate.validator( eles.norm_corporate, eles.err7, eles.errTxt7 );
+    });
+    //法人身份证号
+    eles.corporateidentity.on('change',function(){
+    	eles.corporateidentity.validator( eles.norm_corporateidentity, eles.err8, eles.errTxt8 );
+    });
+    //收款银行
+    eles.companybankname.on('change',function(){
+    	eles.companybankname.validator( eles.norm_companybankname, eles.err9, eles.errTxt9 );
+    });
+    //银行账号
+    eles.companyacc.on('change',function(){
+    	eles.companyacc.validator( eles.norm_companyacc, eles.err10, eles.errTxt10 );
+    });
+    //再次确认一行账号
+    eles.againcompanyacc.on('change',function(){
+    	eles.againcompanyacc.validator( eles.norm_againcompanyacc, eles.err11, eles.errTxt11 );
+    });
+
+    
+</script>
+<script src="../public/js/sys/main.js"></script>
 </body>
 </html>
