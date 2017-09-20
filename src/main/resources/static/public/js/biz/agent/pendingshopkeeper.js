@@ -83,6 +83,12 @@ $(function () {
         			alert("结束时间不能小于开始时间！");
         		}
         	});
+        	$.getJSON("../../agencies/searchAccount", function(r){
+				if(r.code==0){
+					vm.subjects = r.data;
+					$('#search').typeahead({source: vm.subjects})
+				}else{alert(r.msg);}
+			});
         }
     });
 });
@@ -98,7 +104,9 @@ var vm = new Vue({
 		status:null,
 		username:"",
 		password:"",
-		agencies: {}
+		parentId:"",
+		agencies: {},
+		subjects:[]
 	},
 	mounted: function(){
 		var bodywidth = $(document.body).width();
@@ -122,6 +130,8 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
+			console.log(vm.parentId);
+			console.log(vm.subjects);
 			if(vm.agencies.status=="2"){
 				if($('#startTime').val()==""){alert('请输入合同开始时间！');return;}else{
 					vm.agencies.contractStartdt = $('#startTime').val()+" 00:00:00";
