@@ -22,7 +22,7 @@
 				agency.id in (${whereSql})
 			</if>
 			<if test="key!=null and key.trim()!=''">
-				suser.username like CONCAT('%',#{key},'%')
+				and suser.username like CONCAT('%',#{key},'%')
 			</if>
 		</where>
 	</select>
