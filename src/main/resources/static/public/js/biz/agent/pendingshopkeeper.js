@@ -86,7 +86,9 @@ $(function () {
         	$.getJSON("../../agencies/searchAccount", function(r){
 				if(r.code==0){
 					vm.subjects = r.data;
-					$('#search').typeahead({source: vm.subjects})
+					$('#search').typeahead({source: vm.subjects,afterSelect:function(item) {
+						vm.agencies.parent=item.id;
+					}})
 				}else{alert(r.msg);}
 			});
         }
@@ -104,7 +106,6 @@ var vm = new Vue({
 		status:null,
 		username:"",
 		password:"",
-		parentId:"",
 		agencies: {},
 		subjects:[]
 	},
@@ -130,15 +131,24 @@ var vm = new Vue({
             vm.getInfo(id)
 		},
 		saveOrUpdate: function (event) {
-			console.log(vm.parentId);
-			console.log(vm.subjects);
-			if(vm.agencies.status=="2"){
-				if($('#startTime').val()==""){alert('请输入合同开始时间！');return;}else{
-					vm.agencies.contractStartdt = $('#startTime').val()+" 00:00:00";
+			var selParent = true;
+			for(var k in vm.subjects){
+				if(vm.subjects[k].id==vm.agencies.parent){
+					selParent=false;
 				}
-				if($('#endTime').val()==""){alert('请输入合同结束时间！');return;}else{
-					vm.agencies.contractEnddt = $('#endTime').val()+" 23:59:59";
-				}
+			}
+			switch(vm.agencies.status){
+				case "2":
+					if($('#startTime').val()==""){alert('请输入合同开始时间！');return;}else{
+						vm.agencies.contractStartdt = $('#startTime').val()+" 00:00:00";
+					}
+					if($('#endTime').val()==""){alert('请输入合同结束时间！');return;}else{
+						vm.agencies.contractEnddt = $('#endTime').val()+" 23:59:59";
+					}
+				break;
+				case "4":
+					if(selParent || $("#search").val()==""){alert("请选择要转移的代理商！");return;}
+				break;
 			}
 			if(vm.password==""){alert('请输入登录密码！');return;}
 			$.getJSON("../../sys/user/checkPwd?password="+vm.password, function(r){

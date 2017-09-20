@@ -95,6 +95,8 @@ public class AgenciesController extends AbstractController{
 		agenciesService.save(agencies);
 		user.setAgencyId(agencies.getId());
 		user.setParentId(agencies.getParent());
+		Long CreateUserId = agenciesService.queryObject(agencies.getParent()).getAbbrCode();
+		user.setCreateUserId(CreateUserId);
 		//设置空角色列表
 		List<Long> roleIdList = new ArrayList<Long>();
 		user.setRoleIdList(roleIdList);
@@ -124,7 +126,7 @@ public class AgenciesController extends AbstractController{
 
 		//通过审核或店主
 		if(status.equals("2")){
-			int agencyType = agencies.getAgencytype();
+			int agencyType = null!=agencies.getAgencytype()?agencies.getAgencytype():agenciesService.queryObject(agencies.getParent()).getAgencytype();
 			AgenciesEntity parentEntity = agenciesService.queryObject(agencies.getParent());
 			agencies.setAgencyPool(agencyType == 1 ? dataPermissionService.genPermissionByIndependent(agencies.getId(),parentEntity.getAgencyPool()): dataPermissionService.genPermissionBySign(agencies.getId(),agencies.getParent()));
 			if (agencies.getQrcode() == null) {
