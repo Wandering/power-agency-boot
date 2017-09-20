@@ -201,7 +201,7 @@ public class SysUserController extends AbstractController {
 			
 		
 		//判断是否代理商
-		AgenciesEntity agency = user.getAgency();
+		//AgenciesEntity agency = user.getAgency();
 //		if(user.getType().equals(1)){
 //			agenciesService.update(agency);
 //		}else{}
@@ -212,6 +212,15 @@ public class SysUserController extends AbstractController {
 		}else{
 			return R.error("你输入的登录密码不正确");
 		}
+	}
+	/**
+	 * 修改用户
+	 */
+	@RequestMapping("/updateUserInfo")
+	public R updateUserInfo(@RequestBody SysUserEntity user){
+		ValidatorUtils.validateEntity(user, UpdateGroup.class);
+		sysUserService.updateUserInfo(user);
+		return R.ok();
 	}
 	
 	/**

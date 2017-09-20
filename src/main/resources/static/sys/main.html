@@ -33,6 +33,7 @@
 <body>
 <div id="app" v-cloak style="width: 100%;">
 	<h4 v-show="!showinfo&&status!=1" style="display: none;">欢迎登录PPower权限系统</h4>
+	<h4 v-show="showinfo" style="display: none;text-align: center;">请登记主体信息，提交审核</h4>
 	<h4 v-show="status==1" style="display: none;text-align: center;">您的主体信息已提交，正在等待审核，宇能工作人员会在1-3个工作日内与您联系</h4>
 	<h4 v-show="status==3&&showinfo" style="display: none;text-align: center;">未通过审核，请重新提交！</h4>
     <div v-show="showinfo" style="margin-top: 30px;display: none;">

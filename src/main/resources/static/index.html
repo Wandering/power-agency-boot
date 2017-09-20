@@ -27,7 +27,7 @@
 	<!-- Site wrapper -->
 	<div class="wrapper" id="rrapp" v-cloak>
 		<header class="main-header">
-			<a href="javascript:void(0);" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
+			<a href="index.html" class="logo"> <!-- mini logo for sidebar mini 50x50 pixels -->
 				<span class="logo-mini"><b>PP</b></span> <!-- logo for regular state and mobile devices -->
 				<span class="logo-lg"><b>PPower权限系统</b></span>
 			</a>
@@ -43,10 +43,13 @@
 					<ul class="nav navbar-nav">
 						<!-- <li><a href="http://www.renren.io" target="_blank"><i
 								class="fa fa-home"></i> &nbsp;编程教程</a></li> -->
-						<li><a href="javascript:;" @click="updatePassword"><i
-								class="fa fa-lock"></i> &nbsp;修改密码</a></li>
-						<li><a href="logout"><i class="fa fa-sign-out"></i>
-								&nbsp;退出系统</a></li>
+						<li>
+							<a href="javascript:;" @click="updateUserInfo"><i class="fa fa-user"></i> &nbsp;用户信息</a>
+						</li>
+						<li>
+							<a href="javascript:;" @click="updatePassword"><i class="fa fa-lock"></i> &nbsp;修改密码</a>
+						</li>
+						<li><a href="logout"><i class="fa fa-sign-out"></i>&nbsp;退出系统</a></li>
 					</ul>
 				</div>
 			</nav>
@@ -123,6 +126,36 @@
 						<div class="col-sm-10">
 							<input type="text" class="form-control" v-model="newPassword"
 								placeholder="新密码" />
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		
+		<!-- 修改密码 -->
+		<div id="userInfoLayer" style="display: none;">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<div class="form-group">
+						<div class="col-sm-2 control-label">账号</div>
+						<span class="label label-success" style="vertical-align: bottom;">{{user.username}}</span>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">真实姓名</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="user.agencyName" placeholder="真实姓名" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">手机号码</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="user.mobile" placeholder="手机号码" />
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-2 control-label">电子邮箱</div>
+						<div class="col-sm-10">
+							<input type="text" class="form-control" v-model="user.email" placeholder="电子邮箱" />
 						</div>
 					</div>
 				</div>

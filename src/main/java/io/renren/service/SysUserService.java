@@ -76,4 +76,6 @@ public interface SysUserService {
 	List <SysUserEntity> queryByAgencyId(String username);
 
 	void register(SysUserEntity user);
+
+	void updateUserInfo(SysUserEntity user);
 }

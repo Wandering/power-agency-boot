@@ -82,6 +82,34 @@ var vm = new Vue({
 					});
 	            }
 			});
+		},
+		updateUserInfo: function(){
+			console.log(vm.user)
+			layer.open({
+				type: 1,
+				skin: 'layui-layer-lan',
+				title: "用户信息",
+				area: ['550px', '370px'],
+				shadeClose: false,
+				content: jQuery("#userInfoLayer"),
+				btn: ['确认修改','关闭'],
+				btn1: function (index) {
+					$.ajax({
+						type: "POST",
+						url: "sys/user/updateUserInfo",
+						data: JSON.stringify(vm.user),
+						contentType: "application/json",
+						success: function(result){
+							if(result.code == 0){
+								layer.close(index);
+								layer.alert('修改成功');
+							}else{
+								layer.alert(result.msg);
+							}
+						}
+					});
+				}
+			});
 		}
 	},
 	created: function(){

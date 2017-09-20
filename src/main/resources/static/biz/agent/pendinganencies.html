@@ -15,6 +15,7 @@
 <script src="../../public/plugins/layer/layer.js"></script>
 <script src="../../public/libs/bootstrap.min.js"></script>
 <script src="../../public/libs/vue.min.js"></script>
+<script src="../../public/libs/bootstrap-typeahead.js"></script>
 <script src="../../public/plugins/jqgrid/grid.locale-cn.js"></script>
 <script src="../../public/plugins/jqgrid/jquery.jqGrid.min.js"></script>
 <script src="../../public/plugins/ztree/jquery.ztree.all.min.js"></script>
@@ -66,7 +67,7 @@ input[type=radio] {
 					</label><br>
 					<label class="checkbox-inline"> 
 						<input type="radio" value="4" v-model="agencies.status">转移给独家代理商
-						<input type="text" v-model="agencies.parent" style="border: 0;border-bottom: 1px solid #333">
+						<input type="text" id="search" data-provide="typeahead" style="border: 0;border-bottom: 1px solid #333">
 					</label>
 			    </div>
 			</div>
