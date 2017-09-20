@@ -22,7 +22,7 @@ public class AgenciesExServiceImpl  implements IAgenciesExService{
         return agenciesExDAO.search(key,whereSql);
     }
     @Override
-    public List<BaseSearch> searchAccount(String key, String whereSql) {
-        return agenciesExDAO.searchAccount(key,whereSql);
+    public List<BaseSearch> searchAccount(String key,Integer type, String whereSql) {
+        return agenciesExDAO.searchAccount(key,type,whereSql);
     }
 }

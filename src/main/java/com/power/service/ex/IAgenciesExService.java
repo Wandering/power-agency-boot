@@ -11,5 +11,5 @@ import java.util.List;
  */
 public interface IAgenciesExService {
     List<BaseSearch> search(String key, String whereSql);
-    List<BaseSearch> searchAccount(String key, String whereSql);
+    List<BaseSearch> searchAccount(String key,Integer type, String whereSql);
 }

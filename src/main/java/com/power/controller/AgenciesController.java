@@ -223,7 +223,7 @@ public class AgenciesController extends AbstractController{
 	public R searchAccount(String key){
 		Subject subject = SecurityUtils.getSubject();
 		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
-		return R.ok().put("data",agenciesExService.searchAccount(key,userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT)));
+		return R.ok().put("data",agenciesExService.searchAccount(key,1,userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT)));
 	}
 
     /**
@@ -233,7 +233,7 @@ public class AgenciesController extends AbstractController{
      */
     @RequestMapping("/all/searchAccount")
     public R searchAllAccount(String key){
-        return R.ok().put("data",agenciesExService.searchAccount(key,null));
+        return R.ok().put("data",agenciesExService.searchAccount(key,null,null));
     }
 
 }

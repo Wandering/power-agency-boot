@@ -12,6 +12,6 @@ import java.util.List;
  */
 public interface IAgenciesExDAO {
     List<BaseSearch> search(@Param("key") String key, @Param("whereSql") String whereSql);
-    List<BaseSearch> searchAccount(@Param("key") String key, @Param("whereSql") String whereSql);
+    List<BaseSearch> searchAccount(@Param("key") String key,@Param("type")Integer type, @Param("whereSql") String whereSql);
 
 }

@@ -12,6 +12,9 @@
 			  <if test="key!=null and key.trim()!=''">
 				  name like CONCAT('%',#{key},'%')
 			  </if>
+			  <if test="type!=null and type.trim()!=''">
+				  agency.agencytype =#{type}
+			  </if>
 		  </where>
 	</select>
 	<select id="searchAccount" resultType="com.power.entity.ex.BaseSearch">
