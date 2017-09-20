@@ -204,15 +204,15 @@ public class AgenciesController extends AbstractController{
 	}
 	
 
-	/**
-     * 查询代理商
-	 */
-	@RequestMapping("/search")
-	public R search(String key){
-		Subject subject = SecurityUtils.getSubject();
-		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
-		return R.ok().put("data",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
-	}
+//	/**
+//     * 查询代理商
+//	 */
+//	@RequestMapping("/search")
+//	public R search(String key){
+//		Subject subject = SecurityUtils.getSubject();
+//		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
+//		return R.ok().put("data",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
+//	}
 
 	/**
      * 查询所有账号
@@ -223,7 +223,7 @@ public class AgenciesController extends AbstractController{
 	public R searchAccount(String key){
 		Subject subject = SecurityUtils.getSubject();
 		SysUserEntity userEntity = (SysUserEntity)subject.getPrincipal();
-		return R.ok().put("data",userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT));
+		return R.ok().put("data",agenciesExService.searchAccount(key,userEntity.getAgencytype()!=null && userEntity.getAgencytype() == 1 ?dataPermissionService.genWhereSql(PermissionEnum.AGENCY_SIGN) : dataPermissionService.genWhereSql(PermissionEnum.AGENCY_INDEPENDENT)));
 	}
 
     /**
